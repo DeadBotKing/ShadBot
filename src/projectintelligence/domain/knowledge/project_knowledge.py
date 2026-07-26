@@ -19,54 +19,30 @@ class ProjectKnowledge:
 
     project_id: UUID
 
-    knowledge_id: UUID = field(
-        default_factory=uuid4
-    )
+    knowledge_id: UUID = field(default_factory=uuid4)
 
     version: str = "1.0"
 
-    created_at: datetime = field(
-        default_factory=datetime.utcnow
-    )
+    created_at: datetime = field(default_factory=datetime.utcnow)
 
-    technologies: list[str] = field(
-        default_factory=list
-    )
+    technologies: list[str] = field(default_factory=list)
 
-    frameworks: list[str] = field(
-        default_factory=list
-    )
+    frameworks: list[str] = field(default_factory=list)
 
-    languages: list[str] = field(
-        default_factory=list
-    )
+    languages: list[str] = field(default_factory=list)
 
-    dependency_map: dict[str, str] = field(
-        default_factory=dict
-    )
+    dependency_map: dict[str, str] = field(default_factory=dict)
 
     architecture_description: str | None = None
 
-    architecture_patterns: list[str] = field(
-        default_factory=list
-    )
+    architecture_patterns: list[str] = field(default_factory=list)
 
-    project_conventions: list[str] = field(
-        default_factory=list
-    )
+    project_conventions: list[str] = field(default_factory=list)
 
-    coding_rules: list[str] = field(
-        default_factory=list
-    )
+    coding_rules: list[str] = field(default_factory=list)
 
-    known_constraints: list[str] = field(
-        default_factory=list
-    )
+    known_constraints: list[str] = field(default_factory=list)
 
-    historical_changes: list[str] = field(
-        default_factory=list
-    )
+    historical_changes: list[str] = field(default_factory=list)
 
-    intelligence_notes: list[str] = field(
-        default_factory=list
-    )
+    intelligence_notes: list[str] = field(default_factory=list)

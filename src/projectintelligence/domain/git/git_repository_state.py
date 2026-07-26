@@ -19,9 +19,7 @@ class GitRepositoryState:
 
     project_id: UUID
 
-    repository_id: UUID = field(
-        default_factory=uuid4
-    )
+    repository_id: UUID = field(default_factory=uuid4)
 
     repository_path: str = ""
 
@@ -31,32 +29,18 @@ class GitRepositoryState:
 
     previous_commit: str | None = None
 
-    commit_history: list[str] = field(
-        default_factory=list
-    )
+    commit_history: list[str] = field(default_factory=list)
 
-    changed_files: list[str] = field(
-        default_factory=list
-    )
+    changed_files: list[str] = field(default_factory=list)
 
-    added_files: list[str] = field(
-        default_factory=list
-    )
+    added_files: list[str] = field(default_factory=list)
 
-    deleted_files: list[str] = field(
-        default_factory=list
-    )
+    deleted_files: list[str] = field(default_factory=list)
 
-    modified_files: list[str] = field(
-        default_factory=list
-    )
+    modified_files: list[str] = field(default_factory=list)
 
     is_clean: bool = True
 
-    last_checked_at: datetime = field(
-        default_factory=datetime.utcnow
-    )
+    last_checked_at: datetime = field(default_factory=datetime.utcnow)
 
-    metadata: dict[str, object] = field(
-        default_factory=dict
-    )
+    metadata: dict[str, object] = field(default_factory=dict)

@@ -1,0 +1,19 @@
+AI-0001
+
+Ollama
+
+AI-0100
+
+llama.cpp
+
+AI-0200
+
+OpenRouter
+
+AI-0300
+
+Prompt Builder
+
+AI-0400
+
+Conversation Memory

@@ -1,0 +1,39 @@
+PI-0001 ~ PI-0099
+
+Core Architecture
+
+PI-0100 ~ PI-0199
+
+Project Scanner
+
+PI-0200 ~ PI-0299
+
+Snapshot Engine
+
+PI-0300 ~ PI-0399
+
+Knowledge Engine
+
+PI-0400 ~ PI-0499
+
+Context Engine
+
+PI-0500 ~ PI-0599
+
+Analysis Engine
+
+PI-0600 ~ PI-0699
+
+Git Intelligence
+
+PI-0700 ~ PI-0799
+
+Report Engine
+
+PI-0800 ~ PI-0899
+
+Resume Engine
+
+PI-0900 ~ PI-0999
+
+AI Handoff
