@@ -27,10 +27,7 @@ class GitContextMapper:
         Convert Git analysis result into domain state.
         """
 
-        changed_files = [
-            change.path
-            for change in git_context.changes
-        ]
+        changed_files = [change.path for change in git_context.changes]
 
         added_files = [
             change.path
@@ -51,20 +48,17 @@ class GitContextMapper:
         ]
 
         return GitRepositoryState(
-            project_id=git_context.current_commit.project_id
-            if git_context.current_commit
-            and hasattr(git_context.current_commit, "project_id")
-            else None,
+            project_id=(
+                git_context.current_commit.project_id
+                if git_context.current_commit
+                and hasattr(git_context.current_commit, "project_id")
+                else None
+            ),
             branch_name=git_context.status.current_branch,
             current_commit=(
-                git_context.current_commit.hash
-                if git_context.current_commit
-                else ""
+                git_context.current_commit.hash if git_context.current_commit else ""
             ),
-            commit_history=[
-                commit.hash
-                for commit in git_context.recent_commits
-            ],
+            commit_history=[commit.hash for commit in git_context.recent_commits],
             changed_files=changed_files,
             added_files=added_files,
             deleted_files=deleted_files,

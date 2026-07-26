@@ -23,6 +23,9 @@ from projectintelligence.application.contracts.project.workspace_scanner import 
 from projectintelligence.application.contracts.snapshot.snapshot_builder import (
     ISnapshotBuilder,
 )
+from projectintelligence.application.git.mapping.git_context_mapper import (
+    GitContextMapper,
+)
 from projectintelligence.application.git.services.git_analyzer import (
     GitAnalyzer,
 )
@@ -50,6 +53,7 @@ class ProjectIntelligencePipeline:
     dependency_analyzer: IDependencyAnalyzer
     git_analyzer: GitAnalyzer
     knowledge_builder: KnowledgeBuilder
+    git_context_mapper: GitContextMapper
 
     def run(
         self,
@@ -81,9 +85,13 @@ class ProjectIntelligencePipeline:
 
         git_context = self.git_analyzer.analyze()
 
+        git_state = self.git_context_mapper.map(
+            git_context,
+        )
+
         context = self.knowledge_builder.build(
             snapshot,
-            git_context,
+            git_state,
         )
 
         return PipelineResult(

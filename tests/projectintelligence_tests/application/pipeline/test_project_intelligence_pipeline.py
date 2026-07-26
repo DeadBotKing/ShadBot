@@ -32,6 +32,7 @@ def test_project_intelligence_pipeline_executes_all_steps() -> None:
     dependency_analyzer = Mock()
     git_analyzer = Mock()
     knowledge_builder = Mock()
+    git_context_mapper = Mock()
 
     files = ["main.py"]
 
@@ -64,6 +65,7 @@ def test_project_intelligence_pipeline_executes_all_steps() -> None:
         framework_detector=framework_detector,
         dependency_analyzer=dependency_analyzer,
         git_analyzer=git_analyzer,
+        git_context_mapper=git_context_mapper,
         knowledge_builder=knowledge_builder,
     )
 
