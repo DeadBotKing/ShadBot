@@ -57,4 +57,14 @@ class ChangeContextBuilder:
             ],
             "snapshot_quality_issues": snapshot.quality_issues,
             "test_status": snapshot.test_status,
+            "recent_commits": [
+                {
+                    "hash": commit.hash,
+                    "short_hash": commit.short_hash,
+                    "author": commit.author,
+                    "message": commit.message,
+                    "date": commit.date,
+                }
+                for commit in git_context.recent_commits
+            ],
         }

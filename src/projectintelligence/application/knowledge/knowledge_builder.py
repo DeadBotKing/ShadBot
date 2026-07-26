@@ -26,6 +26,9 @@ from projectintelligence.domain.context.project_context import (
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
 )
+from projectintelligence.application.git.models.git_context import (
+    GitContext,
+)
 
 
 @dataclass(slots=True)
@@ -45,7 +48,7 @@ class KnowledgeBuilder:
     def build(
         self,
         snapshot: ProjectSnapshot,
-        git_context,
+        git_context: GitContext,
     ) -> ProjectContext:
         """
         Build unified project context.
