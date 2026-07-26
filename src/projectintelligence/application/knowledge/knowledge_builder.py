@@ -45,12 +45,14 @@ class KnowledgeBuilder:
     def build(
         self,
         snapshot: ProjectSnapshot,
+        git_context,
     ) -> ProjectContext:
         """
         Build unified project context.
         """
 
         return ProjectContext(
+            project_id=snapshot.project_id,
             architecture_context=self.architecture_builder.build(
                 snapshot,
             ),
@@ -62,5 +64,6 @@ class KnowledgeBuilder:
             ),
             change_context=self.change_builder.build(
                 snapshot,
+                git_context,
             ),
         )

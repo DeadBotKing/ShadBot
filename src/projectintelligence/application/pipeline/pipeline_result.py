@@ -8,6 +8,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from projectintelligence.application.git.models.git_context import (
+    GitContext,
+)
 from projectintelligence.domain.context.project_context import (
     ProjectContext,
 )
@@ -25,5 +28,7 @@ class PipelineResult:
     snapshot: ProjectSnapshot
 
     context: ProjectContext
+
+    git_context: GitContext | None = None
 
     success: bool = True
