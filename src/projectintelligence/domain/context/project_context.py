@@ -10,6 +10,10 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from uuid import UUID, uuid4
 
+from projectintelligence.domain.git.git_repository_state import (
+    GitRepositoryState,
+)
+
 
 @dataclass(slots=True)
 class ProjectContext:
@@ -40,3 +44,5 @@ class ProjectContext:
     agent_instructions: list[str] = field(default_factory=list)
 
     reasoning_metadata: dict[str, object] = field(default_factory=dict)
+
+    git_state: GitRepositoryState | None = None
