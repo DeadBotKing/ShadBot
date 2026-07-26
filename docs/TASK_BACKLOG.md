@@ -1,502 +1,194 @@
-\# ShadBot
+# Task Blacklog
 
+Historical and future tasks.
 
 
-\# Master Task Backlog
+---
 
+# Completed
 
 
-> Enterprise Development Roadmap
+## Filesystem Infrastructure
 
+Status:
 
+DONE
 
-Architecture Version: 1.2 (Frozen)
 
+Implemented:
 
+- DirectoryWalker
+- FileCollector
+- IgnoreManager
+- WorkspaceScanner
 
-Status: Active
 
+Tests:
 
+5/5 Passed
 
-\---
 
+---
 
+# Pending
 
-\# Task Status
 
+## Snapshot Builder
 
+Priority:
 
-\- TODO
+HIGH
 
-\- IN PROGRESS
 
-\- REVIEW
+Reason:
 
-\- DONE
+Required foundation for all future intelligence modules.
 
-\- BLOCKED
 
+---
 
+## Real Analyzer Implementations
 
-\---
+Priority:
 
+HIGH
 
 
-\# Phase 0
+Missing:
 
+- Language Detector
+- Framework Detector
+- Dependency Analyzer
 
 
-\## Architecture \& Workflow
+---
 
+## Git Intelligence
 
+Priority:
 
-| ID | Title | Status |
+MEDIUM
 
-|----|-------|--------|
 
-| AR-0001 | Project Manifest | DONE |
+Need:
 
-| AR-0002 | Architecture Freeze | DONE |
+Repository understanding layer.
 
-| AR-0003 | Autonomous Workflow | DONE |
 
-| AR-0004 | Agent Workflow | DONE |
+---
 
-| AR-0005 | Task Specification | DONE |
+## Knowledge System
 
-| AR-0006 | Definition Of Done | DONE |
+Priority:
 
+HIGH
 
 
-\---
+Need:
 
+Long-term project memory.
 
 
-\# Phase 1
+---
 
+## AI Context Generation
 
+Priority:
 
-\# Project Intelligence
+HIGH
 
 
+Need:
 
-\## Epic 1
+Agent-ready context.
 
 
+---
 
-Application Core
+## Persistence Layer
 
+Priority:
 
+MEDIUM
 
-| ID | Title | Status |
 
-|----|-------|--------|
+Need:
 
-| PI-0001 | Snapshot Builder Contract | DONE |
+Store:
 
-| PI-0002 | Workspace Scanner Contract | DONE |
+- snapshots
+- knowledge
+- history
 
-| PI-0003 | Language Detector Contract | DONE |
 
-| PI-0004 | Framework Detector Contract | DONE |
+---
 
-| PI-0005 | Dependency Analyzer Contract | DONE |
+## Reporting System
 
-| PI-0006 | Project Scanner Pipeline | DONE |
+Priority:
 
-| PI-0007 | Project Scanner Service | TODO |
+MEDIUM
 
-| PI-0008 | Workspace Scanner Implementation | TODO |
 
-| PI-0009 | Snapshot Builder Implementation | TODO |
+Generate enterprise reports.
 
-| PI-0010 | Language Detector Implementation | TODO |
 
-| PI-0011 | Framework Detector Implementation | TODO |
+---
 
-| PI-0012 | Dependency Analyzer Implementation | TODO |
+# Architectural Decisions
 
 
+## Decision 001
 
-\---
+Project Intelligence does not generate code.
 
 
+Status:
 
-\## Epic 2
+FINAL
 
 
+---
 
-Snapshot Engine
+## Decision 002
 
+Snapshot is the central knowledge source.
 
 
-| ID | Title | Status |
+Status:
 
-|----|-------|--------|
+FINAL
 
-| PI-0100 | Snapshot Model | TODO |
 
-| PI-0101 | Snapshot Metadata | TODO |
+---
 
-| PI-0102 | Snapshot Storage | TODO |
+## Decision 003
 
-| PI-0103 | Snapshot History | TODO |
+Agents consume intelligence output.
 
-| PI-0104 | Snapshot Comparison | TODO |
 
+Status:
 
+FINAL
 
-\---
 
+---
 
+# Known Limitations
 
-\## Epic 3
 
+Current version:
 
+- Only filesystem scanning works
+- Analysis contracts exist but implementations are pending
+- Persistence is not implemented
+- AI integration is not implemented
 
-Knowledge Engine
 
+---
 
+# Next Development Session
 
-| ID | Title | Status |
+Start from:
 
-|----|-------|--------|
-
-| PI-0200 | Knowledge Builder | TODO |
-
-| PI-0201 | Knowledge Repository | TODO |
-
-| PI-0202 | Knowledge Cache | TODO |
-
-| PI-0203 | Knowledge Export | TODO |
-
-
-
-\---
-
-
-
-\## Epic 4
-
-
-
-Context Engine
-
-
-
-| ID | Title | Status |
-
-|----|-------|--------|
-
-| PI-0300 | Context Builder | TODO |
-
-| PI-0301 | Context Compression | TODO |
-
-| PI-0302 | Context Repository | TODO |
-
-
-
-\---
-
-
-
-\## Epic 5
-
-
-
-Analysis Engine
-
-
-
-| ID | Title | Status |
-
-|----|-------|--------|
-
-| PI-0400 | Architecture Analyzer | TODO |
-
-| PI-0401 | Dependency Analyzer | TODO |
-
-| PI-0402 | Test Analyzer | TODO |
-
-| PI-0403 | Security Analyzer | TODO |
-
-| PI-0404 | Complexity Analyzer | TODO |
-
-| PI-0405 | Dead Code Analyzer | TODO |
-
-
-
-\---
-
-
-
-\## Epic 6
-
-
-
-Git Intelligence
-
-
-
-| ID | Title | Status |
-
-|----|-------|--------|
-
-| PI-0500 | Git Repository Reader | TODO |
-
-| PI-0501 | Commit Analyzer | TODO |
-
-| PI-0502 | Branch Analyzer | TODO |
-
-| PI-0503 | Change Analyzer | TODO |
-
-
-
-\---
-
-
-
-\## Epic 7
-
-
-
-Report Engine
-
-
-
-| ID | Title | Status |
-
-|----|-------|--------|
-
-| PI-0600 | Markdown Report | TODO |
-
-| PI-0601 | HTML Report | TODO |
-
-| PI-0602 | JSON Report | TODO |
-
-| PI-0603 | PDF Report | TODO |
-
-
-
-\---
-
-
-
-\## Epic 8
-
-
-
-Resume Engine
-
-
-
-| ID | Title | Status |
-
-|----|-------|--------|
-
-| PI-0700 | Daily Resume | TODO |
-
-| PI-0701 | Project Resume | TODO |
-
-| PI-0702 | AI Resume | TODO |
-
-
-
-\---
-
-
-
-\## Epic 9
-
-
-
-AI Handoff
-
-
-
-| ID | Title | Status |
-
-|----|-------|--------|
-
-| PI-0800 | AI Handoff Builder | TODO |
-
-| PI-0801 | Prompt Generator | TODO |
-
-| PI-0802 | Session Export | TODO |
-
-
-
-\---
-
-
-
-\# Phase 2
-
-
-
-\## Agent Platform
-
-
-
-Status: TODO
-
-
-
-\---
-
-
-
-\# Phase 3
-
-
-
-\## Planner
-
-
-
-Status: TODO
-
-
-
-\---
-
-
-
-\# Phase 4
-
-
-
-\## Software Engineer
-
-
-
-Status: TODO
-
-
-
-\---
-
-
-
-\# Phase 5
-
-
-
-\## Reviewer
-
-
-
-Status: TODO
-
-
-
-\---
-
-
-
-\# Phase 6
-
-
-
-\## AI Gateway
-
-
-
-Status: TODO
-
-
-
-\---
-
-
-
-\# Phase 7
-
-
-
-\## Testing Engine
-
-
-
-Status: TODO
-
-
-
-\---
-
-
-
-\# Phase 8
-
-
-
-\## Auto Fix Engine
-
-
-
-Status: TODO
-
-
-
-\---
-
-
-
-\# Phase 9
-
-
-
-\## Git Automation
-
-
-
-Status: TODO
-
-
-
-\---
-
-
-
-\# Phase 10
-
-
-
-\## Multi-Agent Orchestrator
-
-
-
-Status: TODO
-
-
-
-\---
-
-
-
-\# Phase 11
-
-
-
-\## Autonomous Software Engineer
-
-
-
-Status: TODO
-
-
-
-\---
-
-
-
-\# Phase 12
-
-
-
-\## ShadBotTrader
-
-
-
-Status: TODO
-
+Snapshot Builder Implementation

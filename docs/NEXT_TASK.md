@@ -1,72 +1,58 @@
-\# Next Task
+\# Next Tasks
 
 
 
-\## Current Phase
+\## Phase 1 - Snapshot Builder
 
 
 
-Phase 1
+Status:
+
+NEXT
 
 
 
-Generic Project Intelligence
+
+
+Create:
 
 
 
-\---
+infrastructure/snapshot
 
 
 
-\## Current Milestone
 
 
 
-Application Contracts
+
+Implement:
 
 
 
-\---
+SnapshotBuilder
 
 
 
-\## Next Implementation
+
+
+Responsibilities:
 
 
 
-\- IProjectScanner
+\- Receive ProjectEntity
 
-\- ISnapshotBuilder
+\- Scan workspace metadata
 
-\- ILanguageDetector
+\- Count files
 
-\- IFrameworkDetector
+\- Count directories
 
-\- IDependencyAnalyzer
+\- Generate file hashes
 
-
-
-\---
+\- Create ProjectSnapshot
 
 
-
-\## After That
-
-
-
-Pipeline Architecture
-
-
-
-\---
-
-
-
-\## After That
-
-
-
-Enterprise Scanner Engine
 
 
 
@@ -74,31 +60,53 @@ Enterprise Scanner Engine
 
 
 
-\## Current Status
+\## Phase 2 - Real Language Detector
 
 
 
-Configuration Layer
-
-✅ Completed
 
 
-
-Domain Layer
-
-✅ Completed
+Implement:
 
 
 
-Application Structure
-
-✅ Completed
+infrastructure/analysis/language\_detector.py
 
 
 
-Application Contracts
 
-🟡 In Progress
+
+
+
+Detect:
+
+
+
+\- Python
+
+\- JavaScript
+
+\- TypeScript
+
+\- C#
+
+\- Java
+
+\- C++
+
+\- etc.
+
+
+
+
+
+Output:
+
+
+
+set\[str]
+
+
 
 
 
@@ -106,9 +114,249 @@ Application Contracts
 
 
 
-\## Next Commit
+\## Phase 3 - Framework Detector
 
 
 
-Create Application Contracts
+
+
+Detect frameworks:
+
+
+
+
+
+Examples:
+
+
+
+Python:
+
+
+
+\- Django
+
+\- FastAPI
+
+\- Flask
+
+
+
+
+
+JS:
+
+
+
+\- React
+
+\- Angular
+
+\- Vue
+
+
+
+
+
+.NET:
+
+
+
+\- ASP.NET
+
+
+
+
+
+\---
+
+
+
+\## Phase 4 - Dependency Analyzer
+
+
+
+
+
+Analyze:
+
+
+
+Python:
+
+
+
+\- requirements.txt
+
+\- pyproject.toml
+
+
+
+
+
+Node:
+
+
+
+\- package.json
+
+
+
+
+
+.NET:
+
+
+
+\- csproj
+
+
+
+
+
+Output:
+
+
+
+dict\[str,str]
+
+
+
+
+
+\---
+
+
+
+\## Phase 5 - Git Intelligence
+
+
+
+
+
+Create:
+
+
+
+infrastructure/git
+
+
+
+
+
+
+
+Analyze:
+
+
+
+\- repository status
+
+\- branch
+
+\- latest commit
+
+\- changed files
+
+
+
+
+
+\---
+
+
+
+\## Phase 6 - Knowledge Builder
+
+
+
+
+
+Create:
+
+
+
+ProjectKnowledge generation.
+
+
+
+
+
+Input:
+
+
+
+ProjectSnapshot
+
+
+
+
+
+Output:
+
+
+
+ProjectKnowledge
+
+
+
+
+
+\---
+
+
+
+\## Phase 7 - Context Builder
+
+
+
+
+
+Create AI context layer.
+
+
+
+
+
+Output:
+
+
+
+ProjectContext
+
+
+
+
+
+Used by:
+
+
+
+Agent Platform
+
+
+
+
+
+\---
+
+
+
+\## Phase 8 - Reporting
+
+
+
+
+
+Generate:
+
+
+
+\- Architecture report
+
+\- Dependency report
+
+\- Technology report
+
+\- Project summary
 

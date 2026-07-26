@@ -1,72 +1,40 @@
-\# ShadBot Project Manifest
+\# ShadBot Project Intelligence Manifest
 
 
 
-\## Vision
+
+
+\## Identity
 
 
 
-Build an Enterprise-grade Autonomous Software Engineer.
+Project:
 
 
 
-The system must be able to understand a software project, plan development, generate code, review changes, run tests, fix issues, and prepare Git commits with minimal human intervention.
+ShadBot
 
 
 
-\---
+
+
+Module:
 
 
 
-\## Core Products
+Project Intelligence Engine
 
 
 
-\### ShadBot
+
+
+Version:
 
 
 
-Main platform.
+0.1.0
 
 
-
-Contains all engines.
-
-
-
-\### Project Intelligence
-
-
-
-Generic project understanding engine.
-
-
-
-Must work with any software project.
-
-
-
-No dependency on ShadBotTrader.
-
-
-
-\### Agent Platform
-
-
-
-Virtual software engineering team.
-
-
-
-Consumes Project Intelligence outputs.
-
-
-
-\### ShadBotTrader
-
-
-
-Trading platform built on top of Project Intelligence and Agent Platform.
 
 
 
@@ -74,31 +42,17 @@ Trading platform built on top of Project Intelligence and Agent Platform.
 
 
 
-\## Architecture Principles
+\# Mission
 
 
 
-\- Enterprise-grade only
+Create an enterprise-grade software understanding engine.
 
-\- No temporary code
 
-\- No prototype implementations
 
-\- Clean Architecture
+The engine enables autonomous AI agents to understand existing projects before performing engineering tasks.
 
-\- SOLID
 
-\- Dependency Inversion
-
-\- Plugin Architecture
-
-\- Contract First
-
-\- Pipeline Based
-
-\- Provider Independent
-
-\- Long-term maintainability
 
 
 
@@ -106,89 +60,35 @@ Trading platform built on top of Project Intelligence and Agent Platform.
 
 
 
-\## AI Strategy
+\# Architecture Principles
 
 
 
-AI must never depend on a single provider.
+
+
+\## Clean Architecture
 
 
 
-Priority:
+Layers:
 
 
 
-1\. Local Models
-
-2\. Free APIs
-
-3\. OpenRouter
-
-4\. Paid Providers (optional)
+Domain
 
 
 
-Every AI provider must implement the same interface.
+Application
 
 
 
-\---
+Infrastructure
 
 
 
-\## Development Workflow
+Interfaces
 
 
-
-Design
-
-
-
-↓
-
-
-
-Architecture Freeze
-
-
-
-↓
-
-
-
-Implementation
-
-
-
-↓
-
-
-
-Compile
-
-
-
-↓
-
-
-
-Tests
-
-
-
-↓
-
-
-
-Commit
-
-
-
-↓
-
-
-
-Push
 
 
 
@@ -196,15 +96,39 @@ Push
 
 
 
-\## Current Phase
+\## Dependency Rule
 
 
 
-Phase 1
+Dependencies flow inward:
 
 
 
-Generic Project Intelligence
+Infrastructure
+
+
+
+↓
+
+
+
+Application
+
+
+
+↓
+
+
+
+Domain
+
+
+
+
+
+Domain has zero external dependency.
+
+
 
 
 
@@ -212,65 +136,137 @@ Generic Project Intelligence
 
 
 
-\## Long-Term Roadmap
+\# Main Components
 
 
 
-Phase 1
-
-Generic Project Intelligence
 
 
-
-Phase 2
-
-Agent Framework
+\## Scanner Engine
 
 
 
-Phase 3
-
-Planner
+Responsible for discovering project structure.
 
 
 
-Phase 4
-
-Software Engineer
 
 
-
-Phase 5
-
-Reviewer
+\## Analysis Engine
 
 
 
-Phase 6
-
-Testing Engine
+Responsible for understanding:
 
 
 
-Phase 7
+\- languages
 
-Auto Fix Engine
+\- frameworks
 
-
-
-Phase 8
-
-Git Automation
+\- dependencies
 
 
 
-Phase 9
-
-Multi-Agent Orchestrator
 
 
+\## Snapshot Engine
 
-Phase 10
 
-Autonomous Software Engineer
+
+Creates immutable project states.
+
+
+
+
+
+\## Knowledge Engine
+
+
+
+Builds long-term project memory.
+
+
+
+
+
+\## Context Engine
+
+
+
+Creates AI-ready understanding.
+
+
+
+
+
+\---
+
+
+
+\# Future Integration
+
+
+
+Project Intelligence will provide data to:
+
+
+
+
+
+Autonomous Agent Platform:
+
+
+
+\- Architect Agent
+
+\- Planner Agent
+
+\- Developer Agent
+
+\- Reviewer Agent
+
+\- Tester Agent
+
+
+
+
+
+\---
+
+
+
+\# Current Status
+
+
+
+
+
+Completed:
+
+
+
+Filesystem Intelligence
+
+
+
+
+
+In Progress:
+
+
+
+Snapshot Intelligence
+
+
+
+
+
+Future:
+
+
+
+Full Autonomous Software Engineer Platform
+
+
 
