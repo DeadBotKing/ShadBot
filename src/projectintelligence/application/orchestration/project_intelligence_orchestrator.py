@@ -8,11 +8,14 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from projectintelligence.application.models.results.runtime_result import (
+    RuntimeResult,
+)
 from projectintelligence.application.persistence.services.persistence_service import (
     PersistenceService,
 )
-from projectintelligence.application.pipeline.pipeline_result import (
-    PipelineResult,
+from projectintelligence.application.persistence.services.snapshot_history_service import (
+    SnapshotHistoryService,
 )
 from projectintelligence.application.pipeline.project_intelligence_pipeline import (
     ProjectIntelligencePipeline,
@@ -32,18 +35,27 @@ class ProjectIntelligenceOrchestrator:
 
     persistence_service: PersistenceService
 
+    snapshot_history_service: SnapshotHistoryService
+
     def execute(
         self,
         project: ProjectEntity,
-    ) -> PipelineResult:
+    ) -> RuntimeResult:
 
-        result = self.pipeline.run(
+        previous_snapshot = self.snapshot_history_service.get_latest_snapshot(
+            project.project_id,
+        )
+
+        pipeline_result = self.pipeline.run(
             project,
         )
 
         self.persistence_service.save_all(
-            snapshot=result.snapshot,
-            context=result.context,
+            snapshot=pipeline_result.snapshot,
+            context=pipeline_result.context,
         )
 
-        return result
+        return RuntimeResult(
+            pipeline_result=pipeline_result,
+            previous_snapshot=previous_snapshot,
+        )
