@@ -8,6 +8,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from projectintelligence.application.git.models.git_context import (
+    GitContext,
+)
 from projectintelligence.application.knowledge.architecture_context_builder import (
     ArchitectureContextBuilder,
 )
@@ -25,9 +28,6 @@ from projectintelligence.domain.context.project_context import (
 )
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
-)
-from projectintelligence.application.git.models.git_context import (
-    GitContext,
 )
 
 
@@ -56,6 +56,7 @@ class KnowledgeBuilder:
 
         return ProjectContext(
             project_id=snapshot.project_id,
+            snapshot_id=snapshot.snapshot_id,
             architecture_context=self.architecture_builder.build(
                 snapshot,
             ),

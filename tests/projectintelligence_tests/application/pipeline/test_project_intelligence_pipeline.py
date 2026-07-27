@@ -43,9 +43,14 @@ def test_project_intelligence_pipeline_executes_all_steps() -> None:
 
     context = ProjectContext(
         project_id=project.project_id,
+        snapshot_id=uuid4(),
     )
 
     git_context = Mock()
+
+    git_state = Mock()
+
+    git_context_mapper.map.return_value = git_state
 
     workspace_scanner.scan.return_value = files
     snapshot_builder.build.return_value = snapshot

@@ -91,8 +91,10 @@ class ProjectIntelligencePipeline:
 
         context = self.knowledge_builder.build(
             snapshot,
-            git_state,
+            git_context,
         )
+
+        context.git_state = git_state
 
         return PipelineResult(
             snapshot=snapshot,

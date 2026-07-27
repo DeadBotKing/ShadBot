@@ -23,6 +23,8 @@ class ProjectContext:
 
     project_id: UUID
 
+    snapshot_id: UUID
+
     context_id: UUID = field(default_factory=uuid4)
 
     version: str = "1.0"

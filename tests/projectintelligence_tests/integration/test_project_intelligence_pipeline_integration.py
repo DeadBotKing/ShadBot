@@ -7,6 +7,9 @@ Pipeline Integration Test
 from pathlib import Path
 from unittest.mock import Mock
 
+from projectintelligence.application.git.mapping.git_context_mapper import (
+    GitContextMapper,
+)
 from projectintelligence.application.git.models.git_context import (
     GitContext,
 )
@@ -94,6 +97,8 @@ def test_project_intelligence_pipeline_integration() -> None:
         change_builder=ChangeContextBuilder(),
     )
 
+    git_context_mapper = GitContextMapper()
+
     pipeline = ProjectIntelligencePipeline(
         workspace_scanner=workspace_scanner,
         snapshot_builder=snapshot_builder,
@@ -102,6 +107,7 @@ def test_project_intelligence_pipeline_integration() -> None:
         dependency_analyzer=dependency_analyzer,
         git_analyzer=git_analyzer,
         knowledge_builder=knowledge_builder,
+        git_context_mapper=git_context_mapper,
     )
 
     result = pipeline.run(project)
@@ -109,4 +115,5 @@ def test_project_intelligence_pipeline_integration() -> None:
     assert result.success is True
     assert result.snapshot is not None
     assert result.context is not None
-    assert result.git_context.status.current_branch == "main"
+    assert result.context.git_state is not None
+    assert result.context.git_state.branch_name == "main"

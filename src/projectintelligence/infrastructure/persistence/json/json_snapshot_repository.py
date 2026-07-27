@@ -7,19 +7,22 @@ JSON Snapshot Repository
 from __future__ import annotations
 
 import json
-from dataclasses import asdict
+from datetime import datetime
 from pathlib import Path
 from uuid import UUID
 
-from projectintelligence.application.contracts.persistence.snapshot_repository import (
-    ISnapshotRepository,
+from projectintelligence.application.ports.outbound.snapshot_repository import (
+    SnapshotRepository,
 )
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
 )
+from projectintelligence.infrastructure.persistence.mapping.snapshot_json_mapper import (
+    SnapshotJsonMapper,
+)
 
 
-class JsonSnapshotRepository(ISnapshotRepository):
+class JsonSnapshotRepository(SnapshotRepository):
     """
     JSON implementation of snapshot persistence.
     """
@@ -39,23 +42,9 @@ class JsonSnapshotRepository(ISnapshotRepository):
         self,
         snapshot: ProjectSnapshot,
     ) -> None:
-        file_path = self.storage_path / (
-            f"{snapshot.snapshot_id}.json"
-        )
+        file_path = self.storage_path / f"{snapshot.snapshot_id}.json"
 
-        data = asdict(snapshot)
-
-        data["snapshot_id"] = str(
-            snapshot.snapshot_id,
-        )
-
-        data["project_id"] = str(
-            snapshot.project_id,
-        )
-
-        data["workspace"] = str(
-            snapshot.workspace,
-        )
+        data = SnapshotJsonMapper.to_dict(snapshot)
 
         file_path.write_text(
             json.dumps(
@@ -66,18 +55,99 @@ class JsonSnapshotRepository(ISnapshotRepository):
             encoding="utf-8",
         )
 
+    def update(
+        self,
+        snapshot: ProjectSnapshot,
+    ) -> None:
+        self.save(snapshot)
+
+    def delete(
+        self,
+        snapshot_id: UUID,
+    ) -> None:
+        file_path = self.storage_path / f"{snapshot_id}.json"
+
+        if file_path.exists():
+            file_path.unlink()
+
+    def exists(
+        self,
+        snapshot_id: UUID,
+    ) -> bool:
+        return (self.storage_path / f"{snapshot_id}.json").exists()
+
+    def get_latest(
+        self,
+        project_id: UUID,
+    ) -> ProjectSnapshot | None:
+
+        snapshots = self.list_by_project(project_id)
+
+        if not snapshots:
+            return None
+
+        return max(
+            snapshots,
+            key=lambda snapshot: snapshot.created_at,
+        )
+
+    def list_by_project(
+        self,
+        project_id: UUID,
+    ) -> list[ProjectSnapshot]:
+
+        snapshots: list[ProjectSnapshot] = []
+
+        for file_path in self.storage_path.glob("*.json"):
+
+            data = json.loads(
+                file_path.read_text(
+                    encoding="utf-8",
+                ),
+            )
+
+            snapshot = SnapshotJsonMapper.from_dict(data)
+
+            if snapshot.project_id == project_id:
+                snapshots.append(snapshot)
+
+        return snapshots
+
+    def list_between_dates(
+        self,
+        project_id: UUID,
+        start_date: datetime,
+        end_date: datetime,
+    ) -> list[ProjectSnapshot]:
+
+        return [
+            snapshot
+            for snapshot in self.list_by_project(project_id)
+            if start_date <= snapshot.created_at <= end_date
+        ]
+
+    def count(
+        self,
+        project_id: UUID,
+    ) -> int:
+        return len(
+            self.list_by_project(project_id),
+        )
+
     def get_by_id(
         self,
         snapshot_id: UUID,
     ) -> ProjectSnapshot | None:
 
-        file_path = self.storage_path / (
-            f"{snapshot_id}.json"
-        )
+        file_path = self.storage_path / f"{snapshot_id}.json"
 
         if not file_path.exists():
             return None
 
-        # reconstruction will be implemented
-        # in the next step
-        return None
+        data = json.loads(
+            file_path.read_text(
+                encoding="utf-8",
+            ),
+        )
+
+        return SnapshotJsonMapper.from_dict(data)
