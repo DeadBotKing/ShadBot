@@ -11,20 +11,23 @@ from dataclasses import dataclass
 from projectintelligence.application.git.models.git_context import (
     GitContext,
 )
-from projectintelligence.application.state.project_intelligence_state import (
-    ProjectIntelligenceState,
-)
 from projectintelligence.domain.context.project_context import (
     ProjectContext,
-)
-from projectintelligence.domain.history.snapshot_history import (
-    SnapshotHistory,
 )
 from projectintelligence.domain.knowledge.project_knowledge import (
     ProjectKnowledge,
 )
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
+)
+from projectintelligence.domain.history.snapshot_history import (
+    SnapshotHistory,
+)
+from projectintelligence.application.state.project_intelligence_state import (
+    ProjectIntelligenceState,
+)
+from projectintelligence.domain.resume.project_resume import (
+    ProjectResume,
 )
 
 
@@ -46,4 +49,6 @@ class PipelineResult:
 
     git_context: GitContext | None = None
 
+    resume: ProjectResume | None = None
+    
     success: bool = True

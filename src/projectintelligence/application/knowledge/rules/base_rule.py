@@ -1,37 +1,40 @@
-"""
-ShadBot Project Intelligence
-
-Knowledge Rule Contract
-"""
-
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Generic, TypeVar
 
-TInput = TypeVar("TInput")
-TOutput = TypeVar("TOutput")
+from .models.rule_result import RuleResult
 
 
-class BaseRule(ABC, Generic[TInput, TOutput]):
+class BaseRule(ABC):
     """
-    Base contract for all Project Intelligence knowledge rules.
+    Base contract for all knowledge analysis rules.
+
+    Rules are responsible only for analyzing extracted project
+    information and producing RuleResult objects.
+
+    Rules must never modify ProjectKnowledge directly.
     """
+
+    @property
+    @abstractmethod
+    def name(self) -> str:
+        """
+        Unique rule identifier.
+        """
+
+        raise NotImplementedError
 
     @abstractmethod
-    def applies_to(
-        self,
-        source: TInput,
-    ) -> bool:
+    def evaluate(self, context: object) -> RuleResult:
         """
-        Determine whether this rule can be applied.
+        Execute rule analysis against provided knowledge context.
+
+        Args:
+            context:
+                Input data required by the rule.
+
+        Returns:
+            RuleResult containing generated findings.
         """
 
-    @abstractmethod
-    def execute(
-        self,
-        source: TInput,
-    ) -> TOutput:
-        """
-        Execute the rule.
-        """
+        raise NotImplementedError

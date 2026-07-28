@@ -29,25 +29,17 @@ class IntelligenceNotesExtractor:
 
         notes: list[str] = []
 
-        notes.append(
-            f"Workspace contains {snapshot.file_count} files."
-        )
+        notes.append(f"Workspace contains {snapshot.file_count} files.")
 
         notes.append(
             f"Detected {len(snapshot.detected_languages)} programming language(s)."
         )
 
-        notes.append(
-            f"Detected {len(snapshot.detected_frameworks)} framework(s)."
-        )
+        notes.append(f"Detected {len(snapshot.detected_frameworks)} framework(s).")
 
-        notes.append(
-            f"Detected {len(snapshot.dependencies)} dependency(s)."
-        )
+        notes.append(f"Detected {len(snapshot.dependencies)} dependency(s).")
 
         if snapshot.quality_issues:
-            notes.append(
-                f"{len(snapshot.quality_issues)} quality issue(s) detected."
-            )
+            notes.append(f"{len(snapshot.quality_issues)} quality issue(s) detected.")
 
         return notes

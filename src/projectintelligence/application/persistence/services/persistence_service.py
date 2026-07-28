@@ -23,6 +23,39 @@ from projectintelligence.domain.context.project_context import (
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
 )
+from projectintelligence.application.persistence.services.knowledge_storage_service import (
+    KnowledgeStorageService,
+)
+
+from projectintelligence.application.persistence.services.state_storage_service import (
+    StateStorageService,
+)
+
+from projectintelligence.application.persistence.services.resume_storage_service import (
+    ResumeStorageService,
+)
+
+from projectintelligence.domain.knowledge.project_knowledge import (
+    ProjectKnowledge,
+)
+
+from projectintelligence.application.state.project_intelligence_state import (
+    ProjectIntelligenceState,
+)
+
+from projectintelligence.domain.resume.project_resume import (
+    ProjectResume,
+)
+from projectintelligence.application.models.results.persistence_batch_result import (
+    PersistenceBatchResult,
+)
+from projectintelligence.application.persistence.services.history_storage_service import (
+    HistoryStorageService,
+)
+
+from projectintelligence.domain.history.snapshot_history import (
+    SnapshotHistory,
+)
 
 
 @dataclass(slots=True)
@@ -34,6 +67,14 @@ class PersistenceService:
     snapshot_storage: SnapshotStorageService
 
     context_storage: ContextStorageService
+
+    knowledge_storage: KnowledgeStorageService
+
+    state_storage: StateStorageService
+
+    resume_storage: ResumeStorageService
+
+    history_storage: HistoryStorageService
 
     def save_snapshot(
         self,
@@ -54,20 +95,66 @@ class PersistenceService:
     def save_all(
         self,
         snapshot: ProjectSnapshot,
+        knowledge: ProjectKnowledge,
+        history: SnapshotHistory,
+        state: ProjectIntelligenceState,
         context: ProjectContext,
-    ) -> tuple[
-        PersistenceResult,
-        PersistenceResult,
-    ]:
-        snapshot_result = self.save_snapshot(
-            snapshot,
+        resume: ProjectResume,
+    ) -> PersistenceBatchResult:
+        results = (
+            self.save_snapshot(
+                snapshot,
+            ),
+            self.save_knowledge(
+                knowledge,
+            ),
+            self.save_history(
+                history,
+            ),
+            self.save_state(
+                state,
+            ),
+            self.save_context(
+                context,
+            ),
+            self.save_resume(
+                resume,
+            ),
         )
 
-        context_result = self.save_context(
-            context,
+        return PersistenceBatchResult(
+            results=results,
         )
 
-        return (
-            snapshot_result,
-            context_result,
+    def save_knowledge(
+        self,
+        knowledge: ProjectKnowledge,
+    ) -> PersistenceResult:
+        return self.knowledge_storage.save(
+            knowledge,
+        )
+
+
+    def save_state(
+        self,
+        state: ProjectIntelligenceState,
+    ) -> PersistenceResult:
+        return self.state_storage.save(
+            state,
+        )
+
+    def save_history(
+        self,
+        history: SnapshotHistory,
+    ) -> PersistenceResult:
+        return self.history_storage.save(
+            history,
+        )
+
+    def save_resume(
+        self,
+        resume: ProjectResume,
+    ) -> PersistenceResult:
+        return self.resume_storage.save(
+            resume,
         )

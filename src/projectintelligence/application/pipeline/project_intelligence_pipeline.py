@@ -38,6 +38,20 @@ from projectintelligence.application.pipeline.pipeline_result import (
 from projectintelligence.domain.project.project_entity import (
     ProjectEntity,
 )
+from projectintelligence.application.context.context_builder import (
+    ContextBuilder,
+)
+from projectintelligence.application.resume.models.resume_build_context import (
+    ResumeBuildContext,
+)
+
+from projectintelligence.application.state.project_state_service import (
+    ProjectStateService,
+)
+
+from projectintelligence.domain.history.snapshot_history import (
+    SnapshotHistory,
+)
 
 
 @dataclass(slots=True)
@@ -53,7 +67,9 @@ class ProjectIntelligencePipeline:
     dependency_analyzer: IDependencyAnalyzer
     git_analyzer: GitAnalyzer
     knowledge_builder: KnowledgeBuilder
+    context_builder: ContextBuilder
     git_context_mapper: GitContextMapper
+    project_state_service: ProjectStateService
 
     def run(
         self,
@@ -89,15 +105,37 @@ class ProjectIntelligencePipeline:
             git_context,
         )
 
-        context = self.knowledge_builder.build(
+        knowledge = self.knowledge_builder.build(
             snapshot,
+            git_context,
+        )
+
+        context = self.context_builder.build(
+            snapshot,
+            knowledge,
             git_context,
         )
 
         context.git_state = git_state
 
+        history = SnapshotHistory()
+
+        resume_context = ResumeBuildContext(
+            snapshot=snapshot,
+            knowledge=knowledge,
+            history=history,
+            context=context,
+        )
+
+        state = self.project_state_service.build(
+            resume_context,
+        )
+
         return PipelineResult(
             snapshot=snapshot,
+            knowledge=knowledge,
+            history=history,
+            state=state,
             context=context,
             git_context=git_context,
         )

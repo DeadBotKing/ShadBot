@@ -36,11 +36,7 @@ class TechnologyExtractor:
         )
 
         technologies = sorted(
-            set(
-                languages
-                + frameworks
-                + list(snapshot.dependencies.keys())
-            ),
+            set(languages + frameworks + list(snapshot.dependencies.keys())),
         )
 
         return (

@@ -8,66 +8,126 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from projectintelligence.application.git.models.git_context import (
-    GitContext,
+from projectintelligence.application.knowledge.extractors.architecture_extractor import (
+    ArchitectureExtractor,
 )
-from projectintelligence.application.knowledge.architecture_context_builder import (
-    ArchitectureContextBuilder,
+from projectintelligence.application.knowledge.extractors.constraint_extractor import (
+    ConstraintExtractor,
 )
-from projectintelligence.application.knowledge.change_context_builder import (
-    ChangeContextBuilder,
+from projectintelligence.application.knowledge.extractors.convention_extractor import (
+    ConventionExtractor,
 )
-from projectintelligence.application.knowledge.dependency_context_builder import (
-    DependencyContextBuilder,
+from projectintelligence.application.knowledge.extractors.dependency_extractor import (
+    DependencyExtractor,
 )
-from projectintelligence.application.knowledge.technology_context_builder import (
-    TechnologyContextBuilder,
+from projectintelligence.application.knowledge.extractors.history_extractor import (
+    HistoryExtractor,
 )
-from projectintelligence.domain.context.project_context import (
-    ProjectContext,
+from projectintelligence.application.knowledge.extractors.intelligence_notes_extractor import (
+    IntelligenceNotesExtractor,
+)
+from projectintelligence.application.knowledge.extractors.technology_extractor import (
+    TechnologyExtractor,
+)
+from projectintelligence.application.knowledge.rules.factories.rule_engine_factory import (
+    RuleEngineFactory,
+)
+from projectintelligence.domain.knowledge.project_knowledge import (
+    ProjectKnowledge,
 )
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
+)
+from projectintelligence.application.git.models.git_context import (
+    GitContext,
 )
 
 
 @dataclass(slots=True)
 class KnowledgeBuilder:
     """
-    Builds a unified ProjectContext from a ProjectSnapshot.
+    Builds ProjectKnowledge from project snapshot analysis.
     """
 
-    architecture_builder: ArchitectureContextBuilder
+    technology_extractor: TechnologyExtractor
 
-    technology_builder: TechnologyContextBuilder
+    architecture_extractor: ArchitectureExtractor
 
-    dependency_builder: DependencyContextBuilder
+    dependency_extractor: DependencyExtractor
 
-    change_builder: ChangeContextBuilder
+    convention_extractor: ConventionExtractor
+
+    constraint_extractor: ConstraintExtractor
+
+    history_extractor: HistoryExtractor
+
+    intelligence_notes_extractor: IntelligenceNotesExtractor
+
+    rule_engine_factory: RuleEngineFactory
 
     def build(
         self,
         snapshot: ProjectSnapshot,
         git_context: GitContext,
-    ) -> ProjectContext:
+    ) -> ProjectKnowledge:
         """
-        Build unified project context.
+        Build project knowledge from extracted information.
         """
 
-        return ProjectContext(
+        (
+            technologies,
+            frameworks,
+            languages,
+        ) = self.technology_extractor.extract(
+            snapshot,
+        )
+
+        (
+            architecture_description,
+            architecture_patterns,
+        ) = self.architecture_extractor.extract(
+            snapshot,
+        )
+
+        (
+            project_conventions,
+            coding_rules,
+        ) = self.convention_extractor.extract(
+            snapshot,
+        )
+
+        knowledge = ProjectKnowledge(
             project_id=snapshot.project_id,
-            snapshot_id=snapshot.snapshot_id,
-            architecture_context=self.architecture_builder.build(
+            technologies=technologies,
+            frameworks=frameworks,
+            languages=languages,
+            dependency_map=self.dependency_extractor.extract(
                 snapshot,
             ),
-            technology_context=self.technology_builder.build(
+            architecture_description=architecture_description,
+            architecture_patterns=architecture_patterns,
+            project_conventions=project_conventions,
+            coding_rules=coding_rules,
+            known_constraints=self.constraint_extractor.extract(
                 snapshot,
             ),
-            dependency_context=self.dependency_builder.build(
-                snapshot,
-            ),
-            change_context=self.change_builder.build(
-                snapshot,
+            historical_changes=self.history_extractor.extract(
                 git_context,
             ),
+            intelligence_notes=self.intelligence_notes_extractor.extract(
+                snapshot,
+            ),
         )
+
+        rule_engine = self.rule_engine_factory.create()
+
+        results = rule_engine.execute(
+            knowledge,
+        )
+
+        for result in results:
+            knowledge.findings.extend(
+                result.findings,
+            )
+
+        return knowledge

@@ -23,6 +23,13 @@ from projectintelligence.application.pipeline.project_intelligence_pipeline impo
 from projectintelligence.domain.project.project_entity import (
     ProjectEntity,
 )
+from projectintelligence.application.resume.models.resume_build_context import (
+    ResumeBuildContext,
+)
+
+from projectintelligence.application.resume.resume_generator import (
+    ResumeGenerator,
+)
 
 
 @dataclass(slots=True)
@@ -37,6 +44,8 @@ class ProjectIntelligenceOrchestrator:
 
     snapshot_history_service: SnapshotHistoryService
 
+    resume_generator: ResumeGenerator
+
     def execute(
         self,
         project: ProjectEntity,
@@ -50,9 +59,24 @@ class ProjectIntelligenceOrchestrator:
             project,
         )
 
+        resume_context = ResumeBuildContext(
+            snapshot=pipeline_result.snapshot,
+            knowledge=pipeline_result.knowledge,
+            history=pipeline_result.history,
+            context=pipeline_result.context,
+        )
+
+        pipeline_result.resume = self.resume_generator.generate(
+            resume_context,
+        )
+
         self.persistence_service.save_all(
             snapshot=pipeline_result.snapshot,
+            knowledge=pipeline_result.knowledge,
+            history=pipeline_result.history,
+            state=pipeline_result.state,
             context=pipeline_result.context,
+            resume=pipeline_result.resume,
         )
 
         return RuntimeResult(

@@ -10,24 +10,49 @@ from projectintelligence.application.git.models.git_context import (
 from projectintelligence.application.git.models.git_status import (
     GitStatus,
 )
+from projectintelligence.application.knowledge.extractors.architecture_extractor import (
+    ArchitectureExtractor,
+)
+from projectintelligence.application.knowledge.extractors.constraint_extractor import (
+    ConstraintExtractor,
+)
+from projectintelligence.application.knowledge.extractors.convention_extractor import (
+    ConventionExtractor,
+)
+from projectintelligence.application.knowledge.extractors.dependency_extractor import (
+    DependencyExtractor,
+)
+from projectintelligence.application.knowledge.extractors.history_extractor import (
+    HistoryExtractor,
+)
+from projectintelligence.application.knowledge.extractors.intelligence_notes_extractor import (
+    IntelligenceNotesExtractor,
+)
+from projectintelligence.application.knowledge.extractors.technology_extractor import (
+    TechnologyExtractor,
+)
 from projectintelligence.application.knowledge.knowledge_builder import (
     KnowledgeBuilder,
+)
+from projectintelligence.application.knowledge.rules.factories.rule_engine_factory import (
+    RuleEngineFactory,
 )
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
 )
 
 
-def test_knowledge_builder_builds_project_context() -> None:
+def test_knowledge_builder_builds_project_knowledge() -> None:
     snapshot = ProjectSnapshot(
         project_id=uuid4(),
         workspace=Path("."),
     )
 
-    architecture_builder = Mock()
-    technology_builder = Mock()
-    dependency_builder = Mock()
-    change_builder = Mock()
+    snapshot.detected_languages = ["Python"]
+    snapshot.detected_frameworks = ["Django"]
+    snapshot.dependencies = {
+        "django": "5",
+    }
 
     git_context = GitContext(
         status=GitStatus(
@@ -43,63 +68,26 @@ def test_knowledge_builder_builds_project_context() -> None:
         recent_commits=(),
     )
 
-    architecture_builder.build.return_value = [
-        "architecture",
-    ]
-
-    technology_builder.build.return_value = [
-        "Python",
-    ]
-
-    dependency_builder.build.return_value = [
-        "Django",
-    ]
-
-    change_builder.build.return_value = {
-        "changed_files": [],
-    }
-
     builder = KnowledgeBuilder(
-        architecture_builder=architecture_builder,
-        technology_builder=technology_builder,
-        dependency_builder=dependency_builder,
-        change_builder=change_builder,
+        technology_extractor=TechnologyExtractor(),
+        architecture_extractor=ArchitectureExtractor(),
+        dependency_extractor=DependencyExtractor(),
+        convention_extractor=ConventionExtractor(),
+        constraint_extractor=ConstraintExtractor(),
+        history_extractor=HistoryExtractor(),
+        intelligence_notes_extractor=IntelligenceNotesExtractor(),
+        rule_engine_factory=RuleEngineFactory(),
     )
 
-    context = builder.build(
+    knowledge = builder.build(
         snapshot,
         git_context,
     )
 
-    assert context.architecture_context == [
-        "architecture",
-    ]
+    assert knowledge.project_id == snapshot.project_id
 
-    assert context.technology_context == [
-        "Python",
-    ]
+    assert "Python" in knowledge.languages
 
-    assert context.dependency_context == [
-        "Django",
-    ]
+    assert "Django" in knowledge.frameworks
 
-    assert context.change_context == {
-        "changed_files": [],
-    }
-
-    architecture_builder.build.assert_called_once_with(
-        snapshot,
-    )
-
-    technology_builder.build.assert_called_once_with(
-        snapshot,
-    )
-
-    dependency_builder.build.assert_called_once_with(
-        snapshot,
-    )
-
-    change_builder.build.assert_called_once_with(
-        snapshot,
-        git_context,
-    )
+    assert "django" in knowledge.dependency_map

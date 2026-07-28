@@ -43,9 +43,7 @@ class ContextBuilder:
             snapshot_id=snapshot.snapshot_id,
             architecture_context=knowledge.architecture_patterns.copy(),
             technology_context=(
-                knowledge.technologies
-                + knowledge.frameworks
-                + knowledge.languages
+                knowledge.technologies + knowledge.frameworks + knowledge.languages
             ),
             dependency_context=list(
                 knowledge.dependency_map.keys(),

@@ -10,6 +10,10 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from uuid import UUID, uuid4
 
+from projectintelligence.domain.knowledge.knowledge_finding import (
+    KnowledgeFinding,
+)
+
 
 @dataclass(slots=True)
 class ProjectKnowledge:
@@ -46,3 +50,5 @@ class ProjectKnowledge:
     historical_changes: list[str] = field(default_factory=list)
 
     intelligence_notes: list[str] = field(default_factory=list)
+
+    findings: list[KnowledgeFinding] = field(default_factory=list)

@@ -40,6 +40,47 @@ from projectintelligence.domain.project.project_entity import (
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
 )
+from projectintelligence.application.context.context_builder import (
+    ContextBuilder,
+)
+
+from projectintelligence.application.knowledge.extractors.architecture_extractor import (
+    ArchitectureExtractor,
+)
+
+from projectintelligence.application.knowledge.extractors.constraint_extractor import (
+    ConstraintExtractor,
+)
+
+from projectintelligence.application.knowledge.extractors.convention_extractor import (
+    ConventionExtractor,
+)
+
+from projectintelligence.application.knowledge.extractors.dependency_extractor import (
+    DependencyExtractor,
+)
+
+from projectintelligence.application.knowledge.extractors.history_extractor import (
+    HistoryExtractor,
+)
+
+from projectintelligence.application.knowledge.extractors.intelligence_notes_extractor import (
+    IntelligenceNotesExtractor,
+)
+
+from projectintelligence.application.knowledge.extractors.technology_extractor import (
+    TechnologyExtractor,
+)
+
+from projectintelligence.application.knowledge.rules.factories.rule_engine_factory import (
+    RuleEngineFactory,
+)
+from projectintelligence.application.state.project_state_service import (
+    ProjectStateService,
+)
+from projectintelligence.application.state.builders.project_state_builder import (
+    ProjectStateBuilder,
+)
 
 
 def test_project_intelligence_pipeline_integration() -> None:
@@ -91,13 +132,24 @@ def test_project_intelligence_pipeline_integration() -> None:
     )
 
     knowledge_builder = KnowledgeBuilder(
-        architecture_builder=ArchitectureContextBuilder(),
-        technology_builder=TechnologyContextBuilder(),
-        dependency_builder=DependencyContextBuilder(),
-        change_builder=ChangeContextBuilder(),
+        technology_extractor=TechnologyExtractor(),
+        architecture_extractor=ArchitectureExtractor(),
+        dependency_extractor=DependencyExtractor(),
+        convention_extractor=ConventionExtractor(),
+        constraint_extractor=ConstraintExtractor(),
+        history_extractor=HistoryExtractor(),
+        intelligence_notes_extractor=IntelligenceNotesExtractor(),
+        rule_engine_factory=RuleEngineFactory(),
     )
 
     git_context_mapper = GitContextMapper()
+    context_builder = ContextBuilder()
+
+    project_state_builder = ProjectStateBuilder()
+
+    project_state_service = ProjectStateService(
+        builder=project_state_builder,
+    )
 
     pipeline = ProjectIntelligencePipeline(
         workspace_scanner=workspace_scanner,
@@ -108,6 +160,8 @@ def test_project_intelligence_pipeline_integration() -> None:
         git_analyzer=git_analyzer,
         knowledge_builder=knowledge_builder,
         git_context_mapper=git_context_mapper,
+        context_builder=context_builder,
+        project_state_service=project_state_service,
     )
 
     result = pipeline.run(project)

@@ -16,6 +16,9 @@ from projectintelligence.domain.project.project_entity import (
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
 )
+from projectintelligence.domain.knowledge.project_knowledge import (
+    ProjectKnowledge,
+)
 
 
 def test_project_intelligence_pipeline_executes_all_steps() -> None:
@@ -32,7 +35,9 @@ def test_project_intelligence_pipeline_executes_all_steps() -> None:
     dependency_analyzer = Mock()
     git_analyzer = Mock()
     knowledge_builder = Mock()
+    context_builder = Mock()
     git_context_mapper = Mock()
+    project_state_service = Mock()
 
     files = ["main.py"]
 
@@ -45,6 +50,8 @@ def test_project_intelligence_pipeline_executes_all_steps() -> None:
         project_id=project.project_id,
         snapshot_id=uuid4(),
     )
+
+    context_builder.build.return_value = context
 
     git_context = Mock()
 
@@ -61,7 +68,11 @@ def test_project_intelligence_pipeline_executes_all_steps() -> None:
 
     git_analyzer.analyze.return_value = git_context
 
-    knowledge_builder.build.return_value = context
+    knowledge = ProjectKnowledge(
+        project_id=project.project_id,
+    )
+
+    knowledge_builder.build.return_value = knowledge
 
     pipeline = ProjectIntelligencePipeline(
         workspace_scanner=workspace_scanner,
@@ -72,6 +83,8 @@ def test_project_intelligence_pipeline_executes_all_steps() -> None:
         git_analyzer=git_analyzer,
         git_context_mapper=git_context_mapper,
         knowledge_builder=knowledge_builder,
+        context_builder=context_builder,
+        project_state_service=project_state_service,
     )
 
     result = pipeline.run(
@@ -82,6 +95,7 @@ def test_project_intelligence_pipeline_executes_all_steps() -> None:
     assert result.snapshot is snapshot
     assert result.context is context
     assert result.git_context is git_context
+    assert result.knowledge is knowledge
 
     workspace_scanner.scan.assert_called_once()
     snapshot_builder.build.assert_called_once()
@@ -90,3 +104,4 @@ def test_project_intelligence_pipeline_executes_all_steps() -> None:
     dependency_analyzer.analyze.assert_called_once()
     git_analyzer.analyze.assert_called_once()
     knowledge_builder.build.assert_called_once()
+    context_builder.build.assert_called_once()

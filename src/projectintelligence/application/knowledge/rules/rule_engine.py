@@ -1,44 +1,48 @@
-"""
-ShadBot Project Intelligence
-
-Knowledge Rule Engine
-"""
-
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Generic, TypeVar
+from dataclasses import dataclass, field
 
-from projectintelligence.application.knowledge.rules.base_rule import (
-    BaseRule,
-)
-
-TInput = TypeVar("TInput")
-TOutput = TypeVar("TOutput")
+from .base_rule import BaseRule
+from .models.rule_result import RuleResult
 
 
 @dataclass(slots=True)
-class RuleEngine(Generic[TInput, TOutput]):
+class RuleEngine:
     """
-    Executes a collection of knowledge rules.
+    Executes registered knowledge analysis rules.
+
+    RuleEngine is responsible for orchestration only.
+    It does not create knowledge and does not modify project state.
     """
 
-    rules: tuple[BaseRule[TInput, TOutput], ...]
+    rules: list[BaseRule] = field(default_factory=list)
 
-    def execute(
-        self,
-        source: TInput,
-    ) -> tuple[TOutput, ...]:
+    def register(self, rule: BaseRule) -> None:
         """
-        Execute all applicable rules.
+        Register a new rule.
         """
 
-        results: list[TOutput] = []
+        self.rules.append(rule)
+
+    def execute(self, context: object) -> tuple[RuleResult, ...]:
+        """
+        Execute all registered rules.
+
+        A failed rule must not stop execution of other rules.
+        """
+
+        results: list[RuleResult] = []
 
         for rule in self.rules:
-            if rule.applies_to(source):
-                results.append(
-                    rule.execute(source),
+            try:
+                result = rule.evaluate(context)
+            except Exception as exc:
+                result = RuleResult(
+                    rule_name=rule.name,
+                    executed=False,
+                    error=str(exc),
                 )
+
+            results.append(result)
 
         return tuple(results)
