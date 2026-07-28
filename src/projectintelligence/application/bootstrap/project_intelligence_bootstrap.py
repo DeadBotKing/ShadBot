@@ -47,6 +47,12 @@ from projectintelligence.application.persistence.services.resume_storage_service
 from projectintelligence.application.persistence.services.persistence_service import (
     PersistenceService,
 )
+from projectintelligence.application.engine.project_intelligence_engine import (
+    ProjectIntelligenceEngine,
+)
+from projectintelligence.application.orchestration.project_intelligence_orchestrator import (
+    ProjectIntelligenceOrchestrator,
+)
 
 
 @dataclass(slots=True)
@@ -105,6 +111,13 @@ class ProjectIntelligenceBootstrap:
             resume_storage=resume_storage,
         )
 
-        raise NotImplementedError(
-            "Bootstrap implementation is not finished yet.",
+        orchestrator = ProjectIntelligenceOrchestrator(
+            pipeline=None,
+            persistence_service=persistence_service,
+            snapshot_history_service=None,
+            resume_generator=None,
+        )
+
+        return ProjectIntelligenceEngine(
+            orchestrator=orchestrator,
         )
