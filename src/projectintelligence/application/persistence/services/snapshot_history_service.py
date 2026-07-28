@@ -7,6 +7,7 @@ Snapshot History Service
 from __future__ import annotations
 
 from dataclasses import dataclass
+from uuid import UUID
 
 from projectintelligence.application.ports.outbound.snapshot_repository import (
     SnapshotRepository,
@@ -14,7 +15,6 @@ from projectintelligence.application.ports.outbound.snapshot_repository import (
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
 )
-from uuid import UUID
 
 
 @dataclass(slots=True)
