@@ -19,10 +19,10 @@ from projectintelligence.domain.resume.project_resume import (
 @dataclass(slots=True)
 class ResumeBuilderService:
     """
-    Builds a complete ProjectResume from intelligence artifacts.
+    Builds complete ProjectResume aggregate.
 
-    This service coordinates resume generation.
-    Actual analysis is delegated to specialized analyzers.
+    This service coordinates resume generation
+    from intelligence artifacts.
     """
 
     completion_analyzer: object
@@ -33,12 +33,14 @@ class ResumeBuilderService:
 
     project_state_analyzer: object
 
+    summary_builder: object
+
     def build(
         self,
         context: ResumeBuildContext,
     ) -> ProjectResume:
         """
-        Build project resume from intelligence context.
+        Build complete project resume.
         """
 
         completed_work = self.completion_analyzer.analyze(
@@ -51,13 +53,28 @@ class ResumeBuilderService:
 
         recommendations = self.recommendation_engine.generate(
             context,
-            pending_work,
         )
 
         state = self.project_state_analyzer.analyze(
             context,
         )
 
-        raise NotImplementedError(
-            "Project summary generation is not implemented yet."
+        summary = self.summary_builder.build(
+            context,
+        )
+
+        return ProjectResume(
+            project_id=context.snapshot.project_id,
+            metadata=context.metadata,
+            state=state,
+            summary=summary,
+            completed_work=tuple(
+                completed_work,
+            ),
+            pending_work=tuple(
+                pending_work,
+            ),
+            recommendations=tuple(
+                recommendations,
+            ),
         )

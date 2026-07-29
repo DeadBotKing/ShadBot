@@ -14,8 +14,14 @@ from projectintelligence.application.models.results.persistence_batch_result imp
 from projectintelligence.application.models.results.persistence_result import (
     PersistenceResult,
 )
+from projectintelligence.application.persistence.services.agent_context_storage_service import (
+    AgentContextStorageService,
+)
 from projectintelligence.application.persistence.services.context_storage_service import (
     ContextStorageService,
+)
+from projectintelligence.application.persistence.services.evolution_storage_service import (
+    EvolutionStorageService,
 )
 from projectintelligence.application.persistence.services.history_storage_service import (
     HistoryStorageService,
@@ -38,6 +44,12 @@ from projectintelligence.application.state.project_intelligence_state import (
 from projectintelligence.domain.context.project_context import (
     ProjectContext,
 )
+from projectintelligence.domain.evolution.project_evolution import (
+    ProjectEvolution,
+)
+from projectintelligence.domain.handoff.agent_context_package import (
+    AgentContextPackage,
+)
 from projectintelligence.domain.history.snapshot_history import (
     SnapshotHistory,
 )
@@ -49,12 +61,6 @@ from projectintelligence.domain.resume.project_resume import (
 )
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
-)
-from projectintelligence.application.persistence.services.agent_context_storage_service import (
-    AgentContextStorageService,
-)
-from projectintelligence.domain.handoff.agent_context_package import (
-    AgentContextPackage,
 )
 
 
@@ -77,6 +83,8 @@ class PersistenceService:
     history_storage: HistoryStorageService
 
     agent_context_storage: AgentContextStorageService
+
+    evolution_storage: EvolutionStorageService
 
     def save_snapshot(
         self,
@@ -102,7 +110,8 @@ class PersistenceService:
         state: ProjectIntelligenceState,
         context: ProjectContext,
         resume: ProjectResume,
-        agent_context: AgentContextPackage
+        agent_context: AgentContextPackage,
+        evolution: ProjectEvolution,
     ) -> PersistenceBatchResult:
         results = (
             self.save_snapshot(
@@ -126,6 +135,9 @@ class PersistenceService:
             self.save_agent_context(
                 agent_context,
             ),
+            self.save_evolution(
+                evolution,
+            ),
         )
 
         return PersistenceBatchResult(
@@ -139,7 +151,6 @@ class PersistenceService:
         return self.knowledge_storage.save(
             knowledge,
         )
-
 
     def save_state(
         self,
@@ -171,4 +182,12 @@ class PersistenceService:
     ) -> PersistenceResult:
         return self.agent_context_storage.save(
             context,
+        )
+
+    def save_evolution(
+        self,
+        evolution: ProjectEvolution,
+    ) -> PersistenceResult:
+        return self.evolution_storage.save(
+            evolution,
         )

@@ -6,12 +6,9 @@ In Memory Context Repository Test
 
 from __future__ import annotations
 
-from pathlib import Path
-
 from projectintelligence.domain.context.project_context import (
     ProjectContext,
 )
-
 from projectintelligence.infrastructure.persistence.repositories.in_memory_context_repository import (
     InMemoryContextRepository,
 )

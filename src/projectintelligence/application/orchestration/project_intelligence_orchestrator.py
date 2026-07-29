@@ -8,6 +8,12 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from projectintelligence.application.evolution.contracts.evolution_analyzer import (
+    EvolutionAnalyzer,
+)
+from projectintelligence.application.handoff.agent_context_builder import (
+    AgentContextBuilder,
+)
 from projectintelligence.application.models.results.runtime_result import (
     RuntimeResult,
 )
@@ -29,9 +35,6 @@ from projectintelligence.application.resume.resume_generator import (
 from projectintelligence.domain.project.project_entity import (
     ProjectEntity,
 )
-from projectintelligence.application.handoff.agent_context_builder import (
-    AgentContextBuilder,
-)
 
 
 @dataclass(slots=True)
@@ -50,6 +53,8 @@ class ProjectIntelligenceOrchestrator:
 
     agent_context_builder: AgentContextBuilder
 
+    evolution_analyzer: EvolutionAnalyzer
+
     def execute(
         self,
         project: ProjectEntity,
@@ -62,6 +67,12 @@ class ProjectIntelligenceOrchestrator:
         pipeline_result = self.pipeline.run(
             project,
         )
+
+        if previous_snapshot:
+            pipeline_result.evolution = self.evolution_analyzer.analyze(
+                previous=previous_snapshot,
+                current=pipeline_result.snapshot,
+            )
 
         resume_context = ResumeBuildContext(
             snapshot=pipeline_result.snapshot,
@@ -88,7 +99,8 @@ class ProjectIntelligenceOrchestrator:
             state=pipeline_result.state,
             context=pipeline_result.context,
             resume=pipeline_result.resume,
-            agent_context=pipeline_result.agent_context
+            agent_context=pipeline_result.agent_context,
+            evolution=pipeline_result.evolution,
         )
 
         return RuntimeResult(

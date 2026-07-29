@@ -4,27 +4,24 @@ ShadBot Project Intelligence
 Agent Context Builder Tests
 """
 
-from uuid import uuid4
-from pathlib import Path
 from datetime import datetime, timezone
+from pathlib import Path
+from uuid import uuid4
 
-from projectintelligence.domain.resume.resume_metadata import (
-    ResumeMetadata,
-)
-from projectintelligence.domain.resume.project_state import (
-    ProjectState,
-)
-from projectintelligence.domain.resume.project_summary import (
-    ProjectSummary,
-)
 from projectintelligence.application.handoff.agent_context_builder import (
     AgentContextBuilder,
 )
-from projectintelligence.application.resume.models.resume_build_context import (
-    ResumeBuildContext,
-)
 from projectintelligence.domain.context.project_context import (
     ProjectContext,
+)
+from projectintelligence.domain.evolution.evolution_change import (
+    EvolutionChange,
+)
+from projectintelligence.domain.evolution.evolution_type import (
+    EvolutionType,
+)
+from projectintelligence.domain.evolution.project_evolution import (
+    ProjectEvolution,
 )
 from projectintelligence.domain.knowledge.project_knowledge import (
     ProjectKnowledge,
@@ -32,11 +29,17 @@ from projectintelligence.domain.knowledge.project_knowledge import (
 from projectintelligence.domain.resume.project_resume import (
     ProjectResume,
 )
+from projectintelligence.domain.resume.project_state import (
+    ProjectState,
+)
+from projectintelligence.domain.resume.project_summary import (
+    ProjectSummary,
+)
+from projectintelligence.domain.resume.resume_metadata import (
+    ResumeMetadata,
+)
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
-)
-from projectintelligence.domain.history.snapshot_history import (
-    SnapshotHistory,
 )
 
 
@@ -96,24 +99,45 @@ def test_agent_context_builder_creates_agent_package():
         recommendations=(),
     )
 
-    history = SnapshotHistory()
+    builder = AgentContextBuilder()
 
-    build_context = ResumeBuildContext(
-        snapshot=snapshot,
-        knowledge=knowledge,
-        history=history,
-        context=context,
+    previous_snapshot = ProjectSnapshot(
+        project_id=snapshot.project_id,
+        workspace=Path("test-project"),
     )
 
-    builder = AgentContextBuilder()
+    evolution = ProjectEvolution(
+        project_id=snapshot.project_id,
+        previous_snapshot_id=previous_snapshot.snapshot_id,
+        current_snapshot_id=snapshot.snapshot_id,
+        changes=(
+            EvolutionChange(
+                path="src/main.py",
+                change_type=EvolutionType.MODIFIED,
+                category="source",
+                description="Updated main application flow",
+            ),
+            EvolutionChange(
+                path="src/new_module.py",
+                change_type=EvolutionType.ADDED,
+                category="source",
+                description="Added new module",
+            ),
+        ),
+    )
 
     result = builder.build(
         knowledge=knowledge,
         context=context,
         resume=resume,
         git_context=None,
+        evolution=evolution,
     )
 
     assert result is not None
     assert "Python" in result.technologies
     assert "Django" in result.frameworks
+    assert result.evolution is not None
+    assert "src/new_module.py" in result.evolution.added_files
+    assert "src/main.py" in result.evolution.modified_files
+    assert len(result.evolution.recent_changes) == 2

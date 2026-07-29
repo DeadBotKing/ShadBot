@@ -7,6 +7,9 @@ Pipeline Integration Test
 from pathlib import Path
 from unittest.mock import Mock
 
+from projectintelligence.application.context.context_builder import (
+    ContextBuilder,
+)
 from projectintelligence.application.git.mapping.git_context_mapper import (
     GitContextMapper,
 )
@@ -16,70 +19,47 @@ from projectintelligence.application.git.models.git_context import (
 from projectintelligence.application.git.models.git_status import (
     GitStatus,
 )
-from projectintelligence.application.knowledge.architecture_context_builder import (
-    ArchitectureContextBuilder,
+from projectintelligence.application.knowledge.extractors.architecture_extractor import (
+    ArchitectureExtractor,
 )
-from projectintelligence.application.knowledge.change_context_builder import (
-    ChangeContextBuilder,
+from projectintelligence.application.knowledge.extractors.constraint_extractor import (
+    ConstraintExtractor,
 )
-from projectintelligence.application.knowledge.dependency_context_builder import (
-    DependencyContextBuilder,
+from projectintelligence.application.knowledge.extractors.convention_extractor import (
+    ConventionExtractor,
+)
+from projectintelligence.application.knowledge.extractors.dependency_extractor import (
+    DependencyExtractor,
+)
+from projectintelligence.application.knowledge.extractors.history_extractor import (
+    HistoryExtractor,
+)
+from projectintelligence.application.knowledge.extractors.intelligence_notes_extractor import (
+    IntelligenceNotesExtractor,
+)
+from projectintelligence.application.knowledge.extractors.technology_extractor import (
+    TechnologyExtractor,
 )
 from projectintelligence.application.knowledge.knowledge_builder import (
     KnowledgeBuilder,
 )
-from projectintelligence.application.knowledge.technology_context_builder import (
-    TechnologyContextBuilder,
+from projectintelligence.application.knowledge.rules.factories.rule_engine_factory import (
+    RuleEngineFactory,
 )
 from projectintelligence.application.pipeline.project_intelligence_pipeline import (
     ProjectIntelligencePipeline,
+)
+from projectintelligence.application.state.builders.project_state_builder import (
+    ProjectStateBuilder,
+)
+from projectintelligence.application.state.project_state_service import (
+    ProjectStateService,
 )
 from projectintelligence.domain.project.project_entity import (
     ProjectEntity,
 )
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
-)
-from projectintelligence.application.context.context_builder import (
-    ContextBuilder,
-)
-
-from projectintelligence.application.knowledge.extractors.architecture_extractor import (
-    ArchitectureExtractor,
-)
-
-from projectintelligence.application.knowledge.extractors.constraint_extractor import (
-    ConstraintExtractor,
-)
-
-from projectintelligence.application.knowledge.extractors.convention_extractor import (
-    ConventionExtractor,
-)
-
-from projectintelligence.application.knowledge.extractors.dependency_extractor import (
-    DependencyExtractor,
-)
-
-from projectintelligence.application.knowledge.extractors.history_extractor import (
-    HistoryExtractor,
-)
-
-from projectintelligence.application.knowledge.extractors.intelligence_notes_extractor import (
-    IntelligenceNotesExtractor,
-)
-
-from projectintelligence.application.knowledge.extractors.technology_extractor import (
-    TechnologyExtractor,
-)
-
-from projectintelligence.application.knowledge.rules.factories.rule_engine_factory import (
-    RuleEngineFactory,
-)
-from projectintelligence.application.state.project_state_service import (
-    ProjectStateService,
-)
-from projectintelligence.application.state.builders.project_state_builder import (
-    ProjectStateBuilder,
 )
 
 

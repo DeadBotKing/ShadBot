@@ -33,17 +33,13 @@ class InMemoryResumeRepository(
         self,
         resume: ProjectResume,
     ) -> None:
-        self._storage[
-            resume.metadata.resume_id
-        ] = resume
+        self._storage[resume.metadata.resume_id] = resume
 
     def update(
         self,
         resume: ProjectResume,
     ) -> None:
-        self._storage[
-            resume.metadata.resume_id
-        ] = resume
+        self._storage[resume.metadata.resume_id] = resume
 
     def delete(
         self,

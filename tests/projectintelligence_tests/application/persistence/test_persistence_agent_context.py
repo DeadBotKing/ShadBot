@@ -10,26 +10,16 @@ from uuid import uuid4
 from projectintelligence.application.persistence.services.persistence_service import (
     PersistenceService,
 )
-from projectintelligence.domain.context.project_context import (
-    ProjectContext,
-)
 from projectintelligence.domain.handoff.agent_context_package import (
     AgentContextPackage,
-)
-from projectintelligence.domain.knowledge.project_knowledge import (
-    ProjectKnowledge,
-)
-from projectintelligence.domain.resume.project_resume import (
-    ProjectResume,
-)
-from projectintelligence.domain.snapshot.project_snapshot import (
-    ProjectSnapshot,
 )
 
 
 def test_persistence_service_delegates_agent_context_storage():
 
-    agent_context_storage=Mock()
+    agent_context_storage = Mock()
+
+    evolution_storage = Mock()
 
     service = PersistenceService(
         snapshot_storage=Mock(),
@@ -39,6 +29,7 @@ def test_persistence_service_delegates_agent_context_storage():
         resume_storage=Mock(),
         history_storage=Mock(),
         agent_context_storage=agent_context_storage,
+        evolution_storage=evolution_storage,
     )
 
     agent_context = AgentContextPackage(

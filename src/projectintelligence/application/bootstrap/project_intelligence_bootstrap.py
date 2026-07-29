@@ -9,10 +9,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
-from projectintelligence.application.git.infrastructure.gitpython_repository import (
-    GitPythonRepository,
-)
-
 from projectintelligence.application.context.context_builder import (
     ContextBuilder,
 )
@@ -28,6 +24,12 @@ from projectintelligence.application.dependency.parser_selector import (
 from projectintelligence.application.engine.project_intelligence_engine import (
     ProjectIntelligenceEngine,
 )
+from projectintelligence.application.evolution.project_evolution_analyzer import (
+    ProjectEvolutionAnalyzer,
+)
+from projectintelligence.application.evolution.strategies.file_evolution_strategy import (
+    FileEvolutionStrategy,
+)
 from projectintelligence.application.framework.framework_detector import (
     FrameworkDetector,
 )
@@ -36,6 +38,9 @@ from projectintelligence.application.framework.framework_registry import (
 )
 from projectintelligence.application.framework.signature_matcher import (
     SignatureMatcher,
+)
+from projectintelligence.application.git.infrastructure.gitpython_repository import (
+    GitPythonRepository,
 )
 from projectintelligence.application.git.mapping.git_context_mapper import (
     GitContextMapper,
@@ -54,6 +59,9 @@ from projectintelligence.application.git.services.git_history_analyzer import (
 )
 from projectintelligence.application.git.services.git_status_detector import (
     GitStatusDetector,
+)
+from projectintelligence.application.handoff.agent_context_builder import (
+    AgentContextBuilder,
 )
 from projectintelligence.application.knowledge.extractors.architecture_extractor import (
     ArchitectureExtractor,
@@ -94,17 +102,20 @@ from projectintelligence.application.language.language_statistics import (
 from projectintelligence.application.orchestration.project_intelligence_orchestrator import (
     ProjectIntelligenceOrchestrator,
 )
+from projectintelligence.application.persistence.services.agent_context_storage_service import (
+    AgentContextStorageService,
+)
 from projectintelligence.application.persistence.services.context_storage_service import (
     ContextStorageService,
+)
+from projectintelligence.application.persistence.services.evolution_storage_service import (
+    EvolutionStorageService,
 )
 from projectintelligence.application.persistence.services.history_storage_service import (
     HistoryStorageService,
 )
 from projectintelligence.application.persistence.services.knowledge_storage_service import (
     KnowledgeStorageService,
-)
-from projectintelligence.application.persistence.services.agent_context_storage_service import (
-    AgentContextStorageService,
 )
 from projectintelligence.application.persistence.services.persistence_service import (
     PersistenceService,
@@ -169,8 +180,14 @@ from projectintelligence.infrastructure.filesystem.ignore_manager import (
 from projectintelligence.infrastructure.filesystem.workspace_scanner import (
     WorkspaceScanner,
 )
+from projectintelligence.infrastructure.persistence.agent_context.in_memory_agent_context_repository import (
+    InMemoryAgentContextRepository,
+)
 from projectintelligence.infrastructure.persistence.repositories.in_memory_context_repository import (
     InMemoryContextRepository,
+)
+from projectintelligence.infrastructure.persistence.repositories.in_memory_evolution_repository import (
+    InMemoryEvolutionRepository,
 )
 from projectintelligence.infrastructure.persistence.repositories.in_memory_history_repository import (
     InMemoryHistoryRepository,
@@ -186,12 +203,6 @@ from projectintelligence.infrastructure.persistence.repositories.in_memory_snaps
 )
 from projectintelligence.infrastructure.persistence.repositories.in_memory_state_repository import (
     InMemoryStateRepository,
-)
-from projectintelligence.application.handoff.agent_context_builder import (
-    AgentContextBuilder,
-)
-from projectintelligence.infrastructure.persistence.agent_context.in_memory_agent_context_repository import (
-    InMemoryAgentContextRepository,
 )
 
 
@@ -221,6 +232,8 @@ class ProjectIntelligenceBootstrap:
 
         agent_context_repository = InMemoryAgentContextRepository()
 
+        evolution_repository = InMemoryEvolutionRepository()
+
         snapshot_storage = SnapshotStorageService(
             repository=snapshot_repository,
         )
@@ -249,6 +262,10 @@ class ProjectIntelligenceBootstrap:
             repository=agent_context_repository,
         )
 
+        evolution_storage = EvolutionStorageService(
+            repository=evolution_repository,
+        )
+
         persistence_service = PersistenceService(
             snapshot_storage=snapshot_storage,
             context_storage=context_storage,
@@ -257,6 +274,7 @@ class ProjectIntelligenceBootstrap:
             state_storage=state_storage,
             resume_storage=resume_storage,
             agent_context_storage=agent_context_storage,
+            evolution_storage=evolution_storage,
         )
 
         directory_walker = DirectoryWalker()
@@ -290,7 +308,6 @@ class ProjectIntelligenceBootstrap:
             language_statistics=language_statistics,
         )
 
-
         framework_registry = FrameworkRegistry()
 
         signature_matcher = SignatureMatcher()
@@ -299,7 +316,6 @@ class ProjectIntelligenceBootstrap:
             framework_registry=framework_registry,
             signature_matcher=signature_matcher,
         )
-
 
         parser_registry = ParserRegistry()
 
@@ -314,7 +330,6 @@ class ProjectIntelligenceBootstrap:
         git_repository = GitPythonRepository(
             repository_path=Path.cwd(),
         )
-
 
         git_status_detector = GitStatusDetector(
             git_repository=git_repository,
@@ -332,14 +347,12 @@ class ProjectIntelligenceBootstrap:
             git_repository=git_repository,
         )
 
-
         git_analyzer = GitAnalyzer(
             status_detector=git_status_detector,
             branch_detector=git_branch_detector,
             change_detector=git_change_detector,
             history_analyzer=git_history_analyzer,
         )
-
 
         git_context_mapper = GitContextMapper()
 
@@ -359,7 +372,6 @@ class ProjectIntelligenceBootstrap:
 
         rule_engine_factory = RuleEngineFactory()
 
-
         knowledge_builder = KnowledgeBuilder(
             technology_extractor=technology_extractor,
             architecture_extractor=architecture_extractor,
@@ -371,9 +383,7 @@ class ProjectIntelligenceBootstrap:
             rule_engine_factory=rule_engine_factory,
         )
 
-
         context_builder = ContextBuilder()
-
 
         project_state_builder = ProjectStateBuilder()
 
@@ -391,7 +401,6 @@ class ProjectIntelligenceBootstrap:
 
         project_state_analyzer = ProjectStateAnalyzer()
 
-
         resume_generator = ResumeGenerator(
             summary_builder=summary_builder,
             completion_analyzer=completion_analyzer,
@@ -399,7 +408,6 @@ class ProjectIntelligenceBootstrap:
             recommendation_engine=recommendation_engine,
             project_state_analyzer=project_state_analyzer,
         )
-
 
         snapshot_history_service = SnapshotHistoryService(
             repository=snapshot_repository,
@@ -420,14 +428,20 @@ class ProjectIntelligenceBootstrap:
 
         agent_context_builder = AgentContextBuilder()
 
+        file_strategy = FileEvolutionStrategy()
+
+        evolution_analyzer = ProjectEvolutionAnalyzer(
+            strategies=(file_strategy,),
+        )
+
         orchestrator = ProjectIntelligenceOrchestrator(
             pipeline=pipeline,
             persistence_service=persistence_service,
             snapshot_history_service=snapshot_history_service,
             resume_generator=resume_generator,
             agent_context_builder=agent_context_builder,
+            evolution_analyzer=evolution_analyzer,
         )
-
 
         return ProjectIntelligenceEngine(
             orchestrator=orchestrator,

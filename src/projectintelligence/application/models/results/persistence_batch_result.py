@@ -27,7 +27,4 @@ class PersistenceBatchResult:
         Returns True when all persistence operations succeeded.
         """
 
-        return all(
-            result.success
-            for result in self.results
-        )
+        return all(result.success for result in self.results)

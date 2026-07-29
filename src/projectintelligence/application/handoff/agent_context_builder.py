@@ -7,8 +7,8 @@ Agent Context Builder
 from __future__ import annotations
 
 from dataclasses import dataclass
-from uuid import uuid4
 from datetime import datetime, timezone
+from uuid import uuid4
 
 from projectintelligence.application.git.models.git_context import (
     GitContext,
@@ -16,17 +16,23 @@ from projectintelligence.application.git.models.git_context import (
 from projectintelligence.domain.context.project_context import (
     ProjectContext,
 )
+from projectintelligence.domain.evolution.project_evolution import (
+    ProjectEvolution,
+)
+from projectintelligence.domain.handoff.agent_context_metadata import (
+    AgentContextMetadata,
+)
 from projectintelligence.domain.handoff.agent_context_package import (
     AgentContextPackage,
+)
+from projectintelligence.domain.handoff.evolution_summary import (
+    EvolutionSummary,
 )
 from projectintelligence.domain.knowledge.project_knowledge import (
     ProjectKnowledge,
 )
 from projectintelligence.domain.resume.project_resume import (
     ProjectResume,
-)
-from projectintelligence.domain.handoff.agent_context_metadata import (
-    AgentContextMetadata,
 )
 
 
@@ -45,6 +51,7 @@ class AgentContextBuilder:
         context: ProjectContext,
         resume: ProjectResume | None = None,
         git_context: GitContext | None = None,
+        evolution: ProjectEvolution | None = None,
     ) -> AgentContextPackage:
         """
         Build an agent-ready context package.
@@ -59,11 +66,7 @@ class AgentContextBuilder:
             )
         )
 
-        current_state = (
-            resume.state.current_phase
-            if resume
-            else None
-        )
+        current_state = resume.state.current_phase if resume else None
 
         recommendations = (
             tuple(resume.recommendations)
@@ -81,6 +84,54 @@ class AgentContextBuilder:
             created_at=datetime.now(timezone.utc),
         )
 
+        evolution_summary = None
+
+        if evolution:
+            added_files: list[str] = []
+            removed_files: list[str] = []
+            modified_files: list[str] = []
+            recent_changes: list[str] = []
+
+            for change in evolution.changes:
+                recent_changes.append(
+                    change.description,
+                )
+
+                if change.change_type.value == "added":
+                    added_files.append(
+                        change.path,
+                    )
+
+                elif change.change_type.value == "removed":
+                    removed_files.append(
+                        change.path,
+                    )
+
+                elif change.change_type.value in (
+                    "modified",
+                    "renamed",
+                    "moved",
+                ):
+                    modified_files.append(
+                        change.path,
+                    )
+
+            evolution_summary = EvolutionSummary(
+                recent_changes=tuple(
+                    recent_changes,
+                ),
+                added_files=tuple(
+                    added_files,
+                ),
+                removed_files=tuple(
+                    removed_files,
+                ),
+                modified_files=tuple(
+                    modified_files,
+                ),
+                impact_summary=(f"{len(evolution.changes)} project changes detected."),
+            )
+
         return AgentContextPackage(
             project_id=knowledge.project_id,
             summary=summary,
@@ -96,9 +147,7 @@ class AgentContextBuilder:
             dependencies=dict(
                 knowledge.dependency_map,
             ),
-            architecture_description=(
-                knowledge.architecture_description
-            ),
+            architecture_description=(knowledge.architecture_description),
             conventions=tuple(
                 knowledge.project_conventions,
             ),
@@ -108,4 +157,5 @@ class AgentContextBuilder:
             recommendations=recommendations,
             current_state=current_state,
             metadata=metadata,
+            evolution=evolution_summary,
         )

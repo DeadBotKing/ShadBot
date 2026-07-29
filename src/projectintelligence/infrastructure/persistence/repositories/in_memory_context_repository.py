@@ -33,17 +33,13 @@ class InMemoryContextRepository(
         self,
         context: ProjectContext,
     ) -> None:
-        self._storage[
-            context.context_id
-        ] = context
+        self._storage[context.context_id] = context
 
     def update(
         self,
         context: ProjectContext,
     ) -> None:
-        self._storage[
-            context.context_id
-        ] = context
+        self._storage[context.context_id] = context
 
     def delete(
         self,

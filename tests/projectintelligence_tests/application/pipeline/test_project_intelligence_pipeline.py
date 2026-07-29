@@ -10,14 +10,14 @@ from projectintelligence.application.pipeline.project_intelligence_pipeline impo
 from projectintelligence.domain.context.project_context import (
     ProjectContext,
 )
+from projectintelligence.domain.knowledge.project_knowledge import (
+    ProjectKnowledge,
+)
 from projectintelligence.domain.project.project_entity import (
     ProjectEntity,
 )
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
-)
-from projectintelligence.domain.knowledge.project_knowledge import (
-    ProjectKnowledge,
 )
 
 

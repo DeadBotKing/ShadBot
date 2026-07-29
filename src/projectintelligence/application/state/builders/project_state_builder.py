@@ -35,16 +35,12 @@ class ProjectStateBuilder:
             context,
         )
 
-        pending_components = (
-            total_components - completed_components
-        )
+        pending_components = total_components - completed_components
 
         completion_percentage = 0.0
 
         if total_components > 0:
-            completion_percentage = (
-                completed_components / total_components
-            ) * 100
+            completion_percentage = (completed_components / total_components) * 100
 
         return ProjectIntelligenceState(
             current_phase="Project Intelligence Engine",

@@ -8,11 +8,11 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from projectintelligence.application.models.results.persistence_result import (
-    PersistenceResult,
-)
 from projectintelligence.application.handoff.contracts.agent_context_repository import (
     IAgentContextRepository,
+)
+from projectintelligence.application.models.results.persistence_result import (
+    PersistenceResult,
 )
 from projectintelligence.domain.handoff.agent_context_package import (
     AgentContextPackage,

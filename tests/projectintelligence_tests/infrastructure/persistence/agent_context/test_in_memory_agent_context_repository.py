@@ -7,14 +7,14 @@ In Memory Agent Context Repository Tests
 from datetime import datetime, timezone
 from uuid import uuid4
 
+from projectintelligence.domain.handoff.agent_context_metadata import (
+    AgentContextMetadata,
+)
 from projectintelligence.domain.handoff.agent_context_package import (
     AgentContextPackage,
 )
 from projectintelligence.infrastructure.persistence.agent_context.in_memory_agent_context_repository import (
     InMemoryAgentContextRepository,
-)
-from projectintelligence.domain.handoff.agent_context_metadata import (
-    AgentContextMetadata,
 )
 
 

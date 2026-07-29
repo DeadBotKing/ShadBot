@@ -33,17 +33,13 @@ class InMemoryHistoryRepository(
         self,
         history: SnapshotHistory,
     ) -> None:
-        self._storage[
-            history.history_id
-        ] = history
+        self._storage[history.history_id] = history
 
     def update(
         self,
         history: SnapshotHistory,
     ) -> None:
-        self._storage[
-            history.history_id
-        ] = history
+        self._storage[history.history_id] = history
 
     def delete(
         self,

@@ -74,14 +74,7 @@ class ProjectStateAnalyzer:
             )
 
         completion_percentage = (
-            len(completed_areas)
-            /
-            (
-                len(completed_areas)
-                +
-                len(pending_areas)
-            )
-            * 100
+            len(completed_areas) / (len(completed_areas) + len(pending_areas)) * 100
             if completed_areas or pending_areas
             else 0.0
         )
@@ -91,9 +84,5 @@ class ProjectStateAnalyzer:
             "pending_areas": pending_areas,
             "completion_percentage": completion_percentage,
             "phase": "Project Intelligence Engine",
-            "status": (
-                "Active"
-                if pending_areas
-                else "Complete"
-            ),
+            "status": ("Active" if pending_areas else "Complete"),
         }

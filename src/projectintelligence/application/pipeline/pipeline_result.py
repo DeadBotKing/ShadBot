@@ -17,6 +17,12 @@ from projectintelligence.application.state.project_intelligence_state import (
 from projectintelligence.domain.context.project_context import (
     ProjectContext,
 )
+from projectintelligence.domain.evolution.project_evolution import (
+    ProjectEvolution,
+)
+from projectintelligence.domain.handoff.agent_context_package import (
+    AgentContextPackage,
+)
 from projectintelligence.domain.history.snapshot_history import (
     SnapshotHistory,
 )
@@ -28,9 +34,6 @@ from projectintelligence.domain.resume.project_resume import (
 )
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
-)
-from projectintelligence.domain.handoff.agent_context_package import (
-    AgentContextPackage,
 )
 
 
@@ -55,5 +58,7 @@ class PipelineResult:
     resume: ProjectResume | None = None
 
     agent_context: AgentContextPackage | None = None
-    
+
+    evolution: ProjectEvolution | None = None
+
     success: bool = True

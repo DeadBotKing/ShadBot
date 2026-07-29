@@ -61,8 +61,7 @@ class CompletionAnalyzer:
                     category="Analysis",
                     completed_at=now,
                     impact=(
-                        "Provides technology context for architectural "
-                        "reasoning."
+                        "Provides technology context for architectural " "reasoning."
                     ),
                 )
             )
@@ -71,14 +70,11 @@ class CompletionAnalyzer:
             completed.append(
                 CompletedWork(
                     title="Dependency Analysis",
-                    description=(
-                        "Project dependencies have been analyzed and mapped."
-                    ),
+                    description=("Project dependencies have been analyzed and mapped."),
                     category="Knowledge",
                     completed_at=now,
                     impact=(
-                        "Allows agents to understand external project "
-                        "requirements."
+                        "Allows agents to understand external project " "requirements."
                     ),
                 )
             )
@@ -93,9 +89,7 @@ class CompletionAnalyzer:
                     ),
                     category="Architecture",
                     completed_at=now,
-                    impact=(
-                        "Improves architecture-aware planning."
-                    ),
+                    impact=("Improves architecture-aware planning."),
                 )
             )
 
@@ -103,14 +97,10 @@ class CompletionAnalyzer:
             completed.append(
                 CompletedWork(
                     title="Project Evolution Tracking",
-                    description=(
-                        "Historical changes have been analyzed."
-                    ),
+                    description=("Historical changes have been analyzed."),
                     category="History",
                     completed_at=now,
-                    impact=(
-                        "Provides project evolution awareness."
-                    ),
+                    impact=("Provides project evolution awareness."),
                 )
             )
 

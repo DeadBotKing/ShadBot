@@ -34,17 +34,13 @@ class InMemorySnapshotRepository(
         self,
         snapshot: ProjectSnapshot,
     ) -> None:
-        self._storage[
-            snapshot.snapshot_id
-        ] = snapshot
+        self._storage[snapshot.snapshot_id] = snapshot
 
     def update(
         self,
         snapshot: ProjectSnapshot,
     ) -> None:
-        self._storage[
-            snapshot.snapshot_id
-        ] = snapshot
+        self._storage[snapshot.snapshot_id] = snapshot
 
     def delete(
         self,
@@ -118,8 +114,6 @@ class InMemorySnapshotRepository(
             for snapshot in self._storage.values()
             if (
                 snapshot.project_id == project_id
-                and start_date
-                <= snapshot.created_at
-                <= end_date
+                and start_date <= snapshot.created_at <= end_date
             )
         ]

@@ -82,12 +82,9 @@ class ResumeGenerator:
             ),
             total_components=(
                 len(state_analysis["completed_areas"])
-                +
-                len(state_analysis["pending_areas"])
+                + len(state_analysis["pending_areas"])
             ),
-            completion_percentage=state_analysis[
-                "completion_percentage"
-            ],
+            completion_percentage=state_analysis["completion_percentage"],
         )
 
         return ProjectResume(

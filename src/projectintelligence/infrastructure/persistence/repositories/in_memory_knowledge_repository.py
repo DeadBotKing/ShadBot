@@ -33,17 +33,13 @@ class InMemoryKnowledgeRepository(
         self,
         knowledge: ProjectKnowledge,
     ) -> None:
-        self._storage[
-            knowledge.knowledge_id
-        ] = knowledge
+        self._storage[knowledge.knowledge_id] = knowledge
 
     def update(
         self,
         knowledge: ProjectKnowledge,
     ) -> None:
-        self._storage[
-            knowledge.knowledge_id
-        ] = knowledge
+        self._storage[knowledge.knowledge_id] = knowledge
 
     def delete(
         self,

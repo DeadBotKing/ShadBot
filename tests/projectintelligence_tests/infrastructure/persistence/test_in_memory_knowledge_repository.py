@@ -9,7 +9,6 @@ from __future__ import annotations
 from projectintelligence.domain.knowledge.project_knowledge import (
     ProjectKnowledge,
 )
-
 from projectintelligence.infrastructure.persistence.repositories.in_memory_knowledge_repository import (
     InMemoryKnowledgeRepository,
 )

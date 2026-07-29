@@ -35,9 +35,7 @@ class ProjectSummaryBuilder:
         history = context.history
 
         title = (
-            snapshot.workspace.name
-            if snapshot.workspace.name
-            else "Unknown Project"
+            snapshot.workspace.name if snapshot.workspace.name else "Unknown Project"
         )
 
         overview = (

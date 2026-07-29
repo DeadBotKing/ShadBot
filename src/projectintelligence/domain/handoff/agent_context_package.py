@@ -12,7 +12,9 @@ from uuid import UUID
 from projectintelligence.domain.handoff.agent_context_metadata import (
     AgentContextMetadata,
 )
-
+from projectintelligence.domain.handoff.evolution_summary import (
+    EvolutionSummary,
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -66,3 +68,5 @@ class AgentContextPackage:
     )
 
     current_state: str | None = None
+
+    evolution: EvolutionSummary | None = None

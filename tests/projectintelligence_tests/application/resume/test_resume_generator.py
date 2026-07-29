@@ -12,23 +12,23 @@ from uuid import uuid4
 from projectintelligence.application.resume.completion_analyzer import (
     CompletionAnalyzer,
 )
+from projectintelligence.application.resume.models.resume_build_context import (
+    ResumeBuildContext,
+)
 from projectintelligence.application.resume.pending_task_analyzer import (
     PendingTaskAnalyzer,
 )
 from projectintelligence.application.resume.project_state_analyzer import (
     ProjectStateAnalyzer,
 )
+from projectintelligence.application.resume.project_summary_builder import (
+    ProjectSummaryBuilder,
+)
 from projectintelligence.application.resume.recommendation_engine import (
     RecommendationEngine,
 )
 from projectintelligence.application.resume.resume_generator import (
     ResumeGenerator,
-)
-from projectintelligence.application.resume.project_summary_builder import (
-    ProjectSummaryBuilder,
-)
-from projectintelligence.application.resume.models.resume_build_context import (
-    ResumeBuildContext,
 )
 from projectintelligence.domain.context.project_context import (
     ProjectContext,
@@ -41,9 +41,6 @@ from projectintelligence.domain.knowledge.project_knowledge import (
 )
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
-)
-from projectintelligence.domain.project.project_entity import (
-    ProjectEntity,
 )
 
 

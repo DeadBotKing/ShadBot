@@ -33,17 +33,13 @@ class InMemoryStateRepository(
         self,
         state: ProjectIntelligenceState,
     ) -> None:
-        self._storage[
-            state.state_id
-        ] = state
+        self._storage[state.state_id] = state
 
     def update(
         self,
         state: ProjectIntelligenceState,
     ) -> None:
-        self._storage[
-            state.state_id
-        ] = state
+        self._storage[state.state_id] = state
 
     def delete(
         self,
@@ -74,9 +70,7 @@ class InMemoryStateRepository(
     ) -> ProjectIntelligenceState | None:
 
         states = [
-            state
-            for state in self._storage.values()
-            if state.project_id == project_id
+            state for state in self._storage.values() if state.project_id == project_id
         ]
 
         if not states:
@@ -93,9 +87,7 @@ class InMemoryStateRepository(
     ) -> list[ProjectIntelligenceState]:
 
         return [
-            state
-            for state in self._storage.values()
-            if state.project_id == project_id
+            state for state in self._storage.values() if state.project_id == project_id
         ]
 
     def count(

@@ -49,14 +49,10 @@ class PendingTaskAnalyzer:
             pending.append(
                 PendingWork(
                     title="Framework Detection",
-                    description=(
-                        "Project frameworks have not been identified."
-                    ),
+                    description=("Project frameworks have not been identified."),
                     category="Analysis",
                     priority="Medium",
-                    reason=(
-                        "Framework awareness improves architecture analysis."
-                    ),
+                    reason=("Framework awareness improves architecture analysis."),
                 )
             )
 
@@ -64,14 +60,10 @@ class PendingTaskAnalyzer:
             pending.append(
                 PendingWork(
                     title="Dependency Analysis",
-                    description=(
-                        "Project dependencies have not been mapped."
-                    ),
+                    description=("Project dependencies have not been mapped."),
                     category="Knowledge",
                     priority="High",
-                    reason=(
-                        "Dependency knowledge is required for agent decisions."
-                    ),
+                    reason=("Dependency knowledge is required for agent decisions."),
                 )
             )
 
@@ -79,14 +71,10 @@ class PendingTaskAnalyzer:
             pending.append(
                 PendingWork(
                     title="Architecture Analysis",
-                    description=(
-                        "Architecture patterns have not been identified."
-                    ),
+                    description=("Architecture patterns have not been identified."),
                     category="Architecture",
                     priority="Medium",
-                    reason=(
-                        "Architecture understanding is incomplete."
-                    ),
+                    reason=("Architecture understanding is incomplete."),
                 )
             )
 
@@ -94,14 +82,10 @@ class PendingTaskAnalyzer:
             pending.append(
                 PendingWork(
                     title="Project Evolution Tracking",
-                    description=(
-                        "Historical project changes are not available."
-                    ),
+                    description=("Historical project changes are not available."),
                     category="History",
                     priority="Low",
-                    reason=(
-                        "Historical awareness improves future planning."
-                    ),
+                    reason=("Historical awareness improves future planning."),
                 )
             )
 
@@ -109,9 +93,7 @@ class PendingTaskAnalyzer:
             pending.append(
                 PendingWork(
                     title="Testing Intelligence",
-                    description=(
-                        "Project testing status has not been analyzed."
-                    ),
+                    description=("Project testing status has not been analyzed."),
                     category="Quality",
                     priority="Medium",
                     reason=(

@@ -9,6 +9,9 @@ from __future__ import annotations
 from pathlib import Path
 from unittest.mock import Mock
 
+from projectintelligence.application.handoff.agent_context_builder import (
+    AgentContextBuilder,
+)
 from projectintelligence.application.models.results.runtime_result import (
     RuntimeResult,
 )
@@ -21,6 +24,15 @@ from projectintelligence.application.pipeline.pipeline_result import (
 from projectintelligence.domain.context.project_context import (
     ProjectContext,
 )
+from projectintelligence.domain.evolution.evolution_change import (
+    EvolutionChange,
+)
+from projectintelligence.domain.evolution.evolution_type import (
+    EvolutionType,
+)
+from projectintelligence.domain.evolution.project_evolution import (
+    ProjectEvolution,
+)
 from projectintelligence.domain.history.snapshot_history import (
     SnapshotHistory,
 )
@@ -32,9 +44,6 @@ from projectintelligence.domain.project.project_entity import (
 )
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
-)
-from projectintelligence.application.handoff.agent_context_builder import (
-    AgentContextBuilder,
 )
 
 
@@ -82,12 +91,31 @@ def test_project_intelligence_runtime_flow() -> None:
 
     snapshot_history_service = Mock()
 
+    evolution_analyzer = Mock()
+
+    evolution = ProjectEvolution(
+        project_id=project.project_id,
+        previous_snapshot_id=snapshot.snapshot_id,
+        current_snapshot_id=snapshot.snapshot_id,
+        changes=(
+            EvolutionChange(
+                path="src/main.py",
+                change_type=EvolutionType.MODIFIED,
+                category="source",
+                description="Modified application flow",
+            ),
+        ),
+    )
+
+    evolution_analyzer.analyze.return_value = evolution
+
     orchestrator = ProjectIntelligenceOrchestrator(
         pipeline=pipeline,
         persistence_service=persistence_service,
         snapshot_history_service=snapshot_history_service,
         resume_generator=resume_generator,
         agent_context_builder=AgentContextBuilder(),
+        evolution_analyzer=evolution_analyzer,
     )
 
     result = orchestrator.execute(
@@ -103,6 +131,10 @@ def test_project_intelligence_runtime_flow() -> None:
 
     assert result.pipeline_result.resume is resume
 
+    assert result.pipeline_result.evolution is evolution
+
+    assert result.pipeline_result.agent_context is not None
+
     pipeline.run.assert_called_once_with(
         project,
     )
@@ -117,4 +149,5 @@ def test_project_intelligence_runtime_flow() -> None:
         context=context,
         resume=resume,
         agent_context=result.pipeline_result.agent_context,
+        evolution=evolution,
     )

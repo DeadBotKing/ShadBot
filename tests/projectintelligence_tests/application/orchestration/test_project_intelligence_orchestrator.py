@@ -8,8 +8,10 @@ from __future__ import annotations
 
 from pathlib import Path
 from unittest.mock import Mock
-from uuid import uuid4
 
+from projectintelligence.application.handoff.agent_context_builder import (
+    AgentContextBuilder,
+)
 from projectintelligence.application.orchestration.project_intelligence_orchestrator import (
     ProjectIntelligenceOrchestrator,
 )
@@ -28,14 +30,11 @@ from projectintelligence.domain.knowledge.project_knowledge import (
 from projectintelligence.domain.project.project_entity import (
     ProjectEntity,
 )
-from projectintelligence.domain.snapshot.project_snapshot import (
-    ProjectSnapshot,
-)
 from projectintelligence.domain.resume.project_resume import (
     ProjectResume,
 )
-from projectintelligence.application.handoff.agent_context_builder import (
-    AgentContextBuilder,
+from projectintelligence.domain.snapshot.project_snapshot import (
+    ProjectSnapshot,
 )
 
 
@@ -79,9 +78,7 @@ def test_orchestrator_generates_resume() -> None:
 
     snapshot_history_service = Mock()
 
-    snapshot_history_service.get_latest_snapshot.return_value = (
-        previous_snapshot
-    )
+    snapshot_history_service.get_latest_snapshot.return_value = previous_snapshot
 
     resume = Mock(spec=ProjectResume)
 
@@ -91,12 +88,19 @@ def test_orchestrator_generates_resume() -> None:
 
     persistence_service = Mock()
 
+    evolution_analyzer = Mock()
+
+    evolution = Mock()
+
+    evolution_analyzer.analyze.return_value = evolution
+
     orchestrator = ProjectIntelligenceOrchestrator(
         pipeline=pipeline,
         persistence_service=persistence_service,
         snapshot_history_service=snapshot_history_service,
         resume_generator=resume_generator,
         agent_context_builder=AgentContextBuilder(),
+        evolution_analyzer=evolution_analyzer,
     )
 
     result = orchestrator.execute(
@@ -105,6 +109,12 @@ def test_orchestrator_generates_resume() -> None:
 
     assert result.pipeline_result.resume is resume
     assert result.previous_snapshot is previous_snapshot
+    assert result.pipeline_result.evolution is evolution
+
+    evolution_analyzer.analyze.assert_called_once_with(
+        previous=previous_snapshot,
+        current=snapshot,
+    )
 
     pipeline.run.assert_called_once_with(
         project,
@@ -120,4 +130,5 @@ def test_orchestrator_generates_resume() -> None:
         context=context,
         resume=resume,
         agent_context=pipeline_result.agent_context,
+        evolution=evolution,
     )

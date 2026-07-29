@@ -41,6 +41,8 @@ class GitRepositoryState:
 
     is_clean: bool = True
 
-    last_checked_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    last_checked_at: datetime = field(
+        default_factory=lambda: datetime.now(timezone.utc)
+    )
 
     metadata: dict[str, object] = field(default_factory=dict)

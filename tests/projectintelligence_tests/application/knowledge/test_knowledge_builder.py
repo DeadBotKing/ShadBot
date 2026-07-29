@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from pathlib import Path
-from unittest.mock import Mock
 from uuid import uuid4
 
 from projectintelligence.application.git.models.git_context import (

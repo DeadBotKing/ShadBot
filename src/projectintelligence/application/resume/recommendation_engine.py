@@ -61,9 +61,7 @@ class RecommendationEngine:
                         "Architecture understanding is required for "
                         "planning complex modifications."
                     ),
-                    expected_outcome=(
-                        "AI agents gain architecture-aware reasoning."
-                    ),
+                    expected_outcome=("AI agents gain architecture-aware reasoning."),
                 )
             )
 
@@ -76,12 +74,8 @@ class RecommendationEngine:
                         "changes over time."
                     ),
                     priority="Low",
-                    rationale=(
-                        "Historical context improves future recommendations."
-                    ),
-                    expected_outcome=(
-                        "The system can reason about project evolution."
-                    ),
+                    rationale=("Historical context improves future recommendations."),
+                    expected_outcome=("The system can reason about project evolution."),
                 )
             )
 
@@ -94,9 +88,7 @@ class RecommendationEngine:
                         "continue deeper analysis."
                     ),
                     priority="Low",
-                    rationale=(
-                        "Continuous analysis improves project understanding."
-                    ),
+                    rationale=("Continuous analysis improves project understanding."),
                     expected_outcome=(
                         "More accurate context becomes available to agents."
                     ),

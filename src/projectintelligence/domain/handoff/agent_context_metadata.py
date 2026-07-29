@@ -6,7 +6,7 @@ Agent Context Metadata
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from uuid import UUID
 
@@ -21,4 +21,6 @@ class AgentContextMetadata:
 
     version: str
 
-    created_at: datetime
+    contract_version: str = "1.0"
+
+    created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
