@@ -95,7 +95,7 @@ class ResumeGenerator:
             metadata=ResumeMetadata(
                 resume_id=uuid4(),
                 snapshot_id=context.snapshot.snapshot_id,
-                generated_at=lambda: datetime.now(timezone.utc),
+                generated_at=datetime.now(timezone.utc),
                 generator_version="1.0",
             ),
             state=state,
