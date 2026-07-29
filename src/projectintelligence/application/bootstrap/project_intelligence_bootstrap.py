@@ -9,7 +9,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
-from projectintelligence.infrastructure.git.git_python_repository import (
+from projectintelligence.application.git.infrastructure.gitpython_repository import (
     GitPythonRepository,
 )
 
