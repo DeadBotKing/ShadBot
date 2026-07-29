@@ -34,6 +34,9 @@ from projectintelligence.domain.snapshot.project_snapshot import (
 from projectintelligence.domain.resume.project_resume import (
     ProjectResume,
 )
+from projectintelligence.application.handoff.agent_context_builder import (
+    AgentContextBuilder,
+)
 
 
 def test_orchestrator_generates_resume() -> None:
@@ -93,6 +96,7 @@ def test_orchestrator_generates_resume() -> None:
         persistence_service=persistence_service,
         snapshot_history_service=snapshot_history_service,
         resume_generator=resume_generator,
+        agent_context_builder=AgentContextBuilder(),
     )
 
     result = orchestrator.execute(

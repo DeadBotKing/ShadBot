@@ -184,6 +184,9 @@ from projectintelligence.infrastructure.persistence.repositories.in_memory_snaps
 from projectintelligence.infrastructure.persistence.repositories.in_memory_state_repository import (
     InMemoryStateRepository,
 )
+from projectintelligence.application.handoff.agent_context_builder import (
+    AgentContextBuilder,
+)
 
 
 @dataclass(slots=True)
@@ -402,12 +405,14 @@ class ProjectIntelligenceBootstrap:
             project_state_service=project_state_service,
         )
 
+        agent_context_builder = AgentContextBuilder()
 
         orchestrator = ProjectIntelligenceOrchestrator(
             pipeline=pipeline,
             persistence_service=persistence_service,
             snapshot_history_service=snapshot_history_service,
             resume_generator=resume_generator,
+            agent_context_builder=agent_context_builder,
         )
 
 

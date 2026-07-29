@@ -33,6 +33,9 @@ from projectintelligence.domain.project.project_entity import (
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
 )
+from projectintelligence.application.handoff.agent_context_builder import (
+    AgentContextBuilder,
+)
 
 
 def test_project_intelligence_runtime_flow() -> None:
@@ -84,6 +87,7 @@ def test_project_intelligence_runtime_flow() -> None:
         persistence_service=persistence_service,
         snapshot_history_service=snapshot_history_service,
         resume_generator=resume_generator,
+        agent_context_builder=AgentContextBuilder(),
     )
 
     result = orchestrator.execute(

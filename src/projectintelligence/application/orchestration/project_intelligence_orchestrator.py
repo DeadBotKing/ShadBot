@@ -29,6 +29,9 @@ from projectintelligence.application.resume.resume_generator import (
 from projectintelligence.domain.project.project_entity import (
     ProjectEntity,
 )
+from projectintelligence.application.handoff.agent_context_builder import (
+    AgentContextBuilder,
+)
 
 
 @dataclass(slots=True)
@@ -44,6 +47,8 @@ class ProjectIntelligenceOrchestrator:
     snapshot_history_service: SnapshotHistoryService
 
     resume_generator: ResumeGenerator
+
+    agent_context_builder: AgentContextBuilder
 
     def execute(
         self,
@@ -67,6 +72,13 @@ class ProjectIntelligenceOrchestrator:
 
         pipeline_result.resume = self.resume_generator.generate(
             resume_context,
+        )
+
+        pipeline_result.agent_context = self.agent_context_builder.build(
+            knowledge=pipeline_result.knowledge,
+            context=pipeline_result.context,
+            resume=pipeline_result.resume,
+            git_context=pipeline_result.git_context,
         )
 
         self.persistence_service.save_all(

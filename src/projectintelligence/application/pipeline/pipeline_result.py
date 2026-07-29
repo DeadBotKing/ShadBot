@@ -29,6 +29,9 @@ from projectintelligence.domain.resume.project_resume import (
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
 )
+from projectintelligence.domain.handoff.agent_context_package import (
+    AgentContextPackage,
+)
 
 
 @dataclass(slots=True)
@@ -50,5 +53,7 @@ class PipelineResult:
     git_context: GitContext | None = None
 
     resume: ProjectResume | None = None
+
+    agent_context: AgentContextPackage | None = None
     
     success: bool = True
