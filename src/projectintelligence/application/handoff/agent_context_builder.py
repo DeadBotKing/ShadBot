@@ -7,6 +7,8 @@ Agent Context Builder
 from __future__ import annotations
 
 from dataclasses import dataclass
+from uuid import uuid4
+from datetime import datetime, timezone
 
 from projectintelligence.application.git.models.git_context import (
     GitContext,
@@ -22,6 +24,9 @@ from projectintelligence.domain.knowledge.project_knowledge import (
 )
 from projectintelligence.domain.resume.project_resume import (
     ProjectResume,
+)
+from projectintelligence.domain.handoff.agent_context_metadata import (
+    AgentContextMetadata,
 )
 
 
@@ -70,6 +75,12 @@ class AgentContextBuilder:
             else tuple()
         )
 
+        metadata = AgentContextMetadata(
+            context_id=uuid4(),
+            version="1.0",
+            created_at=datetime.now(timezone.utc),
+        )
+
         return AgentContextPackage(
             project_id=knowledge.project_id,
             summary=summary,
@@ -96,7 +107,5 @@ class AgentContextBuilder:
             ),
             recommendations=recommendations,
             current_state=current_state,
-            project_context=context,
-            project_resume=resume,
-            git_context=git_context,
+            metadata=metadata,
         )

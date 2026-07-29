@@ -9,15 +9,10 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from uuid import UUID
 
-from projectintelligence.application.git.models.git_context import (
-    GitContext,
+from projectintelligence.domain.handoff.agent_context_metadata import (
+    AgentContextMetadata,
 )
-from projectintelligence.domain.context.project_context import (
-    ProjectContext,
-)
-from projectintelligence.domain.resume.project_resume import (
-    ProjectResume,
-)
+
 
 
 @dataclass(frozen=True, slots=True)
@@ -35,6 +30,8 @@ class AgentContextPackage:
     """
 
     project_id: UUID
+
+    metadata: AgentContextMetadata
 
     summary: str
 
@@ -69,9 +66,3 @@ class AgentContextPackage:
     )
 
     current_state: str | None = None
-
-    project_context: ProjectContext | None = None
-
-    project_resume: ProjectResume | None = None
-
-    git_context: GitContext | None = None
