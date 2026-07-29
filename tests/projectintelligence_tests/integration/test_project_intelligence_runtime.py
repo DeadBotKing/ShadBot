@@ -116,4 +116,5 @@ def test_project_intelligence_runtime_flow() -> None:
         state=state,
         context=context,
         resume=resume,
+        agent_context=result.pipeline_result.agent_context,
     )

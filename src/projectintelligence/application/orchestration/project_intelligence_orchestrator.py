@@ -88,6 +88,7 @@ class ProjectIntelligenceOrchestrator:
             state=pipeline_result.state,
             context=pipeline_result.context,
             resume=pipeline_result.resume,
+            agent_context=pipeline_result.agent_context
         )
 
         return RuntimeResult(

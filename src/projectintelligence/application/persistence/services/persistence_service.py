@@ -50,6 +50,12 @@ from projectintelligence.domain.resume.project_resume import (
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
 )
+from projectintelligence.application.persistence.services.agent_context_storage_service import (
+    AgentContextStorageService,
+)
+from projectintelligence.domain.handoff.agent_context_package import (
+    AgentContextPackage,
+)
 
 
 @dataclass(slots=True)
@@ -69,6 +75,8 @@ class PersistenceService:
     resume_storage: ResumeStorageService
 
     history_storage: HistoryStorageService
+
+    agent_context_storage: AgentContextStorageService
 
     def save_snapshot(
         self,
@@ -94,6 +102,7 @@ class PersistenceService:
         state: ProjectIntelligenceState,
         context: ProjectContext,
         resume: ProjectResume,
+        agent_context: AgentContextPackage
     ) -> PersistenceBatchResult:
         results = (
             self.save_snapshot(
@@ -113,6 +122,9 @@ class PersistenceService:
             ),
             self.save_resume(
                 resume,
+            ),
+            self.save_agent_context(
+                agent_context,
             ),
         )
 
@@ -151,4 +163,12 @@ class PersistenceService:
     ) -> PersistenceResult:
         return self.resume_storage.save(
             resume,
+        )
+
+    def save_agent_context(
+        self,
+        context: AgentContextPackage,
+    ) -> PersistenceResult:
+        return self.agent_context_storage.save(
+            context,
         )

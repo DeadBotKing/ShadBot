@@ -119,4 +119,5 @@ def test_orchestrator_generates_resume() -> None:
         state=pipeline_result.state,
         context=context,
         resume=resume,
+        agent_context=pipeline_result.agent_context,
     )

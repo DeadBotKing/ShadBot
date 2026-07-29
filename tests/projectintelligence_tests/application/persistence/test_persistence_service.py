@@ -24,6 +24,7 @@ def test_persistence_service_delegates_storage_operations() -> None:
     state_storage = Mock()
     resume_storage = Mock()
     history_storage = Mock()
+    agent_context_storage = Mock()
 
     service = PersistenceService(
         snapshot_storage=snapshot_storage,
@@ -32,6 +33,7 @@ def test_persistence_service_delegates_storage_operations() -> None:
         state_storage=state_storage,
         resume_storage=resume_storage,
         history_storage=history_storage,
+        agent_context_storage=agent_context_storage,
     )
 
     snapshot = Mock()
@@ -97,6 +99,7 @@ def test_persistence_service_save_all_returns_batch_result() -> None:
     state_storage = Mock()
     resume_storage = Mock()
     history_storage = Mock()
+    agent_context_storage = Mock()
 
     service = PersistenceService(
         snapshot_storage=snapshot_storage,
@@ -105,6 +108,7 @@ def test_persistence_service_save_all_returns_batch_result() -> None:
         state_storage=state_storage,
         resume_storage=resume_storage,
         history_storage=history_storage,
+        agent_context_storage=agent_context_storage,
     )
 
     snapshot_storage.save.return_value = Mock(success=True)
@@ -121,10 +125,11 @@ def test_persistence_service_save_all_returns_batch_result() -> None:
         state=Mock(),
         context=Mock(),
         resume=Mock(),
+        agent_context=Mock(),
     )
 
     assert result.success is True
 
     assert len(
         result.results,
-    ) == 6
+    ) == 7

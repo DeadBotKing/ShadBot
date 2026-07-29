@@ -103,6 +103,9 @@ from projectintelligence.application.persistence.services.history_storage_servic
 from projectintelligence.application.persistence.services.knowledge_storage_service import (
     KnowledgeStorageService,
 )
+from projectintelligence.application.persistence.services.agent_context_storage_service import (
+    AgentContextStorageService,
+)
 from projectintelligence.application.persistence.services.persistence_service import (
     PersistenceService,
 )
@@ -187,6 +190,9 @@ from projectintelligence.infrastructure.persistence.repositories.in_memory_state
 from projectintelligence.application.handoff.agent_context_builder import (
     AgentContextBuilder,
 )
+from projectintelligence.infrastructure.persistence.agent_context.in_memory_agent_context_repository import (
+    InMemoryAgentContextRepository,
+)
 
 
 @dataclass(slots=True)
@@ -213,6 +219,8 @@ class ProjectIntelligenceBootstrap:
 
         resume_repository = InMemoryResumeRepository()
 
+        agent_context_repository = InMemoryAgentContextRepository()
+
         snapshot_storage = SnapshotStorageService(
             repository=snapshot_repository,
         )
@@ -237,6 +245,10 @@ class ProjectIntelligenceBootstrap:
             repository=resume_repository,
         )
 
+        agent_context_storage = AgentContextStorageService(
+            repository=agent_context_repository,
+        )
+
         persistence_service = PersistenceService(
             snapshot_storage=snapshot_storage,
             context_storage=context_storage,
@@ -244,6 +256,7 @@ class ProjectIntelligenceBootstrap:
             history_storage=history_storage,
             state_storage=state_storage,
             resume_storage=resume_storage,
+            agent_context_storage=agent_context_storage,
         )
 
         directory_walker = DirectoryWalker()
