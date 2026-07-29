@@ -6,7 +6,7 @@ Persistence Batch Result
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 from projectintelligence.application.models.results.persistence_result import (
     PersistenceResult,

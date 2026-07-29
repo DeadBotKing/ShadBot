@@ -6,7 +6,7 @@ Completion Analyzer
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from projectintelligence.application.resume.models.resume_build_context import (
     ResumeBuildContext,
@@ -31,7 +31,7 @@ class CompletionAnalyzer:
 
         completed: list[CompletedWork] = []
 
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
 
         if context.snapshot.detected_languages:
             completed.append(

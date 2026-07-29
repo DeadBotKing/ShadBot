@@ -8,6 +8,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from projectintelligence.application.git.models.git_context import (
+    GitContext,
+)
 from projectintelligence.application.knowledge.extractors.architecture_extractor import (
     ArchitectureExtractor,
 )
@@ -37,9 +40,6 @@ from projectintelligence.domain.knowledge.project_knowledge import (
 )
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
-)
-from projectintelligence.application.git.models.git_context import (
-    GitContext,
 )
 
 

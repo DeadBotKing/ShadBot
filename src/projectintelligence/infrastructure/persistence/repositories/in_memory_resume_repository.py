@@ -11,7 +11,6 @@ from uuid import UUID
 from projectintelligence.application.ports.outbound.resume_repository import (
     ResumeRepository,
 )
-
 from projectintelligence.domain.resume.project_resume import (
     ProjectResume,
 )

@@ -11,7 +11,6 @@ from uuid import UUID
 from projectintelligence.application.ports.outbound.state_repository import (
     StateRepository,
 )
-
 from projectintelligence.application.state.project_intelligence_state import (
     ProjectIntelligenceState,
 )

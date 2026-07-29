@@ -11,7 +11,6 @@ from uuid import UUID
 from projectintelligence.application.ports.outbound.knowledge_repository import (
     KnowledgeRepository,
 )
-
 from projectintelligence.domain.knowledge.project_knowledge import (
     ProjectKnowledge,
 )

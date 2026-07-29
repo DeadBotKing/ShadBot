@@ -7,279 +7,41 @@ Project Intelligence Bootstrap
 from __future__ import annotations
 
 from dataclasses import dataclass
-
-from projectintelligence.infrastructure.persistence.repositories.in_memory_snapshot_repository import (
-    InMemorySnapshotRepository,
-)
-from projectintelligence.infrastructure.persistence.repositories.in_memory_context_repository import (
-    InMemoryContextRepository,
-)
-from projectintelligence.infrastructure.persistence.repositories.in_memory_knowledge_repository import (
-    InMemoryKnowledgeRepository,
-)
-from projectintelligence.infrastructure.persistence.repositories.in_memory_history_repository import (
-    InMemoryHistoryRepository,
-)
-from projectintelligence.infrastructure.persistence.repositories.in_memory_state_repository import (
-    InMemoryStateRepository,
-)
-from projectintelligence.infrastructure.persistence.repositories.in_memory_resume_repository import (
-    InMemoryResumeRepository,
-)
-from projectintelligence.application.persistence.services.snapshot_storage_service import (
-    SnapshotStorageService,
-)
-from projectintelligence.application.persistence.services.context_storage_service import (
-    ContextStorageService,
-)
-from projectintelligence.application.persistence.services.knowledge_storage_service import (
-    KnowledgeStorageService,
-)
-from projectintelligence.application.persistence.services.history_storage_service import (
-    HistoryStorageService,
-)
-from projectintelligence.application.persistence.services.state_storage_service import (
-    StateStorageService,
-)
-from projectintelligence.application.persistence.services.resume_storage_service import (
-    ResumeStorageService,
-)
-from projectintelligence.application.persistence.services.persistence_service import (
-    PersistenceService,
-)
-from projectintelligence.application.engine.project_intelligence_engine import (
-    ProjectIntelligenceEngine,
-)
-from projectintelligence.application.orchestration.project_intelligence_orchestrator import (
-    ProjectIntelligenceOrchestrator,
-)
-from projectintelligence.infrastructure.filesystem.directory_walker import (
-    DirectoryWalker,
-)
-
-from projectintelligence.infrastructure.filesystem.ignore_manager import (
-    IgnoreManager,
-)
-
-from projectintelligence.infrastructure.filesystem.file_collector import (
-    FileCollector,
-)
-
-from projectintelligence.infrastructure.filesystem.workspace_scanner import (
-    WorkspaceScanner,
-)
-
-from projectintelligence.application.snapshot.snapshot_builder import (
-    SnapshotBuilder,
-)
-
-from projectintelligence.application.snapshot.hash_calculator import (
-    HashCalculator,
-)
-
-from projectintelligence.application.snapshot.directory_tree_builder import (
-    DirectoryTreeBuilder,
-)
-from projectintelligence.application.language.language_detector import (
-    LanguageDetector,
-)
-
-from projectintelligence.application.language.extension_registry import (
-    ExtensionRegistry,
-)
-
-from projectintelligence.application.language.language_statistics import (
-    LanguageStatistics,
-)
-
-from projectintelligence.application.framework.framework_detector import (
-    FrameworkDetector,
-)
-
-from projectintelligence.application.framework.framework_registry import (
-    FrameworkRegistry,
-)
-
-from projectintelligence.application.framework.signature_matcher import (
-    SignatureMatcher,
-)
-
-from projectintelligence.application.dependency.dependency_analyzer import (
-    DependencyAnalyzer,
-)
-
-from projectintelligence.application.dependency.parser_selector import (
-    ParserSelector,
-)
-
-from projectintelligence.application.dependency.parser_registry import (
-    ParserRegistry,
-)
-from projectintelligence.application.pipeline.project_intelligence_pipeline import (
-    ProjectIntelligencePipeline,
-)
-
-from projectintelligence.application.context.context_builder import (
-    ContextBuilder,
-)
-
-from projectintelligence.application.state.project_state_service import (
-    ProjectStateService,
-)
-
-from projectintelligence.application.state.builders.project_state_builder import (
-    ProjectStateBuilder,
-)
-
-from projectintelligence.application.knowledge.knowledge_builder import (
-    KnowledgeBuilder,
-)
-
-from projectintelligence.application.knowledge.extractors.technology_extractor import (
-    TechnologyExtractor,
-)
-
-from projectintelligence.application.knowledge.extractors.architecture_extractor import (
-    ArchitectureExtractor,
-)
-
-from projectintelligence.application.knowledge.extractors.dependency_extractor import (
-    DependencyExtractor,
-)
-
-from projectintelligence.application.knowledge.extractors.convention_extractor import (
-    ConventionExtractor,
-)
-
-from projectintelligence.application.knowledge.extractors.constraint_extractor import (
-    ConstraintExtractor,
-)
-
-from projectintelligence.application.knowledge.extractors.history_extractor import (
-    HistoryExtractor,
-)
-
-from projectintelligence.application.knowledge.extractors.intelligence_notes_extractor import (
-    IntelligenceNotesExtractor,
-)
-
-from projectintelligence.application.knowledge.rules.factories.rule_engine_factory import (
-    RuleEngineFactory,
-)
-from projectintelligence.application.resume.resume_generator import (
-    ResumeGenerator,
-)
-
-from projectintelligence.application.resume.project_summary_builder import (
-    ProjectSummaryBuilder,
-)
-
-from projectintelligence.application.resume.completion_analyzer import (
-    CompletionAnalyzer,
-)
-
-from projectintelligence.application.resume.pending_task_analyzer import (
-    PendingTaskAnalyzer,
-)
-
-from projectintelligence.application.resume.recommendation_engine import (
-    RecommendationEngine,
-)
-
-from projectintelligence.application.resume.project_state_analyzer import (
-    ProjectStateAnalyzer,
-)
-
-from projectintelligence.application.persistence.services.snapshot_history_service import (
-    SnapshotHistoryService,
-)
-
-from projectintelligence.application.git.services.git_analyzer import (
-    GitAnalyzer,
-)
-
-from projectintelligence.application.git.services.git_status_detector import (
-    GitStatusDetector,
-)
-
-from projectintelligence.application.git.services.git_branch_detector import (
-    GitBranchDetector,
-)
-
-from projectintelligence.application.git.services.git_change_detector import (
-    GitChangeDetector,
-)
-
-from projectintelligence.application.git.services.git_history_analyzer import (
-    GitHistoryAnalyzer,
-)
-
-from projectintelligence.application.git.mapping.git_context_mapper import (
-    GitContextMapper,
-)
 from pathlib import Path
-
-from projectintelligence.infrastructure.filesystem.directory_walker import (
-    DirectoryWalker,
-)
-from projectintelligence.infrastructure.filesystem.file_collector import (
-    FileCollector,
-)
-from projectintelligence.infrastructure.filesystem.ignore_manager import (
-    IgnoreManager,
-)
-from projectintelligence.infrastructure.filesystem.workspace_scanner import (
-    WorkspaceScanner,
-)
-
-from projectintelligence.application.snapshot.snapshot_builder import (
-    SnapshotBuilder,
-)
-from projectintelligence.application.snapshot.hash_calculator import (
-    HashCalculator,
-)
-from projectintelligence.application.snapshot.directory_tree_builder import (
-    DirectoryTreeBuilder,
-)
-from projectintelligence.application.language.extension_registry import (
-    ExtensionRegistry,
-)
-from projectintelligence.application.language.language_statistics import (
-    LanguageStatistics,
-)
-from projectintelligence.application.language.language_detector import (
-    LanguageDetector,
-)
-
-from projectintelligence.application.framework.framework_registry import (
-    FrameworkRegistry,
-)
-from projectintelligence.application.framework.signature_matcher import (
-    SignatureMatcher,
-)
-from projectintelligence.application.framework.framework_detector import (
-    FrameworkDetector,
-)
-
-from projectintelligence.application.dependency.parser_registry import (
-    ParserRegistry,
-)
-from projectintelligence.application.dependency.parser_selector import (
-    ParserSelector,
-)
-from projectintelligence.application.dependency.dependency_analyzer import (
-    DependencyAnalyzer,
-)
-from projectintelligence.infrastructure.persistence.repositories.in_memory_history_repository import (
-    InMemoryHistoryRepository,
-)
 
 from projectintelligence.infrastructure.git.git_python_repository import (
     GitPythonRepository,
 )
 
-from projectintelligence.application.git.services.git_status_detector import (
-    GitStatusDetector,
+from projectintelligence.application.context.context_builder import (
+    ContextBuilder,
+)
+from projectintelligence.application.dependency.dependency_analyzer import (
+    DependencyAnalyzer,
+)
+from projectintelligence.application.dependency.parser_registry import (
+    ParserRegistry,
+)
+from projectintelligence.application.dependency.parser_selector import (
+    ParserSelector,
+)
+from projectintelligence.application.engine.project_intelligence_engine import (
+    ProjectIntelligenceEngine,
+)
+from projectintelligence.application.framework.framework_detector import (
+    FrameworkDetector,
+)
+from projectintelligence.application.framework.framework_registry import (
+    FrameworkRegistry,
+)
+from projectintelligence.application.framework.signature_matcher import (
+    SignatureMatcher,
+)
+from projectintelligence.application.git.mapping.git_context_mapper import (
+    GitContextMapper,
+)
+from projectintelligence.application.git.services.git_analyzer import (
+    GitAnalyzer,
 )
 from projectintelligence.application.git.services.git_branch_detector import (
     GitBranchDetector,
@@ -290,15 +52,8 @@ from projectintelligence.application.git.services.git_change_detector import (
 from projectintelligence.application.git.services.git_history_analyzer import (
     GitHistoryAnalyzer,
 )
-from projectintelligence.application.git.services.git_analyzer import (
-    GitAnalyzer,
-)
-from projectintelligence.application.git.mapping.git_context_mapper import (
-    GitContextMapper,
-)
-
-from projectintelligence.application.knowledge.knowledge_builder import (
-    KnowledgeBuilder,
+from projectintelligence.application.git.services.git_status_detector import (
+    GitStatusDetector,
 )
 from projectintelligence.application.knowledge.extractors.architecture_extractor import (
     ArchitectureExtractor,
@@ -321,26 +76,50 @@ from projectintelligence.application.knowledge.extractors.intelligence_notes_ext
 from projectintelligence.application.knowledge.extractors.technology_extractor import (
     TechnologyExtractor,
 )
+from projectintelligence.application.knowledge.knowledge_builder import (
+    KnowledgeBuilder,
+)
 from projectintelligence.application.knowledge.rules.factories.rule_engine_factory import (
     RuleEngineFactory,
 )
-
-from projectintelligence.application.context.context_builder import (
-    ContextBuilder,
+from projectintelligence.application.language.extension_registry import (
+    ExtensionRegistry,
 )
-
-from projectintelligence.application.state.builders.project_state_builder import (
-    ProjectStateBuilder,
+from projectintelligence.application.language.language_detector import (
+    LanguageDetector,
 )
-from projectintelligence.application.state.project_state_service import (
-    ProjectStateService,
+from projectintelligence.application.language.language_statistics import (
+    LanguageStatistics,
 )
-from projectintelligence.application.resume.resume_generator import (
-    ResumeGenerator,
+from projectintelligence.application.orchestration.project_intelligence_orchestrator import (
+    ProjectIntelligenceOrchestrator,
 )
-
-from projectintelligence.application.resume.project_summary_builder import (
-    ProjectSummaryBuilder,
+from projectintelligence.application.persistence.services.context_storage_service import (
+    ContextStorageService,
+)
+from projectintelligence.application.persistence.services.history_storage_service import (
+    HistoryStorageService,
+)
+from projectintelligence.application.persistence.services.knowledge_storage_service import (
+    KnowledgeStorageService,
+)
+from projectintelligence.application.persistence.services.persistence_service import (
+    PersistenceService,
+)
+from projectintelligence.application.persistence.services.resume_storage_service import (
+    ResumeStorageService,
+)
+from projectintelligence.application.persistence.services.snapshot_history_service import (
+    SnapshotHistoryService,
+)
+from projectintelligence.application.persistence.services.snapshot_storage_service import (
+    SnapshotStorageService,
+)
+from projectintelligence.application.persistence.services.state_storage_service import (
+    StateStorageService,
+)
+from projectintelligence.application.pipeline.project_intelligence_pipeline import (
+    ProjectIntelligencePipeline,
 )
 from projectintelligence.application.resume.completion_analyzer import (
     CompletionAnalyzer,
@@ -348,36 +127,64 @@ from projectintelligence.application.resume.completion_analyzer import (
 from projectintelligence.application.resume.pending_task_analyzer import (
     PendingTaskAnalyzer,
 )
-from projectintelligence.application.resume.recommendation_engine import (
-    RecommendationEngine,
-)
 from projectintelligence.application.resume.project_state_analyzer import (
     ProjectStateAnalyzer,
 )
-
-from projectintelligence.application.resume.models.resume_build_context import (
-    ResumeBuildContext,
+from projectintelligence.application.resume.project_summary_builder import (
+    ProjectSummaryBuilder,
+)
+from projectintelligence.application.resume.recommendation_engine import (
+    RecommendationEngine,
+)
+from projectintelligence.application.resume.resume_generator import (
+    ResumeGenerator,
+)
+from projectintelligence.application.snapshot.directory_tree_builder import (
+    DirectoryTreeBuilder,
+)
+from projectintelligence.application.snapshot.hash_calculator import (
+    HashCalculator,
+)
+from projectintelligence.application.snapshot.snapshot_builder import (
+    SnapshotBuilder,
+)
+from projectintelligence.application.state.builders.project_state_builder import (
+    ProjectStateBuilder,
+)
+from projectintelligence.application.state.project_state_service import (
+    ProjectStateService,
+)
+from projectintelligence.infrastructure.filesystem.directory_walker import (
+    DirectoryWalker,
+)
+from projectintelligence.infrastructure.filesystem.file_collector import (
+    FileCollector,
+)
+from projectintelligence.infrastructure.filesystem.ignore_manager import (
+    IgnoreManager,
+)
+from projectintelligence.infrastructure.filesystem.workspace_scanner import (
+    WorkspaceScanner,
+)
+from projectintelligence.infrastructure.persistence.repositories.in_memory_context_repository import (
+    InMemoryContextRepository,
+)
+from projectintelligence.infrastructure.persistence.repositories.in_memory_history_repository import (
+    InMemoryHistoryRepository,
+)
+from projectintelligence.infrastructure.persistence.repositories.in_memory_knowledge_repository import (
+    InMemoryKnowledgeRepository,
+)
+from projectintelligence.infrastructure.persistence.repositories.in_memory_resume_repository import (
+    InMemoryResumeRepository,
+)
+from projectintelligence.infrastructure.persistence.repositories.in_memory_snapshot_repository import (
+    InMemorySnapshotRepository,
+)
+from projectintelligence.infrastructure.persistence.repositories.in_memory_state_repository import (
+    InMemoryStateRepository,
 )
 
-from projectintelligence.application.pipeline.project_intelligence_pipeline import (
-    ProjectIntelligencePipeline,
-)
-
-from projectintelligence.application.pipeline.pipeline_result import (
-    PipelineResult,
-)
-
-from projectintelligence.application.orchestration.project_intelligence_orchestrator import (
-    ProjectIntelligenceOrchestrator,
-)
-
-from projectintelligence.application.persistence.services.snapshot_history_service import (
-    SnapshotHistoryService,
-)
-
-from projectintelligence.application.engine.project_intelligence_engine import (
-    ProjectIntelligenceEngine,
-)
 
 @dataclass(slots=True)
 class ProjectIntelligenceBootstrap:

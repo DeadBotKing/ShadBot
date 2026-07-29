@@ -7,7 +7,7 @@ Analysis Result Domain Model
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from uuid import UUID, uuid4
 
 
@@ -23,7 +23,7 @@ class AnalysisResult:
 
     result_id: UUID = field(default_factory=uuid4)
 
-    created_at: datetime = field(default_factory=datetime.utcnow)
+    created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
     success: bool = False
 

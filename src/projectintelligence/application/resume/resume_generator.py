@@ -6,11 +6,14 @@ Resume Generator
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timezone
 from uuid import uuid4
 
 from projectintelligence.application.resume.completion_analyzer import (
     CompletionAnalyzer,
+)
+from projectintelligence.application.resume.models.resume_build_context import (
+    ResumeBuildContext,
 )
 from projectintelligence.application.resume.pending_task_analyzer import (
     PendingTaskAnalyzer,
@@ -23,9 +26,6 @@ from projectintelligence.application.resume.project_summary_builder import (
 )
 from projectintelligence.application.resume.recommendation_engine import (
     RecommendationEngine,
-)
-from projectintelligence.application.resume.models.resume_build_context import (
-    ResumeBuildContext,
 )
 from projectintelligence.domain.resume.project_resume import (
     ProjectResume,
@@ -95,7 +95,7 @@ class ResumeGenerator:
             metadata=ResumeMetadata(
                 resume_id=uuid4(),
                 snapshot_id=context.snapshot.snapshot_id,
-                generated_at=datetime.utcnow(),
+                generated_at=lambda: datetime.now(timezone.utc),
                 generator_version="1.0",
             ),
             state=state,

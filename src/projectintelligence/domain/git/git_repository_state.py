@@ -7,7 +7,7 @@ Git Repository State Domain Model
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from uuid import UUID, uuid4
 
 
@@ -41,6 +41,6 @@ class GitRepositoryState:
 
     is_clean: bool = True
 
-    last_checked_at: datetime = field(default_factory=datetime.utcnow)
+    last_checked_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
     metadata: dict[str, object] = field(default_factory=dict)

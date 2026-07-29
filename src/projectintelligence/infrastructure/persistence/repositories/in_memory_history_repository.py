@@ -11,7 +11,6 @@ from uuid import UUID
 from projectintelligence.application.ports.outbound.history_repository import (
     HistoryRepository,
 )
-
 from projectintelligence.domain.history.snapshot_history import (
     SnapshotHistory,
 )

@@ -11,7 +11,6 @@ from uuid import UUID
 from projectintelligence.application.ports.outbound.context_repository import (
     ContextRepository,
 )
-
 from projectintelligence.domain.context.project_context import (
     ProjectContext,
 )

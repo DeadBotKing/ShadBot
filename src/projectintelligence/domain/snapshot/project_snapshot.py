@@ -7,7 +7,7 @@ Project Snapshot Domain Entity
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from uuid import UUID, uuid4
 
@@ -24,7 +24,7 @@ class ProjectSnapshot:
 
     snapshot_id: UUID = field(default_factory=uuid4)
 
-    created_at: datetime = field(default_factory=datetime.utcnow)
+    created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
     file_count: int = 0
 

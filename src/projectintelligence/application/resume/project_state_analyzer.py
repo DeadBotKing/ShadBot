@@ -9,9 +9,6 @@ from __future__ import annotations
 from projectintelligence.application.resume.models.resume_build_context import (
     ResumeBuildContext,
 )
-from projectintelligence.domain.resume.project_summary import (
-    ProjectSummary,
-)
 
 
 class ProjectStateAnalyzer:

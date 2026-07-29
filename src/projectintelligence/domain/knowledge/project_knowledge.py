@@ -7,7 +7,7 @@ Project Knowledge Domain Entity
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from uuid import UUID, uuid4
 
 from projectintelligence.domain.knowledge.knowledge_finding import (
@@ -27,7 +27,7 @@ class ProjectKnowledge:
 
     version: str = "1.0"
 
-    created_at: datetime = field(default_factory=datetime.utcnow)
+    created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
     technologies: list[str] = field(default_factory=list)
 

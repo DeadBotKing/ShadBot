@@ -12,7 +12,6 @@ from uuid import UUID
 from projectintelligence.application.ports.outbound.snapshot_repository import (
     SnapshotRepository,
 )
-
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
 )

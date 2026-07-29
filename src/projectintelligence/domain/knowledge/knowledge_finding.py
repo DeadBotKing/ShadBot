@@ -7,7 +7,7 @@ Knowledge Finding Domain Entity
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from uuid import UUID, uuid4
 
 from projectintelligence.domain.knowledge.rule_severity import (
@@ -33,7 +33,7 @@ class KnowledgeFinding:
 
     finding_id: UUID = field(default_factory=uuid4)
 
-    created_at: datetime = field(default_factory=datetime.utcnow)
+    created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
     source: str | None = None
 

@@ -8,53 +8,47 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from projectintelligence.application.models.results.persistence_batch_result import (
+    PersistenceBatchResult,
+)
 from projectintelligence.application.models.results.persistence_result import (
     PersistenceResult,
 )
 from projectintelligence.application.persistence.services.context_storage_service import (
     ContextStorageService,
 )
-from projectintelligence.application.persistence.services.snapshot_storage_service import (
-    SnapshotStorageService,
-)
-from projectintelligence.domain.context.project_context import (
-    ProjectContext,
-)
-from projectintelligence.domain.snapshot.project_snapshot import (
-    ProjectSnapshot,
+from projectintelligence.application.persistence.services.history_storage_service import (
+    HistoryStorageService,
 )
 from projectintelligence.application.persistence.services.knowledge_storage_service import (
     KnowledgeStorageService,
 )
-
-from projectintelligence.application.persistence.services.state_storage_service import (
-    StateStorageService,
-)
-
 from projectintelligence.application.persistence.services.resume_storage_service import (
     ResumeStorageService,
 )
-
-from projectintelligence.domain.knowledge.project_knowledge import (
-    ProjectKnowledge,
+from projectintelligence.application.persistence.services.snapshot_storage_service import (
+    SnapshotStorageService,
 )
-
+from projectintelligence.application.persistence.services.state_storage_service import (
+    StateStorageService,
+)
 from projectintelligence.application.state.project_intelligence_state import (
     ProjectIntelligenceState,
 )
-
+from projectintelligence.domain.context.project_context import (
+    ProjectContext,
+)
+from projectintelligence.domain.history.snapshot_history import (
+    SnapshotHistory,
+)
+from projectintelligence.domain.knowledge.project_knowledge import (
+    ProjectKnowledge,
+)
 from projectintelligence.domain.resume.project_resume import (
     ProjectResume,
 )
-from projectintelligence.application.models.results.persistence_batch_result import (
-    PersistenceBatchResult,
-)
-from projectintelligence.application.persistence.services.history_storage_service import (
-    HistoryStorageService,
-)
-
-from projectintelligence.domain.history.snapshot_history import (
-    SnapshotHistory,
+from projectintelligence.domain.snapshot.project_snapshot import (
+    ProjectSnapshot,
 )
 
 

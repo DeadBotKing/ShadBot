@@ -20,15 +20,14 @@ from projectintelligence.application.persistence.services.snapshot_history_servi
 from projectintelligence.application.pipeline.project_intelligence_pipeline import (
     ProjectIntelligencePipeline,
 )
-from projectintelligence.domain.project.project_entity import (
-    ProjectEntity,
-)
 from projectintelligence.application.resume.models.resume_build_context import (
     ResumeBuildContext,
 )
-
 from projectintelligence.application.resume.resume_generator import (
     ResumeGenerator,
+)
+from projectintelligence.domain.project.project_entity import (
+    ProjectEntity,
 )
 
 

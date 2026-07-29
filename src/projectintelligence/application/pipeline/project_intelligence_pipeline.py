@@ -8,6 +8,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from projectintelligence.application.context.context_builder import (
+    ContextBuilder,
+)
 from projectintelligence.application.contracts.analysis.dependency_analyzer import (
     IDependencyAnalyzer,
 )
@@ -35,22 +38,17 @@ from projectintelligence.application.knowledge.knowledge_builder import (
 from projectintelligence.application.pipeline.pipeline_result import (
     PipelineResult,
 )
-from projectintelligence.domain.project.project_entity import (
-    ProjectEntity,
-)
-from projectintelligence.application.context.context_builder import (
-    ContextBuilder,
-)
 from projectintelligence.application.resume.models.resume_build_context import (
     ResumeBuildContext,
 )
-
 from projectintelligence.application.state.project_state_service import (
     ProjectStateService,
 )
-
 from projectintelligence.domain.history.snapshot_history import (
     SnapshotHistory,
+)
+from projectintelligence.domain.project.project_entity import (
+    ProjectEntity,
 )
 
 

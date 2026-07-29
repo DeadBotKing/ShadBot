@@ -7,7 +7,7 @@ Project Context Domain Entity
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from uuid import UUID, uuid4
 
 from projectintelligence.domain.git.git_repository_state import (
@@ -29,7 +29,7 @@ class ProjectContext:
 
     version: str = "1.0"
 
-    created_at: datetime = field(default_factory=datetime.utcnow)
+    created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
     summary: str = ""
 
