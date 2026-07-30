@@ -1,0 +1,3 @@
+"""
+Project Intelligence CLI.
+"""
