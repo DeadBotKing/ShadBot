@@ -48,12 +48,7 @@ class GitContextMapper:
         ]
 
         return GitRepositoryState(
-            project_id=(
-                git_context.current_commit.project_id
-                if git_context.current_commit
-                and hasattr(git_context.current_commit, "project_id")
-                else None
-            ),
+            project_id=git_context.project_id,
             branch_name=git_context.status.current_branch,
             current_commit=(
                 git_context.current_commit.hash if git_context.current_commit else ""

@@ -6,13 +6,13 @@ In Memory State Repository
 
 from __future__ import annotations
 
-from uuid import UUID
+from uuid import UUID, uuid4
 
 from projectintelligence.application.ports.outbound.state_repository import (
     StateRepository,
 )
-from projectintelligence.application.state.project_intelligence_state import (
-    ProjectIntelligenceState,
+from projectintelligence.domain.resume.project_state import (
+    ProjectState,
 )
 
 
@@ -26,25 +26,33 @@ class InMemoryStateRepository(
     def __init__(self) -> None:
         self._storage: dict[
             UUID,
-            ProjectIntelligenceState,
+            ProjectState,
         ] = {}
 
     def save(
         self,
-        state: ProjectIntelligenceState,
+        state: ProjectState,
     ) -> None:
-        self._storage[state.state_id] = state
+
+        state_id = uuid4()
+
+        self._storage[state_id] = state
 
     def update(
         self,
-        state: ProjectIntelligenceState,
+        state: ProjectState,
     ) -> None:
-        self._storage[state.state_id] = state
+
+        for state_id, stored_state in self._storage.items():
+            if stored_state == state:
+                self._storage[state_id] = state
+                return
 
     def delete(
         self,
         state_id: UUID,
     ) -> None:
+
         self._storage.pop(
             state_id,
             None,
@@ -54,49 +62,30 @@ class InMemoryStateRepository(
         self,
         state_id: UUID,
     ) -> bool:
+
         return state_id in self._storage
 
     def get_by_id(
         self,
         state_id: UUID,
-    ) -> ProjectIntelligenceState | None:
+    ) -> ProjectState | None:
+
         return self._storage.get(
             state_id,
         )
 
-    def get_latest(
+    def list_all(
         self,
-        project_id: UUID,
-    ) -> ProjectIntelligenceState | None:
+    ) -> list[ProjectState]:
 
-        states = [
-            state for state in self._storage.values() if state.project_id == project_id
-        ]
-
-        if not states:
-            return None
-
-        return max(
-            states,
-            key=lambda item: item.created_at,
+        return list(
+            self._storage.values(),
         )
-
-    def list_by_project(
-        self,
-        project_id: UUID,
-    ) -> list[ProjectIntelligenceState]:
-
-        return [
-            state for state in self._storage.values() if state.project_id == project_id
-        ]
 
     def count(
         self,
-        project_id: UUID,
     ) -> int:
 
         return len(
-            self.list_by_project(
-                project_id,
-            ),
+            self._storage,
         )

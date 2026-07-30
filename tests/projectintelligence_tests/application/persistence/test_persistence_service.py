@@ -6,7 +6,9 @@ Persistence Service Test
 
 from __future__ import annotations
 
+from datetime import datetime, timezone
 from unittest.mock import Mock
+from uuid import uuid4
 
 from projectintelligence.application.persistence.services.persistence_service import (
     PersistenceService,
@@ -43,7 +45,11 @@ def test_persistence_service_delegates_storage_operations() -> None:
     knowledge = Mock()
     state = Mock()
     resume = Mock()
-    history = SnapshotHistory()
+    history = SnapshotHistory(
+        history_id=uuid4(),
+        project_id=uuid4(),
+        created_at=datetime.now(timezone.utc),
+    )
 
     service.save_snapshot(
         snapshot,

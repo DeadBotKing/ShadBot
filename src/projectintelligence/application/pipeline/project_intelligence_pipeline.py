@@ -7,6 +7,8 @@ Project Intelligence Pipeline
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import datetime, timezone
+from uuid import uuid4
 
 from projectintelligence.application.context.context_builder import (
     ContextBuilder,
@@ -85,19 +87,25 @@ class ProjectIntelligencePipeline:
             project,
         )
 
-        snapshot.detected_languages = self.language_detector.detect(
-            files,
+        snapshot.detected_languages = list(
+            self.language_detector.detect(
+                files,
+            )
         )
 
-        snapshot.detected_frameworks = self.framework_detector.detect(
-            files,
+        snapshot.detected_frameworks = list(
+            self.framework_detector.detect(
+                files,
+            )
         )
 
         snapshot.dependencies = self.dependency_analyzer.analyze(
-            files,
+            project.workspace,
         )
 
-        git_context = self.git_analyzer.analyze()
+        git_context = self.git_analyzer.analyze(
+            project.project_id,
+        )
 
         git_state = self.git_context_mapper.map(
             git_context,
@@ -116,7 +124,11 @@ class ProjectIntelligencePipeline:
 
         context.git_state = git_state
 
-        history = SnapshotHistory()
+        history = SnapshotHistory(
+            history_id=uuid4(),
+            project_id=project.project_id,
+            created_at=datetime.now(timezone.utc),
+        )
 
         resume_context = ResumeBuildContext(
             snapshot=snapshot,

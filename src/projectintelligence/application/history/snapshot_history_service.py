@@ -7,6 +7,8 @@ Snapshot History Service
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import datetime, timezone
+from uuid import uuid4
 
 from projectintelligence.application.snapshot.snapshot_difference_service import (
     SnapshotDifferenceService,
@@ -32,7 +34,11 @@ class SnapshotHistoryService:
         snapshots: list[ProjectSnapshot],
     ) -> SnapshotHistory:
 
-        history = SnapshotHistory()
+        history = SnapshotHistory(
+            history_id=uuid4(),
+            project_id=snapshots[0].project_id,
+            created_at=datetime.now(timezone.utc),
+        )
 
         for previous, current in zip(
             snapshots,

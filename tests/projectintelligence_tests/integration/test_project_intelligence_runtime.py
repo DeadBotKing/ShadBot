@@ -6,8 +6,10 @@ Project Intelligence Runtime Integration Test
 
 from __future__ import annotations
 
+from datetime import datetime, timezone
 from pathlib import Path
 from unittest.mock import Mock
+from uuid import uuid4
 
 from projectintelligence.application.handoff.agent_context_builder import (
     AgentContextBuilder,
@@ -42,6 +44,9 @@ from projectintelligence.domain.knowledge.project_knowledge import (
 from projectintelligence.domain.project.project_entity import (
     ProjectEntity,
 )
+from projectintelligence.domain.resume.project_resume import (
+    ProjectResume,
+)
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
 )
@@ -72,12 +77,18 @@ def test_project_intelligence_runtime_flow() -> None:
     pipeline_result = PipelineResult(
         snapshot=snapshot,
         knowledge=knowledge,
-        history=SnapshotHistory(),
+        history=SnapshotHistory(
+            history_id=uuid4(),
+            project_id=uuid4(),
+            created_at=datetime.now(timezone.utc),
+        ),
         state=state,
         context=context,
     )
 
-    resume = Mock()
+    resume = Mock(spec=ProjectResume)
+
+    resume.recommendations = ()
 
     pipeline = Mock()
 

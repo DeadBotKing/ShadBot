@@ -6,6 +6,7 @@ Resume Generator Test
 
 from __future__ import annotations
 
+from datetime import datetime, timezone
 from pathlib import Path
 from uuid import uuid4
 
@@ -79,7 +80,11 @@ def test_resume_generator_creates_project_resume() -> None:
     build_context = ResumeBuildContext(
         snapshot=snapshot,
         knowledge=knowledge,
-        history=SnapshotHistory(),
+        history=SnapshotHistory(
+            history_id=uuid4(),
+            project_id=project_id,
+            created_at=datetime.now(timezone.utc),
+        ),
         context=context,
     )
 

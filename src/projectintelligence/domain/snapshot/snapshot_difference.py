@@ -36,3 +36,19 @@ class SnapshotDifference:
     git_changed: bool = False
 
     breaking_changes: list[str] = field(default_factory=list)
+
+    @property
+    def total_changes(self) -> int:
+        return (
+            len(self.added_files)
+            + len(self.removed_files)
+            + len(self.modified_files)
+            + len(self.added_dependencies)
+            + len(self.removed_dependencies)
+            + len(self.updated_dependencies)
+            + len(self.language_changes)
+            + len(self.framework_changes)
+            + len(self.breaking_changes)
+            + int(self.architecture_changed)
+            + int(self.git_changed)
+        )

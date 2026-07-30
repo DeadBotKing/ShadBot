@@ -11,9 +11,6 @@ from dataclasses import dataclass
 from projectintelligence.application.git.models.git_context import (
     GitContext,
 )
-from projectintelligence.application.state.project_intelligence_state import (
-    ProjectIntelligenceState,
-)
 from projectintelligence.domain.context.project_context import (
     ProjectContext,
 )
@@ -32,6 +29,9 @@ from projectintelligence.domain.knowledge.project_knowledge import (
 from projectintelligence.domain.resume.project_resume import (
     ProjectResume,
 )
+from projectintelligence.domain.resume.project_state import (
+    ProjectState,
+)
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
 )
@@ -49,7 +49,7 @@ class PipelineResult:
 
     history: SnapshotHistory
 
-    state: ProjectIntelligenceState
+    state: ProjectState
 
     context: ProjectContext
 

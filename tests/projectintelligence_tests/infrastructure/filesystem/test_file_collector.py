@@ -9,7 +9,7 @@ from projectintelligence.infrastructure.filesystem.file_collector import (
 )
 
 
-def test_should_collect_only_files(tmp_path: Path):
+def test_should_collect_only_files(tmp_path: Path) -> None:
     workspace = tmp_path / "workspace"
 
     workspace.mkdir()

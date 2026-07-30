@@ -6,6 +6,7 @@ Agent Context Export Service Tests
 
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Any
 from uuid import uuid4
 
 from projectintelligence.application.handoff.export.agent_context_export_service import (
@@ -55,7 +56,7 @@ def test_export_service_exports_valid_payload():
         schema_path=schema_path,
     )
 
-    payload = service.export(
+    payload: dict[str, Any] = service.export(
         package,
     )
 

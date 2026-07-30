@@ -98,6 +98,7 @@ def test_project_intelligence_pipeline_integration() -> None:
     }
 
     git_analyzer.analyze.return_value = GitContext(
+        project_id=project.project_id,
         status=GitStatus(
             is_repository=True,
             is_dirty=False,

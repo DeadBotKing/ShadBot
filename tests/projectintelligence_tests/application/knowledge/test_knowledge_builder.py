@@ -54,6 +54,7 @@ def test_knowledge_builder_builds_project_knowledge() -> None:
     }
 
     git_context = GitContext(
+        project_id=snapshot.project_id,
         status=GitStatus(
             is_repository=True,
             is_dirty=False,

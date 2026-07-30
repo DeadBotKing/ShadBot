@@ -69,12 +69,8 @@ class AgentContextBuilder:
         current_state = resume.state.current_phase if resume else None
 
         recommendations = (
-            tuple(resume.recommendations)
+            tuple(recommendation.title for recommendation in resume.recommendations)
             if resume
-            and isinstance(
-                resume.recommendations,
-                tuple | list,
-            )
             else tuple()
         )
 

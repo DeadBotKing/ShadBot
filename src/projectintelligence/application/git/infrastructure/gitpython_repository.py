@@ -58,7 +58,7 @@ class GitPythonRepository(IGitRepository):
         for item in self._repo.index.diff(None):
             changes.append(
                 GitChange(
-                    path=item.a_path,
+                    path=item.a_path or "",
                     change_type=GitChangeType.MODIFIED,
                     is_staged=False,
                 )
@@ -72,9 +72,9 @@ class GitPythonRepository(IGitRepository):
         return GitCommit(
             hash=commit.hexsha,
             short_hash=commit.hexsha[:7],
-            author=commit.author.name,
-            email=commit.author.email,
-            message=commit.message.strip(),
+            author=commit.author.name or "",
+            email=commit.author.email or "",
+            message=str(commit.message).strip(),
             date=commit.committed_datetime,
         )
 
@@ -89,9 +89,9 @@ class GitPythonRepository(IGitRepository):
                 GitCommit(
                     hash=commit.hexsha,
                     short_hash=commit.hexsha[:7],
-                    author=commit.author.name,
-                    email=commit.author.email,
-                    message=commit.message.strip(),
+                    author=commit.author.name or "",
+                    email=commit.author.email or "",
+                    message=str(commit.message).strip(),
                     date=commit.committed_datetime,
                 )
             )

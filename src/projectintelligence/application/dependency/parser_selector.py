@@ -36,7 +36,7 @@ class ParserSelector:
         Select matching parsers for project files.
         """
 
-        selected: list[tuple[Path, object]] = []
+        selected: list[tuple[Path, IDependencyParser]] = []
 
         registrations = self._parser_registry.registrations()
 

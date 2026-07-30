@@ -18,7 +18,9 @@ from projectintelligence.infrastructure.filesystem.workspace_scanner import (
 )
 
 
-def test_should_scan_workspace_and_return_allowed_files(tmp_path: Path):
+def test_should_scan_workspace_and_return_allowed_files(
+    tmp_path: Path,
+) -> None:
     workspace = tmp_path / "workspace"
 
     source_directory = workspace / "src"

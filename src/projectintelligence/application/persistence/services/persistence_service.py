@@ -38,9 +38,6 @@ from projectintelligence.application.persistence.services.snapshot_storage_servi
 from projectintelligence.application.persistence.services.state_storage_service import (
     StateStorageService,
 )
-from projectintelligence.application.state.project_intelligence_state import (
-    ProjectIntelligenceState,
-)
 from projectintelligence.domain.context.project_context import (
     ProjectContext,
 )
@@ -58,6 +55,9 @@ from projectintelligence.domain.knowledge.project_knowledge import (
 )
 from projectintelligence.domain.resume.project_resume import (
     ProjectResume,
+)
+from projectintelligence.domain.resume.project_state import (
+    ProjectState,
 )
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
@@ -107,11 +107,11 @@ class PersistenceService:
         snapshot: ProjectSnapshot,
         knowledge: ProjectKnowledge,
         history: SnapshotHistory,
-        state: ProjectIntelligenceState,
+        state: ProjectState,
         context: ProjectContext,
         resume: ProjectResume,
         agent_context: AgentContextPackage,
-        evolution: ProjectEvolution,
+        evolution: ProjectEvolution | None,
     ) -> PersistenceBatchResult:
         results = (
             self.save_snapshot(
@@ -135,8 +135,14 @@ class PersistenceService:
             self.save_agent_context(
                 agent_context,
             ),
-            self.save_evolution(
-                evolution,
+            *(
+                (
+                    self.save_evolution(
+                        evolution,
+                    ),
+                )
+                if evolution is not None
+                else ()
             ),
         )
 
@@ -154,7 +160,7 @@ class PersistenceService:
 
     def save_state(
         self,
-        state: ProjectIntelligenceState,
+        state: ProjectState,
     ) -> PersistenceResult:
         return self.state_storage.save(
             state,

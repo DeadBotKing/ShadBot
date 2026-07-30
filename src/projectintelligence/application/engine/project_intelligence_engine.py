@@ -8,6 +8,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from projectintelligence.application.models.results.runtime_result import (
+    RuntimeResult,
+)
 from projectintelligence.application.orchestration.project_intelligence_orchestrator import (
     ProjectIntelligenceOrchestrator,
 )
@@ -27,7 +30,7 @@ class ProjectIntelligenceEngine:
     def analyze(
         self,
         project: ProjectEntity,
-    ):
+    ) -> RuntimeResult:
         """
         Analyze a project and execute the complete intelligence pipeline.
         """

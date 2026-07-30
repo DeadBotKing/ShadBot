@@ -9,8 +9,8 @@ from __future__ import annotations
 from projectintelligence.application.resume.models.resume_build_context import (
     ResumeBuildContext,
 )
-from projectintelligence.application.state.project_intelligence_state import (
-    ProjectIntelligenceState,
+from projectintelligence.domain.resume.project_state import (
+    ProjectState,
 )
 
 
@@ -22,7 +22,7 @@ class ProjectStateBuilder:
     def build(
         self,
         context: ResumeBuildContext,
-    ) -> ProjectIntelligenceState:
+    ) -> ProjectState:
         """
         Build the current project intelligence state.
         """
@@ -42,7 +42,7 @@ class ProjectStateBuilder:
         if total_components > 0:
             completion_percentage = (completed_components / total_components) * 100
 
-        return ProjectIntelligenceState(
+        return ProjectState(
             current_phase="Project Intelligence Engine",
             current_sub_phase="Analysis Pipeline",
             architecture_version=context.context.version,

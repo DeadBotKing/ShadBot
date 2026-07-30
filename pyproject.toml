@@ -34,3 +34,11 @@ select = [
 [tool.black]
 line-length = 88
 target-version = ["py314"]
+
+[tool.setuptools.package-data]
+projectintelligence = ["py.typed"]
+
+[tool.mypy]
+python_version = "3.14"
+explicit_package_bases = true
+mypy_path = "src"

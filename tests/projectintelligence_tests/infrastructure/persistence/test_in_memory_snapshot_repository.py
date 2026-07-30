@@ -7,6 +7,7 @@ In Memory Snapshot Repository Test
 from __future__ import annotations
 
 from pathlib import Path
+from uuid import uuid4
 
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
@@ -21,7 +22,7 @@ def test_in_memory_snapshot_repository_stores_snapshot() -> None:
     repository = InMemorySnapshotRepository()
 
     snapshot = ProjectSnapshot(
-        project_id=None,
+        project_id=uuid4(),
         workspace=Path("."),
     )
 
@@ -40,7 +41,7 @@ def test_in_memory_snapshot_repository_get_latest() -> None:
 
     repository = InMemorySnapshotRepository()
 
-    project_id = None
+    project_id = uuid4()
 
     snapshot = ProjectSnapshot(
         project_id=project_id,

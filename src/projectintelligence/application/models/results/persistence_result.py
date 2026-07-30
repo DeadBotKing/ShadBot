@@ -26,7 +26,9 @@ class PersistenceResult:
 
     message: str = ""
 
-    created_at: datetime = field(default_factory=datetime.now(timezone.utc))
+    created_at: datetime = field(
+        default_factory=lambda: datetime.now(timezone.utc),
+    )
 
     @classmethod
     def succeeded(

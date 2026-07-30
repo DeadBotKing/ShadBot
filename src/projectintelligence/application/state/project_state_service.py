@@ -14,8 +14,8 @@ from projectintelligence.application.resume.models.resume_build_context import (
 from projectintelligence.application.state.builders.project_state_builder import (
     ProjectStateBuilder,
 )
-from projectintelligence.application.state.project_intelligence_state import (
-    ProjectIntelligenceState,
+from projectintelligence.domain.resume.project_state import (
+    ProjectState,
 )
 
 
@@ -30,7 +30,7 @@ class ProjectStateService:
     def build(
         self,
         context: ResumeBuildContext,
-    ) -> ProjectIntelligenceState:
+    ) -> ProjectState:
         """
         Build the current Project Intelligence state.
         """

@@ -6,6 +6,8 @@ In Memory Knowledge Repository Test
 
 from __future__ import annotations
 
+from uuid import uuid4
+
 from projectintelligence.domain.knowledge.project_knowledge import (
     ProjectKnowledge,
 )
@@ -19,7 +21,7 @@ def test_in_memory_knowledge_repository_stores_knowledge() -> None:
     repository = InMemoryKnowledgeRepository()
 
     knowledge = ProjectKnowledge(
-        project_id=None,
+        project_id=uuid4(),
     )
 
     repository.save(
@@ -38,7 +40,7 @@ def test_in_memory_knowledge_repository_get_latest() -> None:
     repository = InMemoryKnowledgeRepository()
 
     knowledge = ProjectKnowledge(
-        project_id=None,
+        project_id=uuid4(),
     )
 
     repository.save(

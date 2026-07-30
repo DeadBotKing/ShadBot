@@ -14,8 +14,8 @@ from projectintelligence.application.models.results.persistence_result import (
 from projectintelligence.application.ports.outbound.state_repository import (
     StateRepository,
 )
-from projectintelligence.application.state.project_intelligence_state import (
-    ProjectIntelligenceState,
+from projectintelligence.domain.resume.project_state import (
+    ProjectState,
 )
 
 
@@ -29,7 +29,7 @@ class StateStorageService:
 
     def save(
         self,
-        state: ProjectIntelligenceState,
+        state: ProjectState,
     ) -> PersistenceResult:
         self.repository.save(
             state,
@@ -37,7 +37,7 @@ class StateStorageService:
 
         return PersistenceResult.succeeded(
             operation="save",
-            entity="ProjectIntelligenceState",
-            identifier=str(state.state_id),
+            entity="ProjectState",
+            identifier=None,
             message="Project intelligence state stored successfully.",
         )

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from uuid import UUID
+
 from ..models.git_context import GitContext
 from .git_branch_detector import GitBranchDetector
 from .git_change_detector import GitChangeDetector
@@ -27,12 +29,16 @@ class GitAnalyzer:
         self._change_detector = change_detector
         self._history_analyzer = history_analyzer
 
-    def analyze(self) -> GitContext:
+    def analyze(
+        self,
+        project_id: UUID,
+    ) -> GitContext:
         """
         Executes Git intelligence analysis pipeline.
         """
 
         return GitContext(
+            project_id=project_id,
             status=self._status_detector.detect(),
             current_commit=None,
             branches=self._branch_detector.detect_all(),

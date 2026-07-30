@@ -9,6 +9,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
+from projectintelligence.application.contracts.project.workspace_scanner import (
+    IWorkspaceScanner,
+)
 from projectintelligence.infrastructure.filesystem.directory_walker import (
     DirectoryWalker,
 )
@@ -21,7 +24,9 @@ from projectintelligence.infrastructure.filesystem.ignore_manager import (
 
 
 @dataclass(slots=True)
-class WorkspaceScanner:
+class WorkspaceScanner(
+    IWorkspaceScanner,
+):
     """
     Coordinates filesystem scanning.
 

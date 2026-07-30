@@ -6,8 +6,9 @@ In Memory Evolution Repository Tests
 
 from __future__ import annotations
 
-from uuid import uuid4
+from uuid import UUID, uuid4
 
+from projectintelligence.domain.evolution.evolution_change import EvolutionChange
 from projectintelligence.domain.evolution.project_evolution import (
     ProjectEvolution,
 )
@@ -17,13 +18,13 @@ from projectintelligence.infrastructure.persistence.repositories.in_memory_evolu
 
 
 def create_evolution(
-    project_id,
+    project_id: UUID,
 ) -> ProjectEvolution:
     return ProjectEvolution(
         project_id=project_id,
         previous_snapshot_id=uuid4(),
         current_snapshot_id=uuid4(),
-        changes=[],
+        changes=tuple[EvolutionChange](),
     )
 
 

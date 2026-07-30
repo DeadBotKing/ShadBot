@@ -5,6 +5,7 @@ Agent Context Serializer Tests
 """
 
 from datetime import datetime, timezone
+from typing import Any
 from uuid import uuid4
 
 from projectintelligence.application.handoff.serialization.agent_context_serializer import (
@@ -44,7 +45,7 @@ def test_agent_context_serializer_serializes_package():
 
     serializer = AgentContextSerializer()
 
-    result = serializer.serialize(
+    result: dict[str, Any] = serializer.serialize(
         package,
     )
 

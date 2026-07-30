@@ -12,6 +12,9 @@ from pathlib import Path
 from projectintelligence.application.contracts.analysis.dependency_analyzer import (
     IDependencyAnalyzer,
 )
+from projectintelligence.application.contracts.project.workspace_scanner import (
+    IWorkspaceScanner,
+)
 from projectintelligence.application.dependency.parser_selector import (
     ParserSelector,
 )
@@ -25,17 +28,29 @@ class DependencyAnalyzer(IDependencyAnalyzer):
 
     parser_selector: ParserSelector
 
+    workspace_scanner: IWorkspaceScanner
+
     def analyze(
         self,
-        files: list[Path],
+        workspace: Path,
     ) -> dict[str, str]:
         """
         Analyze project dependencies.
         """
 
+        files = self.workspace_scanner.scan(
+            workspace,
+        )
+
         dependencies: dict[str, str] = {}
 
-        for manifest, parser in self.parser_selector.select(files):
-            dependencies.update(parser.parse(manifest))
+        for manifest, parser in self.parser_selector.select(
+            files,
+        ):
+            dependencies.update(
+                parser.parse(
+                    manifest,
+                )
+            )
 
         return dependencies

@@ -36,6 +36,8 @@ class EvolutionStorageService:
             evolution,
         )
 
-        return PersistenceResult(
-            success=True,
+        return PersistenceResult.succeeded(
+            operation="save",
+            entity="ProjectEvolution",
+            identifier=str(evolution.evolution_id),
         )

@@ -39,6 +39,8 @@ class AgentContextStorageService:
             context,
         )
 
-        return PersistenceResult(
-            success=True,
+        return PersistenceResult.succeeded(
+            operation="save",
+            entity="AgentContextPackage",
+            identifier=str(context.project_id),
         )

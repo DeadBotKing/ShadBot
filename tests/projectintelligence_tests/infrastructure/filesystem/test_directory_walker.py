@@ -9,7 +9,7 @@ from projectintelligence.infrastructure.filesystem.directory_walker import (
 )
 
 
-def test_should_walk_all_paths_in_workspace(tmp_path: Path):
+def test_should_walk_all_paths_in_workspace(tmp_path: Path) -> None:
     workspace = tmp_path / "workspace"
 
     source_directory = workspace / "src"

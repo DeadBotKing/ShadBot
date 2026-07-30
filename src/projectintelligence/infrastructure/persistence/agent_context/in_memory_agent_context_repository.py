@@ -6,20 +6,33 @@ In Memory Agent Context Repository
 
 from __future__ import annotations
 
-from uuid import UUID
+from uuid import UUID, uuid4
 
+from projectintelligence.application.handoff.contracts.agent_context_repository import (
+    IAgentContextRepository,
+)
 from projectintelligence.domain.handoff.agent_context_package import (
     AgentContextPackage,
 )
 
 
-class InMemoryAgentContextRepository:
+class InMemoryAgentContextRepository(
+    IAgentContextRepository,
+):
     """
-    In-memory storage implementation for agent contexts.
+    In-memory implementation for agent context persistence.
     """
 
     def __init__(self) -> None:
-        self._contexts: dict[UUID, list[AgentContextPackage]] = {}
+        self._contexts: dict[
+            UUID,
+            AgentContextPackage,
+        ] = {}
+
+        self._project_index: dict[
+            UUID,
+            list[UUID],
+        ] = {}
 
     def save(
         self,
@@ -29,11 +42,15 @@ class InMemoryAgentContextRepository:
         Store an agent context package.
         """
 
-        if context.project_id not in self._contexts:
-            self._contexts[context.project_id] = []
+        context_id = uuid4()
 
-        self._contexts[context.project_id].append(
-            context,
+        self._contexts[context_id] = context
+
+        if context.project_id not in self._project_index:
+            self._project_index[context.project_id] = []
+
+        self._project_index[context.project_id].append(
+            context_id,
         )
 
     def get_latest(
@@ -41,29 +58,30 @@ class InMemoryAgentContextRepository:
         project_id: UUID,
     ) -> AgentContextPackage | None:
         """
-        Return the latest stored context for a project.
+        Retrieve the latest agent context package
+        for a project.
         """
 
-        contexts = self._contexts.get(
+        context_ids = self._project_index.get(
             project_id,
             [],
         )
 
-        if not contexts:
+        if not context_ids:
             return None
 
-        return contexts[-1]
+        return self._contexts.get(
+            context_ids[-1],
+        )
 
     def get_by_id(
         self,
         context_id: UUID,
     ) -> AgentContextPackage | None:
         """
-        Find a context package by id.
-
-        Note:
-        Current domain model does not expose a dedicated
-        context_id, therefore lookup is not supported yet.
+        Retrieve an agent context package by identifier.
         """
 
-        return None
+        return self._contexts.get(
+            context_id,
+        )

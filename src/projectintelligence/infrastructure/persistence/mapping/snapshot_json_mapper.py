@@ -9,6 +9,7 @@ from __future__ import annotations
 from dataclasses import asdict
 from datetime import datetime
 from pathlib import Path
+from typing import Any
 from uuid import UUID
 
 from projectintelligence.domain.snapshot.project_snapshot import (
@@ -29,7 +30,7 @@ class SnapshotJsonMapper:
     @staticmethod
     def to_dict(
         snapshot: ProjectSnapshot,
-    ) -> dict:
+    ) -> dict[str, Any]:
         data = asdict(snapshot)
 
         data["snapshot_id"] = str(snapshot.snapshot_id)
@@ -40,7 +41,7 @@ class SnapshotJsonMapper:
 
     @staticmethod
     def from_dict(
-        data: dict,
+        data: dict[str, Any],
     ) -> ProjectSnapshot:
         return ProjectSnapshot(
             project_id=UUID(data["project_id"]),

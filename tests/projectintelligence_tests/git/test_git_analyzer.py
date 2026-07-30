@@ -1,6 +1,14 @@
+"""
+ShadBot Project Intelligence
+
+Git Analyzer Test
+"""
+
 from __future__ import annotations
 
+from datetime import datetime, timezone
 from unittest.mock import Mock
+from uuid import uuid4
 
 from projectintelligence.application.git.models.git_branch import (
     GitBranch,
@@ -47,7 +55,7 @@ def test_git_analyzer_builds_git_context() -> None:
             author="Developer",
             email="developer@example.com",
             message="Initial commit",
-            date=None,
+            date=datetime.now(timezone.utc),
         ),
     )
 
@@ -58,7 +66,9 @@ def test_git_analyzer_builds_git_context() -> None:
         history_analyzer=history_analyzer,
     )
 
-    result = analyzer.analyze()
+    result = analyzer.analyze(
+        uuid4(),
+    )
 
     assert result.status.current_branch == "main"
     assert len(result.branches) == 1

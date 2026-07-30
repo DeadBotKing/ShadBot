@@ -7,12 +7,32 @@ Resume Builder Service
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import datetime, timezone
+from uuid import uuid4
 
+from projectintelligence.application.resume.completion_analyzer import (
+    CompletionAnalyzer,
+)
 from projectintelligence.application.resume.models.resume_build_context import (
     ResumeBuildContext,
 )
+from projectintelligence.application.resume.pending_task_analyzer import (
+    PendingTaskAnalyzer,
+)
+from projectintelligence.application.resume.project_summary_builder import (
+    ProjectSummaryBuilder,
+)
+from projectintelligence.application.resume.recommendation_engine import (
+    RecommendationEngine,
+)
+from projectintelligence.application.state.builders.project_state_builder import (
+    ProjectStateBuilder,
+)
 from projectintelligence.domain.resume.project_resume import (
     ProjectResume,
+)
+from projectintelligence.domain.resume.resume_metadata import (
+    ResumeMetadata,
 )
 
 
@@ -25,15 +45,15 @@ class ResumeBuilderService:
     from intelligence artifacts.
     """
 
-    completion_analyzer: object
+    completion_analyzer: CompletionAnalyzer
 
-    pending_task_analyzer: object
+    pending_task_analyzer: PendingTaskAnalyzer
 
-    recommendation_engine: object
+    recommendation_engine: RecommendationEngine
 
-    project_state_analyzer: object
+    project_state_builder: ProjectStateBuilder
 
-    summary_builder: object
+    summary_builder: ProjectSummaryBuilder
 
     def build(
         self,
@@ -55,9 +75,7 @@ class ResumeBuilderService:
             context,
         )
 
-        state = self.project_state_analyzer.analyze(
-            context,
-        )
+        state = self.project_state_builder.build(context)
 
         summary = self.summary_builder.build(
             context,
@@ -65,7 +83,12 @@ class ResumeBuilderService:
 
         return ProjectResume(
             project_id=context.snapshot.project_id,
-            metadata=context.metadata,
+            metadata=ResumeMetadata(
+                resume_id=uuid4(),
+                snapshot_id=context.snapshot.snapshot_id,
+                generated_at=datetime.now(timezone.utc),
+                generator_version="1.0",
+            ),
             state=state,
             summary=summary,
             completed_work=tuple(

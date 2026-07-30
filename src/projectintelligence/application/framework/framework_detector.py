@@ -32,7 +32,7 @@ class FrameworkDetector(IFrameworkDetector):
     def detect(
         self,
         files: list[Path],
-    ) -> list[str]:
+    ) -> set[str]:
         """
         Detect project frameworks.
         """
@@ -46,4 +46,4 @@ class FrameworkDetector(IFrameworkDetector):
             ):
                 detected.append(signature.framework)
 
-        return detected
+        return set(detected)

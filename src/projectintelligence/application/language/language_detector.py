@@ -32,7 +32,7 @@ class LanguageDetector(ILanguageDetector):
     def detect(
         self,
         files: list[Path],
-    ) -> list[str]:
+    ) -> set[str]:
         """
         Detect project languages.
         """
@@ -41,4 +41,6 @@ class LanguageDetector(ILanguageDetector):
 
         statistics = self.language_statistics.collect(detected)
 
-        return self.language_statistics.unique_languages(statistics)
+        return set(
+            self.language_statistics.unique_languages(statistics),
+        )

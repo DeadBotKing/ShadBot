@@ -31,6 +31,13 @@ class DirectoryTreeBuilder:
             current = tree
 
             for part in relative_parts:
-                current = current.setdefault(part, {})
+                child = current.setdefault(part, {})
+
+                if not isinstance(child, dict):
+                    raise TypeError(
+                        f"Invalid directory tree node: {part}",
+                    )
+
+                current = child
 
         return tree

@@ -65,7 +65,9 @@ class ProjectSummaryBuilder:
         )
 
         latest_changes = (
-            "; ".join(history.differences)
+            "; ".join(
+                str(difference.total_changes) for difference in history.differences
+            )
             if history.differences
             else "No historical changes available."
         )

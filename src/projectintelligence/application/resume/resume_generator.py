@@ -30,9 +30,6 @@ from projectintelligence.application.resume.recommendation_engine import (
 from projectintelligence.domain.resume.project_resume import (
     ProjectResume,
 )
-from projectintelligence.domain.resume.project_state import (
-    ProjectState,
-)
 from projectintelligence.domain.resume.resume_metadata import (
     ResumeMetadata,
 )
@@ -66,25 +63,8 @@ class ResumeGenerator:
         Generate a complete project resume.
         """
 
-        state_analysis = self.project_state_analyzer.analyze(
+        state = self.project_state_analyzer.analyze(
             context,
-        )
-
-        state = ProjectState(
-            current_phase=state_analysis["phase"],
-            current_sub_phase=state_analysis["status"],
-            architecture_version=context.context.version,
-            completed_components=len(
-                state_analysis["completed_areas"],
-            ),
-            pending_components=len(
-                state_analysis["pending_areas"],
-            ),
-            total_components=(
-                len(state_analysis["completed_areas"])
-                + len(state_analysis["pending_areas"])
-            ),
-            completion_percentage=state_analysis["completion_percentage"],
         )
 
         return ProjectResume(

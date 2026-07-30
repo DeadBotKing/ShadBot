@@ -9,6 +9,9 @@ from __future__ import annotations
 from projectintelligence.application.resume.models.resume_build_context import (
     ResumeBuildContext,
 )
+from projectintelligence.domain.resume.project_state import (
+    ProjectState,
+)
 
 
 class ProjectStateAnalyzer:
@@ -19,7 +22,7 @@ class ProjectStateAnalyzer:
     def analyze(
         self,
         context: ResumeBuildContext,
-    ) -> dict[str, object]:
+    ) -> ProjectState:
         """
         Produce a high-level project state analysis.
         """
@@ -79,10 +82,12 @@ class ProjectStateAnalyzer:
             else 0.0
         )
 
-        return {
-            "completed_areas": completed_areas,
-            "pending_areas": pending_areas,
-            "completion_percentage": completion_percentage,
-            "phase": "Project Intelligence Engine",
-            "status": ("Active" if pending_areas else "Complete"),
-        }
+        return ProjectState(
+            current_phase="Project Intelligence Engine",
+            current_sub_phase="Active" if pending_areas else "Complete",
+            architecture_version=context.context.version,
+            completed_components=len(completed_areas),
+            pending_components=len(pending_areas),
+            total_components=len(completed_areas) + len(pending_areas),
+            completion_percentage=completion_percentage,
+        )

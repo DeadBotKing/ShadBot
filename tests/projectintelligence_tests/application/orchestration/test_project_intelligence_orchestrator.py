@@ -6,8 +6,10 @@ Project Intelligence Orchestrator Test
 
 from __future__ import annotations
 
+from datetime import datetime, timezone
 from pathlib import Path
 from unittest.mock import Mock
+from uuid import uuid4
 
 from projectintelligence.application.handoff.agent_context_builder import (
     AgentContextBuilder,
@@ -62,7 +64,11 @@ def test_orchestrator_generates_resume() -> None:
     pipeline_result = PipelineResult(
         snapshot=snapshot,
         knowledge=knowledge,
-        history=SnapshotHistory(),
+        history=SnapshotHistory(
+            history_id=uuid4(),
+            project_id=project.project_id,
+            created_at=datetime.now(timezone.utc),
+        ),
         state=Mock(),
         context=context,
     )
@@ -81,6 +87,8 @@ def test_orchestrator_generates_resume() -> None:
     snapshot_history_service.get_latest_snapshot.return_value = previous_snapshot
 
     resume = Mock(spec=ProjectResume)
+
+    resume.recommendations = ()
 
     resume_generator = Mock()
 

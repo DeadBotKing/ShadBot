@@ -9,20 +9,20 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from uuid import UUID
 
-from projectintelligence.application.state.project_intelligence_state import (
-    ProjectIntelligenceState,
+from projectintelligence.domain.resume.project_state import (
+    ProjectState,
 )
 
 
 class StateRepository(ABC):
     """
-    Outbound port for persisting and retrieving project intelligence state.
+    Outbound port for persisting project intelligence state.
     """
 
     @abstractmethod
     def save(
         self,
-        state: ProjectIntelligenceState,
+        state: ProjectState,
     ) -> None:
         """
         Persist project intelligence state.
@@ -31,7 +31,7 @@ class StateRepository(ABC):
     @abstractmethod
     def update(
         self,
-        state: ProjectIntelligenceState,
+        state: ProjectState,
     ) -> None:
         """
         Update existing project intelligence state.
@@ -59,34 +59,23 @@ class StateRepository(ABC):
     def get_by_id(
         self,
         state_id: UUID,
-    ) -> ProjectIntelligenceState | None:
+    ) -> ProjectState | None:
         """
         Retrieve state by identifier.
         """
 
     @abstractmethod
-    def get_latest(
+    def list_all(
         self,
-        project_id: UUID,
-    ) -> ProjectIntelligenceState | None:
+    ) -> list[ProjectState]:
         """
-        Retrieve latest state of a project.
-        """
-
-    @abstractmethod
-    def list_by_project(
-        self,
-        project_id: UUID,
-    ) -> list[ProjectIntelligenceState]:
-        """
-        Retrieve all states of a project.
+        Retrieve all stored states.
         """
 
     @abstractmethod
     def count(
         self,
-        project_id: UUID,
     ) -> int:
         """
-        Count stored states of a project.
+        Count stored states.
         """

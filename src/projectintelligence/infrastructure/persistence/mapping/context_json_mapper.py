@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from dataclasses import asdict
 from datetime import datetime
+from typing import Any
 from uuid import UUID
 
 from projectintelligence.domain.context.project_context import (
@@ -27,7 +28,7 @@ class ContextJsonMapper:
     @staticmethod
     def to_dict(
         context: ProjectContext,
-    ) -> dict:
+    ) -> dict[str, Any]:
 
         data = asdict(context)
 
@@ -39,7 +40,7 @@ class ContextJsonMapper:
 
     @staticmethod
     def from_dict(
-        data: dict,
+        data: dict[str, Any],
     ) -> ProjectContext:
 
         git_state = None

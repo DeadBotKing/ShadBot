@@ -214,7 +214,7 @@ class ProjectIntelligenceBootstrap:
     Responsible for constructing the complete dependency graph.
     """
 
-    def build(self):
+    def build(self) -> ProjectIntelligenceEngine:
         """
         Build the complete Project Intelligence Engine.
         """
@@ -325,6 +325,7 @@ class ProjectIntelligenceBootstrap:
 
         dependency_analyzer = DependencyAnalyzer(
             parser_selector=parser_selector,
+            workspace_scanner=workspace_scanner,
         )
 
         git_repository = GitPythonRepository(
