@@ -4,11 +4,16 @@ ShadBot Project Intelligence
 Project Intelligence Bootstrap Tests
 """
 
+from pathlib import Path
+
 from projectintelligence.application.bootstrap.project_intelligence_bootstrap import (
     ProjectIntelligenceBootstrap,
 )
 from projectintelligence.application.engine.project_intelligence_engine import (
     ProjectIntelligenceEngine,
+)
+from projectintelligence.domain.project.project_entity import (
+    ProjectEntity,
 )
 
 
@@ -19,7 +24,14 @@ def test_project_intelligence_bootstrap_builds_engine():
 
     bootstrap = ProjectIntelligenceBootstrap()
 
-    engine = bootstrap.build()
+    project = ProjectEntity(
+        name="Test Project",
+        workspace=Path.cwd(),
+    )
+
+    engine = bootstrap.build(
+        project=project,
+    )
 
     assert isinstance(
         engine,
