@@ -19,11 +19,11 @@ from projectintelligence.domain.history.snapshot_history import (
 from projectintelligence.domain.knowledge.project_knowledge import (
     ProjectKnowledge,
 )
+from projectintelligence.domain.resume.project_state import (
+    ProjectState,
+)
 from projectintelligence.domain.snapshot.project_snapshot import (
     ProjectSnapshot,
-)
-from projectintelligence.domain.state.project_state import (
-    ProjectState,
 )
 
 

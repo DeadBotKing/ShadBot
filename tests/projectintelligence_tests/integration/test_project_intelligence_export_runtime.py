@@ -6,22 +6,10 @@ Project Intelligence Export Runtime Test
 
 from __future__ import annotations
 
-from pathlib import Path
 from datetime import datetime, timezone
+from pathlib import Path
 from uuid import uuid4
 
-from projectintelligence.application.resume.models.resume_build_context import (
-    ResumeBuildContext,
-)
-from projectintelligence.application.state.builders.project_state_builder import (
-    ProjectStateBuilder,
-)
-from projectintelligence.application.state.project_state_service import (
-    ProjectStateService,
-)
-from projectintelligence.domain.history.snapshot_history import (
-    SnapshotHistory,
-)
 from projectintelligence.application.export.context_serializer import (
     ContextSerializer,
 )
@@ -43,8 +31,20 @@ from projectintelligence.application.export.state_serializer import (
 from projectintelligence.application.pipeline.pipeline_result import (
     PipelineResult,
 )
+from projectintelligence.application.resume.models.resume_build_context import (
+    ResumeBuildContext,
+)
+from projectintelligence.application.state.builders.project_state_builder import (
+    ProjectStateBuilder,
+)
+from projectintelligence.application.state.project_state_service import (
+    ProjectStateService,
+)
 from projectintelligence.domain.context.project_context import (
     ProjectContext,
+)
+from projectintelligence.domain.history.snapshot_history import (
+    SnapshotHistory,
 )
 from projectintelligence.domain.knowledge.project_knowledge import (
     ProjectKnowledge,

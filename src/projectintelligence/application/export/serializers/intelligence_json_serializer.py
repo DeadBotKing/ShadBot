@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from dataclasses import asdict
 from datetime import datetime
+from typing import cast
 from uuid import UUID
 
 from projectintelligence.domain.export.intelligence_export_package import (
@@ -28,8 +29,9 @@ class IntelligenceJsonSerializer:
         Convert intelligence package into JSON compatible structure.
         """
 
-        return self._convert(
-            asdict(package),
+        return cast(
+            dict[str, object],
+            self._convert(asdict(package)),
         )
 
     def _convert(
@@ -41,22 +43,13 @@ class IntelligenceJsonSerializer:
         """
 
         if isinstance(value, dict):
-            return {
-                str(key): self._convert(item)
-                for key, item in value.items()
-            }
+            return {str(key): self._convert(item) for key, item in value.items()}
 
         if isinstance(value, list):
-            return [
-                self._convert(item)
-                for item in value
-            ]
+            return [self._convert(item) for item in value]
 
         if isinstance(value, tuple):
-            return [
-                self._convert(item)
-                for item in value
-            ]
+            return [self._convert(item) for item in value]
 
         if isinstance(value, UUID):
             return str(value)

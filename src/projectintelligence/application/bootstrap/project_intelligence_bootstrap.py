@@ -7,7 +7,6 @@ Project Intelligence Bootstrap
 from __future__ import annotations
 
 from dataclasses import dataclass
-from pathlib import Path
 
 from projectintelligence.application.context.context_builder import (
     ContextBuilder,
@@ -168,6 +167,9 @@ from projectintelligence.application.state.builders.project_state_builder import
 from projectintelligence.application.state.project_state_service import (
     ProjectStateService,
 )
+from projectintelligence.domain.project.project_entity import (
+    ProjectEntity,
+)
 from projectintelligence.infrastructure.filesystem.directory_walker import (
     DirectoryWalker,
 )
@@ -214,7 +216,10 @@ class ProjectIntelligenceBootstrap:
     Responsible for constructing the complete dependency graph.
     """
 
-    def build(self) -> ProjectIntelligenceEngine:
+    def build(
+        self,
+        project: ProjectEntity,
+    ) -> ProjectIntelligenceEngine:
         """
         Build the complete Project Intelligence Engine.
         """
@@ -329,7 +334,7 @@ class ProjectIntelligenceBootstrap:
         )
 
         git_repository = GitPythonRepository(
-            repository_path=Path.cwd(),
+            repository_path=project.workspace,
         )
 
         git_status_detector = GitStatusDetector(

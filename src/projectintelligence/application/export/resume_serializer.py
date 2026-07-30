@@ -45,21 +45,17 @@ class ResumeSerializer(BaseSerializer):
             },
             "state": {
                 "current_phase": value.state.current_phase,
-                "status": value.state.status,
+                "current_sub_phase": value.state.current_sub_phase,
+                "architecture_version": value.state.architecture_version,
+                "completed_components": value.state.completed_components,
+                "pending_components": value.state.pending_components,
+                "total_components": value.state.total_components,
+                "completion_percentage": value.state.completion_percentage,
             },
             "summary": {
                 "overview": value.summary.overview,
             },
-            "completed_work": [
-                item.title
-                for item in value.completed_work
-            ],
-            "pending_work": [
-                item.title
-                for item in value.pending_work
-            ],
-            "recommendations": [
-                item.title
-                for item in value.recommendations
-            ],
+            "completed_work": [item.title for item in value.completed_work],
+            "pending_work": [item.title for item in value.pending_work],
+            "recommendations": [item.title for item in value.recommendations],
         }

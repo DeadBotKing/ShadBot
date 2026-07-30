@@ -22,19 +22,22 @@ from projectintelligence.domain.project.project_entity import (
 @dataclass(slots=True)
 class ProjectIntelligenceEngine:
     """
-    Public entry point of the Project Intelligence Engine.
+    Top-level entry point for Project Intelligence.
+
+    This class intentionally contains no business logic.
+    It delegates execution to the orchestrator.
     """
 
     orchestrator: ProjectIntelligenceOrchestrator
 
-    def analyze(
+    def execute(
         self,
         project: ProjectEntity,
     ) -> RuntimeResult:
         """
-        Analyze a project and execute the complete intelligence pipeline.
+        Execute the complete Project Intelligence workflow.
         """
 
         return self.orchestrator.execute(
-            project,
+            project=project,
         )
