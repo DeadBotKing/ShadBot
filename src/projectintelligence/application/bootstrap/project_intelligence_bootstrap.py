@@ -29,6 +29,33 @@ from projectintelligence.application.evolution.project_evolution_analyzer import
 from projectintelligence.application.evolution.strategies.file_evolution_strategy import (
     FileEvolutionStrategy,
 )
+from projectintelligence.application.export.agent_context_export_serializer import (
+    AgentContextExportSerializer,
+)
+from projectintelligence.application.export.context_serializer import (
+    ContextSerializer,
+)
+from projectintelligence.application.export.evolution_serializer import (
+    EvolutionSerializer,
+)
+from projectintelligence.application.export.intelligence_export_service import (
+    IntelligenceExportService,
+)
+from projectintelligence.application.export.knowledge_serializer import (
+    KnowledgeSerializer,
+)
+from projectintelligence.application.export.project_intelligence_exporter import (
+    ProjectIntelligenceExporter,
+)
+from projectintelligence.application.export.resume_serializer import (
+    ResumeSerializer,
+)
+from projectintelligence.application.export.snapshot_serializer import (
+    SnapshotSerializer,
+)
+from projectintelligence.application.export.state_serializer import (
+    StateSerializer,
+)
 from projectintelligence.application.framework.framework_detector import (
     FrameworkDetector,
 )
@@ -419,6 +446,30 @@ class ProjectIntelligenceBootstrap:
             repository=snapshot_repository,
         )
 
+        snapshot_serializer = SnapshotSerializer()
+
+        knowledge_serializer = KnowledgeSerializer()
+
+        context_serializer = ContextSerializer()
+
+        state_serializer = StateSerializer()
+
+        resume_serializer = ResumeSerializer()
+
+        exporter = ProjectIntelligenceExporter(
+            snapshot_serializer=snapshot_serializer,
+            knowledge_serializer=knowledge_serializer,
+            context_serializer=context_serializer,
+            state_serializer=state_serializer,
+            resume_serializer=resume_serializer,
+            agent_context_serializer=AgentContextExportSerializer(),
+            evolution_serializer=EvolutionSerializer(),
+        )
+
+        intelligence_export_service = IntelligenceExportService(
+            exporter=exporter,
+        )
+
         pipeline = ProjectIntelligencePipeline(
             workspace_scanner=workspace_scanner,
             snapshot_builder=snapshot_builder,
@@ -451,4 +502,5 @@ class ProjectIntelligenceBootstrap:
 
         return ProjectIntelligenceEngine(
             orchestrator=orchestrator,
+            export_service=intelligence_export_service,
         )

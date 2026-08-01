@@ -1,0 +1,274 @@
+{
+    "snapshot": {
+        "snapshot_id": "4766bab2-77ea-48b0-8dd2-48e7466f1f7f",
+        "project_id": "b5106f92-6b63-4e05-8be6-2ea09433a9bc",
+        "workspace": "C:\\Users\\DeadBotKing\\Desktop\\ShadBot",
+        "detected_languages": [
+            "Python",
+            "TOML",
+            "JSON",
+            "Markdown"
+        ],
+        "detected_frameworks": [
+            "Gin",
+            "Next.js",
+            "Vue",
+            "Flask",
+            "NestJS",
+            "FastAPI"
+        ],
+        "dependencies": {
+            "pytest": "",
+            "ruff": "",
+            "black": "",
+            "mypy": ""
+        }
+    },
+    "knowledge": {
+        "knowledge_id": "ac785cc3-d410-4e83-b58a-b2fec98d1c46",
+        "project_id": "b5106f92-6b63-4e05-8be6-2ea09433a9bc",
+        "languages": [
+            "JSON",
+            "Markdown",
+            "Python",
+            "TOML"
+        ],
+        "frameworks": [
+            "FastAPI",
+            "Flask",
+            "Gin",
+            "NestJS",
+            "Next.js",
+            "Vue"
+        ],
+        "dependency_map": {
+            "black": "",
+            "mypy": "",
+            "pytest": "",
+            "ruff": ""
+        },
+        "architecture_description": "Project contains 479 files across 992 directories.",
+        "technologies": [
+            "FastAPI",
+            "Flask",
+            "Gin",
+            "JSON",
+            "Markdown",
+            "NestJS",
+            "Next.js",
+            "Python",
+            "TOML",
+            "Vue",
+            "black",
+            "mypy",
+            "pytest",
+            "ruff"
+        ],
+        "project_conventions": [
+            "Language-specific project conventions detected.",
+            "Framework conventions detected."
+        ],
+        "coding_rules": [],
+        "known_constraints": [
+            "Project test status is unavailable.",
+            "Snapshot is not associated with a Git commit."
+        ],
+        "historical_changes": [
+            "709bd18: feat(cli): add executable project intelligence command",
+            "dc1758a: feat(runtime): add runtime execution foundation",
+            "32cf444: refactor(project-intelligence): make bootstrap workspace-aware",
+            "8a2fa04: refactor(project-intelligence): make bootstrap workspace-aware",
+            "e789566: Add Project Intelligence JSON Export system",
+            "1e5c5a6: complete project intelligence resume handoff evolution and quality validation",
+            "ef7da34: Integrate agent context handoff persistence pipeline",
+            "072c5e5: Stabilize Agent Context handoff boundary",
+            "0ba5133: Add Project Intelligence agent handoff context pipeline",
+            "36382a6: Fix datetime factories and stabilize Project Intelligence models"
+        ],
+        "intelligence_notes": [
+            "Workspace contains 479 files.",
+            "Detected 4 programming language(s).",
+            "Detected 6 framework(s).",
+            "Detected 4 dependency(s)."
+        ],
+        "findings": []
+    },
+    "context": {
+        "context_id": "5ba7afd2-082b-4756-9c8e-d47c65ece867",
+        "project_id": "b5106f92-6b63-4e05-8be6-2ea09433a9bc",
+        "snapshot_id": "4766bab2-77ea-48b0-8dd2-48e7466f1f7f",
+        "technology_context": [
+            "FastAPI",
+            "Flask",
+            "Gin",
+            "JSON",
+            "Markdown",
+            "NestJS",
+            "Next.js",
+            "Python",
+            "TOML",
+            "Vue",
+            "black",
+            "mypy",
+            "pytest",
+            "ruff",
+            "FastAPI",
+            "Flask",
+            "Gin",
+            "NestJS",
+            "Next.js",
+            "Vue",
+            "JSON",
+            "Markdown",
+            "Python",
+            "TOML"
+        ],
+        "architecture_context": [
+            ".gitignore",
+            ".mypy_cache",
+            ".ruff_cache",
+            ".shadbot",
+            "MyInstractions",
+            "__init__.py",
+            "docs",
+            "mypy.ini",
+            "project_tree.txt",
+            "pyproject.toml",
+            "pytest.ini",
+            "requirements-dev.txt",
+            "src",
+            "tests"
+        ],
+        "dependency_context": [
+            "black",
+            "mypy",
+            "pytest",
+            "ruff"
+        ],
+        "change_context": [
+            "709bd18: feat(cli): add executable project intelligence command",
+            "dc1758a: feat(runtime): add runtime execution foundation",
+            "32cf444: refactor(project-intelligence): make bootstrap workspace-aware",
+            "8a2fa04: refactor(project-intelligence): make bootstrap workspace-aware",
+            "e789566: Add Project Intelligence JSON Export system",
+            "1e5c5a6: complete project intelligence resume handoff evolution and quality validation",
+            "ef7da34: Integrate agent context handoff persistence pipeline",
+            "072c5e5: Stabilize Agent Context handoff boundary",
+            "0ba5133: Add Project Intelligence agent handoff context pipeline",
+            "36382a6: Fix datetime factories and stabilize Project Intelligence models"
+        ],
+        "constraint_context": [
+            "Project test status is unavailable.",
+            "Snapshot is not associated with a Git commit."
+        ],
+        "agent_instructions": [],
+        "reasoning_metadata": {},
+        "git_state": {
+            "branch_name": "main"
+        }
+    },
+    "state": {
+        "current_phase": "Project Intelligence Engine",
+        "current_sub_phase": "Analysis Pipeline",
+        "architecture_version": "1.0",
+        "completed_components": 4,
+        "pending_components": 1,
+        "total_components": 5,
+        "completion_percentage": 80.0
+    },
+    "resume": {
+        "project_id": "b5106f92-6b63-4e05-8be6-2ea09433a9bc",
+        "metadata": {
+            "resume_id": "cbfb8321-c3dd-4b87-abd0-bd22c4fe1bad",
+            "snapshot_id": "4766bab2-77ea-48b0-8dd2-48e7466f1f7f",
+            "generated_at": "2026-07-30T13:55:02.357326+00:00",
+            "generator_version": "1.0"
+        },
+        "state": {
+            "current_phase": "Project Intelligence Engine",
+            "current_sub_phase": "Active",
+            "architecture_version": "1.0",
+            "completed_components": 4,
+            "pending_components": 1,
+            "total_components": 5,
+            "completion_percentage": 80.0
+        },
+        "summary": {
+            "overview": "Project contains 479 files using technologies: FastAPI, Flask, Gin, JSON, Markdown, NestJS, Next.js, Python, TOML, Vue, black, mypy, pytest, ruff."
+        },
+        "completed_work": [
+            "Language Detection",
+            "Framework Detection",
+            "Dependency Analysis",
+            "Architecture Analysis"
+        ],
+        "pending_work": [
+            "Project Evolution Tracking",
+            "Testing Intelligence"
+        ],
+        "recommendations": [
+            "Add Testing Intelligence",
+            "Enable Project Evolution Tracking"
+        ]
+    },
+    "agent_context": {
+        "metadata": {
+            "context_id": "4f3d9529-22eb-41df-8809-17b08ec5bd70",
+            "version": "1.0",
+            "contract_version": "1.0",
+            "created_at": "2026-07-30T13:55:02.357367+00:00"
+        },
+        "project_id": "b5106f92-6b63-4e05-8be6-2ea09433a9bc",
+        "summary": "Project contains 479 files using technologies: FastAPI, Flask, Gin, JSON, Markdown, NestJS, Next.js, Python, TOML, Vue, black, mypy, pytest, ruff.",
+        "technologies": [
+            "FastAPI",
+            "Flask",
+            "Gin",
+            "JSON",
+            "Markdown",
+            "NestJS",
+            "Next.js",
+            "Python",
+            "TOML",
+            "Vue",
+            "black",
+            "mypy",
+            "pytest",
+            "ruff"
+        ],
+        "frameworks": [
+            "FastAPI",
+            "Flask",
+            "Gin",
+            "NestJS",
+            "Next.js",
+            "Vue"
+        ],
+        "languages": [
+            "JSON",
+            "Markdown",
+            "Python",
+            "TOML"
+        ],
+        "dependencies": {
+            "black": "",
+            "mypy": "",
+            "pytest": "",
+            "ruff": ""
+        },
+        "architecture_description": "Project contains 479 files across 992 directories.",
+        "conventions": [
+            "Language-specific project conventions detected.",
+            "Framework conventions detected."
+        ],
+        "constraints": [
+            "Project test status is unavailable.",
+            "Snapshot is not associated with a Git commit."
+        ],
+        "recommendations": [
+            "Add Testing Intelligence",
+            "Enable Project Evolution Tracking"
+        ],
+        "current_state": "Project Intelligence Engine"
+    }
+}

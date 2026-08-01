@@ -64,9 +64,12 @@ class ParserSelector:
         Determine whether a parser matches a file.
         """
 
-        filename = registration.filename
+        pattern = registration.filename_pattern
 
-        if filename.startswith("*."):
-            return file.suffix == filename[1:]
+        if pattern.startswith("*."):
+            return file.suffix == pattern[1:]
 
-        return file.name == filename
+        if pattern.startswith("."):
+            return file.suffix == pattern
+
+        return file.name == pattern

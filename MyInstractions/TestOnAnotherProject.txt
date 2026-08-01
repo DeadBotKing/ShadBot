@@ -1,0 +1,5 @@
+python -m projectintelligence.cli.main `
+"C:\Users\DeadBotKing\Desktop\ShadBotWorkspace\ShadBotTrader"
+
+python -m projectintelligence.cli.main `
+"C:\Users\DeadBotKing\Desktop\ShadBotWorkspace\Meryx"

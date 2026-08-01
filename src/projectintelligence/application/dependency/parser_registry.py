@@ -34,49 +34,59 @@ from projectintelligence.application.dependency.parsers.requirements_parser impo
 @dataclass(frozen=True, slots=True)
 class ParserRegistration:
     """
-    Associates a dependency manifest filename with its parser.
+    Dependency parser registration metadata.
     """
 
-    filename: str
+    filename_pattern: str
+
+    ecosystem: str
 
     parser: IDependencyParser
 
 
 class ParserRegistry:
     """
-    Registry of dependency parsers.
+    Central dependency parser registry.
+
+    Defines supported dependency ecosystems.
     """
 
     def registrations(
         self,
-    ) -> list[ParserRegistration]:
+    ) -> tuple[ParserRegistration, ...]:
         """
-        Return registered dependency parsers.
+        Return all supported dependency parsers.
         """
 
-        return [
+        return (
             ParserRegistration(
-                filename="requirements.txt",
+                filename_pattern="requirements.txt",
+                ecosystem="python",
                 parser=RequirementsParser(),
             ),
             ParserRegistration(
-                filename="pyproject.toml",
+                filename_pattern="pyproject.toml",
+                ecosystem="python",
                 parser=PyProjectParser(),
             ),
             ParserRegistration(
-                filename="package.json",
+                filename_pattern="package.json",
+                ecosystem="javascript",
                 parser=PackageJsonParser(),
             ),
             ParserRegistration(
-                filename="Cargo.toml",
+                filename_pattern="Cargo.toml",
+                ecosystem="rust",
                 parser=CargoParser(),
             ),
             ParserRegistration(
-                filename="pom.xml",
+                filename_pattern="pom.xml",
+                ecosystem="java",
                 parser=PomParser(),
             ),
             ParserRegistration(
-                filename="*.csproj",
+                filename_pattern=".csproj",
+                ecosystem="dotnet",
                 parser=CsprojParser(),
             ),
-        ]
+        )

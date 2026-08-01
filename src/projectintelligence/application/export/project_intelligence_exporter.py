@@ -11,8 +11,14 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from projectintelligence.application.export.agent_context_export_serializer import (
+    AgentContextExportSerializer,
+)
 from projectintelligence.application.export.context_serializer import (
     ContextSerializer,
+)
+from projectintelligence.application.export.evolution_serializer import (
+    EvolutionSerializer,
 )
 from projectintelligence.application.export.knowledge_serializer import (
     KnowledgeSerializer,
@@ -42,6 +48,8 @@ class ProjectIntelligenceExporter:
     context_serializer: ContextSerializer
     state_serializer: StateSerializer
     resume_serializer: ResumeSerializer
+    agent_context_serializer: AgentContextExportSerializer | None = None
+    evolution_serializer: EvolutionSerializer | None = None
 
     def export(
         self,
@@ -76,6 +84,19 @@ class ProjectIntelligenceExporter:
             parents=True,
             exist_ok=True,
         )
+
+        if (
+            result.agent_context is not None
+            and self.agent_context_serializer is not None
+        ):
+            payload["agent_context"] = self.agent_context_serializer.serialize(
+                result.agent_context,
+            )
+
+        if result.evolution is not None and self.evolution_serializer is not None:
+            payload["evolution"] = self.evolution_serializer.serialize(
+                result.evolution,
+            )
 
         output_path.write_text(
             json.dumps(

@@ -8,6 +8,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from projectintelligence.application.export.intelligence_export_service import (
+    IntelligenceExportService,
+)
 from projectintelligence.application.models.results.runtime_result import (
     RuntimeResult,
 )
@@ -30,6 +33,8 @@ class ProjectIntelligenceEngine:
 
     orchestrator: ProjectIntelligenceOrchestrator
 
+    export_service: IntelligenceExportService
+
     def execute(
         self,
         project: ProjectEntity,
@@ -38,6 +43,13 @@ class ProjectIntelligenceEngine:
         Execute the complete Project Intelligence workflow.
         """
 
-        return self.orchestrator.execute(
+        result = self.orchestrator.execute(
             project=project,
         )
+
+        self.export_service.export(
+            result=result,
+            workspace=project.workspace,
+        )
+
+        return result
