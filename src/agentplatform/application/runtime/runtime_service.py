@@ -11,6 +11,7 @@ from collections.abc import Sequence
 from agentplatform.application.orchestration import AgentOrchestrator
 from agentplatform.application.planning.planner import AgentPlanner
 from agentplatform.application.registry import AgentRegistry
+from agentplatform.application.tooling import ToolExecutor
 from agentplatform.domain.agents import AgentRole
 from agentplatform.domain.context import AgentExecutionContext
 from agentplatform.domain.contracts import AgentContract
@@ -45,12 +46,15 @@ class AgentRuntimeService:
         planner: AgentPlanner | None = None,
         registry: AgentRegistry | None = None,
         orchestrator: AgentOrchestrator | None = None,
+        tool_executor: ToolExecutor | None = None,
     ) -> None:
         self._planner = planner or AgentPlanner()
 
         self._registry = registry or AgentRegistry()
 
         self._orchestrator = orchestrator or AgentOrchestrator()
+
+        self._tool_executor = tool_executor
 
     def execute(
         self,

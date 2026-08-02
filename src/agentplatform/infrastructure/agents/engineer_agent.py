@@ -7,14 +7,12 @@ Engineer agent implementation.
 from __future__ import annotations
 
 from agentplatform.application.brain import AgentBrain
+from agentplatform.application.tooling import ToolExecutor
 from agentplatform.domain.agents import AgentRole
 from agentplatform.domain.context import AgentExecutionContext
 from agentplatform.domain.results import AgentResult
-from agentplatform.infrastructure.tools import (
-    CodeExtractor,
-    FileSystemTool,
-    TestRunner,
-)
+from agentplatform.domain.tools import ToolType
+from agentplatform.infrastructure.tools import CodeExtractor
 
 from .base_agent import BaseAgent
 
@@ -28,13 +26,11 @@ class EngineerAgent(BaseAgent):
         self,
         brain: AgentBrain | None = None,
         extractor: CodeExtractor | None = None,
-        filesystem: FileSystemTool | None = None,
-        test_runner: TestRunner | None = None,
+        tool_executor: ToolExecutor | None = None,
     ) -> None:
         self._brain = brain
         self._extractor = extractor or CodeExtractor()
-        self._filesystem = filesystem or FileSystemTool()
-        self._test_runner = test_runner or TestRunner()
+        self._tool_executor = tool_executor
 
     @property
     def name(self) -> str:
@@ -75,13 +71,30 @@ class EngineerAgent(BaseAgent):
             "generated_output.py",
         )
 
-        self._filesystem.write_file(
-            str(output_path),
-            code,
+        if self._tool_executor is None:
+            return AgentResult(
+                success=False,
+                message="Tool executor is not configured.",
+                data={
+                    "agent": self.name,
+                },
+            )
+
+        self._tool_executor.execute(
+            ToolType.FILE_SYSTEM,
+            {
+                "action": "write",
+                "path": str(output_path),
+                "content": code,
+            },
         )
 
-        test_result = self._test_runner.run_python_file(
-            str(output_path),
+        test_result = self._tool_executor.execute(
+            ToolType.TEST_RUNNER,
+            {
+                "action": "python",
+                "path": str(output_path),
+            },
         )
 
         return AgentResult(

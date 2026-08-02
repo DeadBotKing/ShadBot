@@ -27,8 +27,13 @@ from agentplatform.application.runtime import (
 from agentplatform.application.runtime.retry_coordinator import (
     RetryCoordinator,
 )
+from agentplatform.application.tooling import (
+    ToolExecutor,
+    ToolRegistry,
+)
 from agentplatform.infrastructure.registration import (
     register_default_agents,
+    register_default_tools,
 )
 
 
@@ -48,12 +53,24 @@ class AgentPlatformBootstrap:
 
         registry = AgentRegistry()
 
+        tool_registry = ToolRegistry()
+
+        register_default_tools(
+            tool_registry,
+        )
+
+        tool_executor = ToolExecutor(
+            tool_registry,
+        )
+
         register_default_agents(
             registry,
+            tool_executor,
         )
 
         runtime = AgentRuntimeService(
             registry=registry,
+            tool_executor=tool_executor,
         )
 
         decision_engine = DecisionEngine()

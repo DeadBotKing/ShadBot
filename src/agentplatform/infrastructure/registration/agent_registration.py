@@ -12,6 +12,7 @@ from agentplatform.application.brain import AgentBrain
 from agentplatform.application.llm import LLMProvider
 from agentplatform.application.memory import MemoryService
 from agentplatform.application.registry import AgentRegistry
+from agentplatform.application.tooling import ToolExecutor
 from agentplatform.domain.agents import AgentRole
 from agentplatform.infrastructure.agents.architect_agent import (
     ArchitectAgent,
@@ -25,9 +26,6 @@ from agentplatform.infrastructure.agents.researcher_agent import (
 from agentplatform.infrastructure.agents.reviewer_agent import (
     ReviewerAgent,
 )
-from agentplatform.infrastructure.agents.trader_agent import (
-    TraderAgent,
-)
 from agentplatform.infrastructure.llm import RoutedLLMProvider
 from agentplatform.infrastructure.memory import (
     InMemoryMemoryRepository,
@@ -36,6 +34,7 @@ from agentplatform.infrastructure.memory import (
 
 def register_default_agents(
     registry: AgentRegistry,
+    tool_executor: ToolExecutor,
 ) -> AgentRegistry:
     """
     Register built-in agents.
@@ -66,18 +65,29 @@ def register_default_agents(
 
     registry.register(
         AgentRole.ARCHITECT,
-        ArchitectAgent(),
+        ArchitectAgent(
+            role=AgentRole.ARCHITECT,
+            brain=brain,
+            tool_executor=tool_executor,
+            memory_service=memory_service,
+        ),
     )
 
     registry.register(
         AgentRole.RESEARCHER,
-        ResearcherAgent(),
+        ResearcherAgent(
+            role=AgentRole.RESEARCHER,
+            brain=brain,
+            tool_executor=tool_executor,
+            memory_service=memory_service,
+        ),
     )
 
     registry.register(
         AgentRole.ENGINEER,
         EngineerAgent(
             brain=brain,
+            tool_executor=tool_executor,
         ),
     )
 
@@ -87,11 +97,6 @@ def register_default_agents(
             brain=brain,
             memory_service=memory_service,
         ),
-    )
-
-    registry.register(
-        AgentRole.TRADER,
-        TraderAgent(),
     )
 
     return registry

@@ -9,10 +9,10 @@ from __future__ import annotations
 from agentplatform.domain.context import AgentExecutionContext
 from agentplatform.domain.results import AgentResult
 
-from .base_agent import BaseAgent
+from .base_llm_agent import BaseLLMAgent
 
 
-class TraderAgent(BaseAgent):
+class TraderAgent(BaseLLMAgent):
     """
     Responsible for trading analysis tasks.
     """
@@ -33,11 +33,16 @@ class TraderAgent(BaseAgent):
         Execute trading analysis.
         """
 
+        response = self.think(
+            context,
+        )
+
         return AgentResult(
             success=True,
             message="Trading analysis completed.",
             data={
                 "agent": self.name,
+                "analysis": response,
                 "project_context": context.intelligence_context,
             },
         )

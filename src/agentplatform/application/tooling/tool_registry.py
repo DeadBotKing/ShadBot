@@ -7,50 +7,53 @@ Tool registry.
 from __future__ import annotations
 
 from agentplatform.domain.tooling import ToolDefinition
-from agentplatform.domain.tools import ToolType
+from agentplatform.domain.tools import (
+    ToolContract,
+    ToolType,
+)
 
 
 class ToolRegistry:
     """
-    Stores available tools.
+    Stores available agent tools.
     """
 
     def __init__(self) -> None:
-        self._tools: dict[ToolType, ToolDefinition] = {}
+        self._definitions: dict[
+            ToolType,
+            ToolDefinition,
+        ] = {}
+
+        self._implementations: dict[
+            ToolType,
+            ToolContract,
+        ] = {}
 
     def register(
         self,
         tool: ToolDefinition,
+        implementation: ToolContract,
     ) -> None:
-        """
-        Register tool.
-        """
-
-        self._tools[tool.tool_type] = tool
+        self._definitions[tool.tool_type] = tool
+        self._implementations[tool.tool_type] = implementation
 
     def exists(
         self,
         tool_type: ToolType,
     ) -> bool:
-        """
-        Check tool availability.
-        """
-
-        return tool_type in self._tools
+        return tool_type in self._implementations
 
     def get(
         self,
         tool_type: ToolType,
-    ) -> ToolDefinition:
-        """
-        Retrieve tool definition.
-        """
+    ) -> ToolContract:
+        return self._implementations[tool_type]
 
-        return self._tools[tool_type]
+    def get_definition(
+        self,
+        tool_type: ToolType,
+    ) -> ToolDefinition:
+        return self._definitions[tool_type]
 
     def count(self) -> int:
-        """
-        Number of registered tools.
-        """
-
-        return len(self._tools)
+        return len(self._implementations)
