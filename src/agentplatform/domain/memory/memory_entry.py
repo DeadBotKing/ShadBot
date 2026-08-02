@@ -1,36 +1,31 @@
 """
 ShadBot Agent Platform
 
-Agent execution result model.
+Agent memory entry.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
-from typing import Any
 from uuid import UUID, uuid4
 
 
 @dataclass(frozen=True, slots=True)
-class AgentResult:
+class MemoryEntry:
     """
-    Result produced by an agent execution.
+    Represents learned information from agent execution.
     """
 
-    success: bool
+    project_id: UUID
 
-    message: str
+    content: str
 
-    approved: bool = True
+    source: str
 
-    data: dict[str, Any] = field(
-        default_factory=dict,
-    )
+    confidence: float = 1.0
 
-    execution_id: UUID = field(
-        default_factory=uuid4,
-    )
+    memory_id: UUID = field(default_factory=uuid4)
 
     created_at: datetime = field(
         default_factory=lambda: datetime.now(timezone.utc),

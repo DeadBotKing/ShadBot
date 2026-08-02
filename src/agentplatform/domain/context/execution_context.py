@@ -30,9 +30,19 @@ class AgentExecutionContext:
 
     instructions: str
 
+    task_title: str = ""
+
+    task_description: str = ""
+
+    task_type: str = ""
+
     intelligence_context: dict[str, Any] = field(default_factory=dict)
 
     metadata: dict[str, Any] = field(default_factory=dict)
+
+    memory_context: dict[str, Any] = field(
+        default_factory=dict,
+    )
 
     execution_id: UUID = field(default_factory=uuid4)
 

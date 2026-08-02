@@ -6,6 +6,11 @@ Default agent registration.
 
 from __future__ import annotations
 
+import os
+
+from agentplatform.application.brain import AgentBrain
+from agentplatform.application.llm import LLMProvider
+from agentplatform.application.memory import MemoryService
 from agentplatform.application.registry import AgentRegistry
 from agentplatform.domain.agents import AgentRole
 from agentplatform.infrastructure.agents.architect_agent import (
@@ -23,6 +28,10 @@ from agentplatform.infrastructure.agents.reviewer_agent import (
 from agentplatform.infrastructure.agents.trader_agent import (
     TraderAgent,
 )
+from agentplatform.infrastructure.llm import RoutedLLMProvider
+from agentplatform.infrastructure.memory import (
+    InMemoryMemoryRepository,
+)
 
 
 def register_default_agents(
@@ -31,6 +40,29 @@ def register_default_agents(
     """
     Register built-in agents.
     """
+
+    use_router = os.getenv("SHADBOT_ENABLE_MODEL_ROUTING", "0") == "1"
+
+    llm: LLMProvider
+
+    if use_router:
+        llm = RoutedLLMProvider()
+    else:
+        from agentplatform.infrastructure.llm import OllamaProvider
+
+        llm = OllamaProvider(
+            model="qwen2.5-coder:7b",
+        )
+
+    brain = AgentBrain(
+        llm=llm,
+    )
+
+    memory_repository = InMemoryMemoryRepository()
+
+    memory_service = MemoryService(
+        repository=memory_repository,
+    )
 
     registry.register(
         AgentRole.ARCHITECT,
@@ -44,12 +76,17 @@ def register_default_agents(
 
     registry.register(
         AgentRole.ENGINEER,
-        EngineerAgent(),
+        EngineerAgent(
+            brain=brain,
+        ),
     )
 
     registry.register(
         AgentRole.REVIEWER,
-        ReviewerAgent(),
+        ReviewerAgent(
+            brain=brain,
+            memory_service=memory_service,
+        ),
     )
 
     registry.register(

@@ -20,7 +20,7 @@ from agentplatform.domain.tasks import AgentTask
 
 class AgentRuntimeService:
     """
-    Coordinates the complete agent execution lifecycle.
+    Coordinates complete agent execution lifecycle.
 
     Flow:
 
@@ -30,13 +30,14 @@ class AgentRuntimeService:
     Planner
       |
       v
-    Registry
+    Agent Pipeline
       |
       v
-    Orchestrator
+    Decision Engine
       |
-      v
-    Results
+      +---- Accepted
+      |
+      +---- Retry
     """
 
     def __init__(
@@ -46,7 +47,9 @@ class AgentRuntimeService:
         orchestrator: AgentOrchestrator | None = None,
     ) -> None:
         self._planner = planner or AgentPlanner()
+
         self._registry = registry or AgentRegistry()
+
         self._orchestrator = orchestrator or AgentOrchestrator()
 
     def execute(
@@ -55,12 +58,14 @@ class AgentRuntimeService:
         context: AgentExecutionContext,
     ) -> list[AgentResult]:
         """
-        Execute a task through the agent pipeline.
+        Execute single agent pipeline run.
         """
 
         plan = self._planner.create_plan(task)
 
-        agents = self._resolve_agents(plan.agents)
+        agents = self._resolve_agents(
+            plan.agents,
+        )
 
         return self._orchestrator.execute_pipeline(
             agents,
@@ -72,13 +77,15 @@ class AgentRuntimeService:
         roles: Sequence[AgentRole],
     ) -> list[AgentContract]:
         """
-        Resolve agent implementations from registry.
+        Resolve agent implementations.
         """
 
         agents: list[AgentContract] = []
 
         for role in roles:
             if self._registry.exists(role):
-                agents.append(self._registry.get(role))
+                agents.append(
+                    self._registry.get(role),
+                )
 
         return agents
