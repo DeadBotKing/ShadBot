@@ -15,6 +15,12 @@ from agentplatform.infrastructure.tools.filesystem_tool_adapter import (
 from agentplatform.infrastructure.tools.git_tool_adapter import (
     GitToolAdapter,
 )
+from agentplatform.infrastructure.tools.project_analyzer_tool_adapter import (
+    ProjectAnalyzerToolAdapter,
+)
+from agentplatform.infrastructure.tools.terminal_tool_adapter import (
+    TerminalToolAdapter,
+)
 from agentplatform.infrastructure.tools.test_runner_adapter import (
     TestRunnerAdapter,
 )
@@ -38,6 +44,24 @@ def register_default_tools(
 
     registry.register(
         ToolDefinition(
+            name="terminal",
+            tool_type=ToolType.TERMINAL,
+            description="Execute terminal commands in project workspace.",
+        ),
+        TerminalToolAdapter(),
+    )
+
+    registry.register(
+        ToolDefinition(
+            name="project_analyzer",
+            tool_type=ToolType.PROJECT_ANALYZER,
+            description="Analyze project structure and generate intelligence context.",
+        ),
+        ProjectAnalyzerToolAdapter(),
+    )
+
+    registry.register(
+        ToolDefinition(
             name="test_runner",
             tool_type=ToolType.TEST_RUNNER,
             description="Execute project tests.",
@@ -49,7 +73,7 @@ def register_default_tools(
         ToolDefinition(
             name="git",
             tool_type=ToolType.GIT,
-            description="Inspect git repository state and changes.",
+            description="Execute git repository operations.",
         ),
         GitToolAdapter(),
     )

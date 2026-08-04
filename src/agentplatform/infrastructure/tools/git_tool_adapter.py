@@ -16,7 +16,7 @@ from .git_tool import GitTool
 
 class GitToolAdapter(ToolContract):
     """
-    Adapter exposing git operations.
+    Adapter exposing git operations as agent tool.
     """
 
     def __init__(self) -> None:
@@ -30,12 +30,8 @@ class GitToolAdapter(ToolContract):
         self,
         payload: dict[str, object],
     ) -> dict[str, object]:
-
         action = str(
-            payload.get(
-                "action",
-                "",
-            ),
+            payload.get("action", ""),
         )
 
         path = str(
@@ -45,19 +41,19 @@ class GitToolAdapter(ToolContract):
         if action == "status":
             return {
                 "success": True,
-                "status": self._tool.status(path),
+                "output": self._tool.status(path),
             }
 
         if action == "diff":
             return {
                 "success": True,
-                "diff": self._tool.diff(path),
+                "output": self._tool.diff(path),
             }
 
         if action == "log":
             return {
                 "success": True,
-                "log": self._tool.log(path),
+                "output": self._tool.log(path),
             }
 
         raise ValueError(

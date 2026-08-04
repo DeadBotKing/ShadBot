@@ -40,6 +40,7 @@ class AgentPlanner:
 
         if task_type == "implementation":
             agents = [
+                AgentRole.PROJECT_INTELLIGENCE,
                 AgentRole.ARCHITECT,
                 AgentRole.ENGINEER,
                 AgentRole.REVIEWER,

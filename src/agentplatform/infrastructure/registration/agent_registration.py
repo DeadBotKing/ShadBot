@@ -26,6 +26,9 @@ from agentplatform.infrastructure.agents.architect_agent import (
 from agentplatform.infrastructure.agents.engineer_agent import (
     EngineerAgent,
 )
+from agentplatform.infrastructure.agents.project_intelligence_agent import (
+    ProjectIntelligenceAgent,
+)
 from agentplatform.infrastructure.agents.researcher_agent import (
     ResearcherAgent,
 )
@@ -75,6 +78,13 @@ def register_default_agents(
 
     memory_service = MemoryService(
         repository=memory_repository,
+    )
+
+    registry.register(
+        AgentRole.PROJECT_INTELLIGENCE,
+        ProjectIntelligenceAgent(
+            tool_executor=tool_executor,
+        ),
     )
 
     registry.register(
