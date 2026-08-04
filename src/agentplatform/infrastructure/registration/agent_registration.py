@@ -12,6 +12,9 @@ from agentplatform.application.brain import AgentBrain
 from agentplatform.application.brain.brain_reasoning import (
     BrainReasoning,
 )
+from agentplatform.application.generation import (
+    CodeGenerationService,
+)
 from agentplatform.application.llm import LLMProvider
 from agentplatform.application.memory import MemoryService
 from agentplatform.application.registry import AgentRegistry
@@ -64,6 +67,10 @@ def register_default_agents(
         reasoning=reasoning,
     )
 
+    code_generation_service = CodeGenerationService(
+        brain=brain,
+    )
+
     memory_repository = InMemoryMemoryRepository()
 
     memory_service = MemoryService(
@@ -93,7 +100,7 @@ def register_default_agents(
     registry.register(
         AgentRole.ENGINEER,
         EngineerAgent(
-            brain=brain,
+            code_generation_service=code_generation_service,
             tool_executor=tool_executor,
         ),
     )

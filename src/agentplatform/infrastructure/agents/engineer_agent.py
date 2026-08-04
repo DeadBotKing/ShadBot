@@ -6,19 +6,26 @@ Engineer agent implementation.
 
 from __future__ import annotations
 
-from dataclasses import replace
 from pathlib import Path
 
-from agentplatform.application.brain import AgentBrain
-from agentplatform.application.tooling import ToolExecutor
-from agentplatform.domain.agents import AgentRole
+from agentplatform.application.generation import (
+    CodeGenerationService,
+)
+from agentplatform.application.tooling import (
+    ToolExecutor,
+)
 from agentplatform.domain.architecture import (
     ArchitecturePlan,
 )
-from agentplatform.domain.context import AgentExecutionContext
-from agentplatform.domain.results import AgentResult
-from agentplatform.domain.tools import ToolType
-from agentplatform.infrastructure.tools import CodeExtractor
+from agentplatform.domain.context import (
+    AgentExecutionContext,
+)
+from agentplatform.domain.results import (
+    AgentResult,
+)
+from agentplatform.domain.tools import (
+    ToolType,
+)
 
 from .base_agent import BaseAgent
 
@@ -30,12 +37,10 @@ class EngineerAgent(BaseAgent):
 
     def __init__(
         self,
-        brain: AgentBrain | None = None,
-        extractor: CodeExtractor | None = None,
-        tool_executor: ToolExecutor | None = None,
+        code_generation_service: CodeGenerationService,
+        tool_executor: ToolExecutor,
     ) -> None:
-        self._brain = brain
-        self._extractor = extractor or CodeExtractor()
+        self._code_generation_service = code_generation_service
         self._tool_executor = tool_executor
 
     @property
@@ -53,15 +58,6 @@ class EngineerAgent(BaseAgent):
         """
         Execute engineering task.
         """
-
-        if self._brain is None:
-            return AgentResult(
-                success=False,
-                message="Agent brain is not configured.",
-                data={
-                    "agent": self.name,
-                },
-            )
 
         plan = context.metadata.get(
             "architecture_plan",
@@ -86,7 +82,6 @@ class EngineerAgent(BaseAgent):
                 message="Architecture plan not found in execution context.",
                 data={
                     "agent": self.name,
-                    "metadata": context.metadata,
                 },
             )
 
@@ -99,7 +94,6 @@ class EngineerAgent(BaseAgent):
                 message="Invalid architecture plan type.",
                 data={
                     "agent": self.name,
-                    "plan_type": type(plan).__name__,
                 },
             )
 
@@ -112,22 +106,14 @@ class EngineerAgent(BaseAgent):
                 },
             )
 
-        if self._tool_executor is None:
-            return AgentResult(
-                success=False,
-                message="Tool executor is not configured.",
-                data={
-                    "agent": self.name,
-                },
-            )
-
         generated_files: list[str] = []
 
         for architecture_file in plan.files:
             file_path = Path(context.target_project.path) / architecture_file.path
 
-            file_context = replace(
-                context,
+            artifact = self._code_generation_service.generate(
+                context=context,
+                file_path=file_path,
                 instructions=(
                     "You are Engineer Agent.\n"
                     "Generate production quality code.\n"
@@ -138,33 +124,17 @@ class EngineerAgent(BaseAgent):
                 ),
             )
 
-            response = self._brain.think(
-                AgentRole.ENGINEER,
-                file_context,
-            )
-
-            code = self._extractor.extract(
-                response,
-            )
-
-            self._tool_executor.execute(
-                ToolType.FILE_SYSTEM,
-                {
-                    "action": "write",
-                    "path": str(file_path),
-                    "content": code,
-                },
-            )
-
             generated_files.append(
-                str(file_path),
+                str(artifact.path),
             )
 
         test_result = self._tool_executor.execute(
             ToolType.TEST_RUNNER,
             {
                 "action": "pytest",
-                "path": str(context.target_project.path),
+                "path": str(
+                    context.target_project.path,
+                ),
             },
         )
 
