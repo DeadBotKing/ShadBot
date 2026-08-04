@@ -10,9 +10,6 @@ from enum import Enum
 
 
 class AgentRole(str, Enum):
-    """
-    Defines the responsibility category of an agent.
-    """
 
     ARCHITECT = "architect"
 
@@ -22,4 +19,10 @@ class AgentRole(str, Enum):
 
     RESEARCHER = "researcher"
 
-    TRADER = "trader"
+    PROJECT_INTELLIGENCE = "project_intelligence"
+
+    QA = "qa"
+
+    RUNTIME_OBSERVER = "runtime_observer"
+
+    ML_SCIENTIST = "ml_scientist"

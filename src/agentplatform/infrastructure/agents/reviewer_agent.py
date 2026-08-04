@@ -11,10 +11,16 @@ from agentplatform.application.memory import (
     MemoryExtractor,
     MemoryService,
 )
+from agentplatform.application.tooling import (
+    ToolExecutor,
+)
 from agentplatform.domain.agents import AgentRole
 from agentplatform.domain.context import AgentExecutionContext
 from agentplatform.domain.results import AgentResult
 from agentplatform.domain.review import ReviewResult
+from agentplatform.domain.tools import (
+    ToolType,
+)
 
 from .base_agent import BaseAgent
 
@@ -29,10 +35,12 @@ class ReviewerAgent(BaseAgent):
         brain: AgentBrain | None = None,
         memory_service: MemoryService | None = None,
         memory_extractor: MemoryExtractor | None = None,
+        tool_executor: ToolExecutor | None = None,
     ) -> None:
         self._brain = brain
         self._memory_service = memory_service
         self._memory_extractor = memory_extractor or MemoryExtractor()
+        self._tool_executor = tool_executor
 
     @property
     def name(self) -> str:
@@ -49,6 +57,23 @@ class ReviewerAgent(BaseAgent):
                 data={
                     "agent": self.name,
                 },
+            )
+
+        if self._tool_executor and context.target_project:
+            git_context = self._tool_executor.execute(
+                ToolType.GIT,
+                {
+                    "action": "diff",
+                    "path": str(
+                        context.target_project.path,
+                    ),
+                },
+            )
+
+            context.metadata.update(
+                {
+                    "git_review_context": git_context,
+                }
             )
 
         response = self._brain.think(

@@ -12,6 +12,9 @@ from agentplatform.domain.tools import ToolType
 from agentplatform.infrastructure.tools.filesystem_tool_adapter import (
     FileSystemToolAdapter,
 )
+from agentplatform.infrastructure.tools.git_tool_adapter import (
+    GitToolAdapter,
+)
 from agentplatform.infrastructure.tools.test_runner_adapter import (
     TestRunnerAdapter,
 )
@@ -40,6 +43,15 @@ def register_default_tools(
             description="Execute project tests.",
         ),
         TestRunnerAdapter(),
+    )
+
+    registry.register(
+        ToolDefinition(
+            name="git",
+            tool_type=ToolType.GIT,
+            description="Inspect git repository state and changes.",
+        ),
+        GitToolAdapter(),
     )
 
     return registry

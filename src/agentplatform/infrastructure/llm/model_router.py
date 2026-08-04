@@ -30,9 +30,6 @@ class ModelRouter:
         if role is AgentRole.RESEARCHER:
             return "deepseek-coder:6.7b"
 
-        if role is AgentRole.TRADER:
-            return "qwen2.5-coder:7b"
-
         raise ValueError(
             f"Unsupported agent role: {role}",
         )

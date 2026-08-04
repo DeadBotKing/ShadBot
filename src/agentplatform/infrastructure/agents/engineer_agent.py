@@ -6,9 +6,15 @@ Engineer agent implementation.
 
 from __future__ import annotations
 
+from dataclasses import replace
+from pathlib import Path
+
 from agentplatform.application.brain import AgentBrain
 from agentplatform.application.tooling import ToolExecutor
 from agentplatform.domain.agents import AgentRole
+from agentplatform.domain.architecture import (
+    ArchitecturePlan,
+)
 from agentplatform.domain.context import AgentExecutionContext
 from agentplatform.domain.results import AgentResult
 from agentplatform.domain.tools import ToolType
@@ -57,19 +63,54 @@ class EngineerAgent(BaseAgent):
                 },
             )
 
-        response = self._brain.think(
-            AgentRole.ENGINEER,
-            context,
+        plan = context.metadata.get(
+            "architecture_plan",
         )
 
-        code = self._extractor.extract(
-            response,
-        )
+        if plan is None:
+            architect_result = context.metadata.get(
+                "agent_results",
+                {},
+            ).get(
+                "architect",
+                {},
+            )
 
-        output_path = context.metadata.get(
-            "output_file",
-            "generated_output.py",
-        )
+            plan = architect_result.get(
+                "architecture_plan",
+            )
+
+        if plan is None:
+            return AgentResult(
+                success=False,
+                message="Architecture plan not found in execution context.",
+                data={
+                    "agent": self.name,
+                    "metadata": context.metadata,
+                },
+            )
+
+        if not isinstance(
+            plan,
+            ArchitecturePlan,
+        ):
+            return AgentResult(
+                success=False,
+                message="Invalid architecture plan type.",
+                data={
+                    "agent": self.name,
+                    "plan_type": type(plan).__name__,
+                },
+            )
+
+        if context.target_project is None:
+            return AgentResult(
+                success=False,
+                message="Target project is not selected.",
+                data={
+                    "agent": self.name,
+                },
+            )
 
         if self._tool_executor is None:
             return AgentResult(
@@ -80,30 +121,59 @@ class EngineerAgent(BaseAgent):
                 },
             )
 
-        self._tool_executor.execute(
-            ToolType.FILE_SYSTEM,
-            {
-                "action": "write",
-                "path": str(output_path),
-                "content": code,
-            },
-        )
+        generated_files: list[str] = []
+
+        for architecture_file in plan.files:
+            file_path = Path(context.target_project.path) / architecture_file.path
+
+            file_context = replace(
+                context,
+                instructions=(
+                    "You are Engineer Agent.\n"
+                    "Generate production quality code.\n"
+                    f"Create only this file:\n"
+                    f"{architecture_file.path}\n"
+                    "Do not explain.\n"
+                    "Return only code."
+                ),
+            )
+
+            response = self._brain.think(
+                AgentRole.ENGINEER,
+                file_context,
+            )
+
+            code = self._extractor.extract(
+                response,
+            )
+
+            self._tool_executor.execute(
+                ToolType.FILE_SYSTEM,
+                {
+                    "action": "write",
+                    "path": str(file_path),
+                    "content": code,
+                },
+            )
+
+            generated_files.append(
+                str(file_path),
+            )
 
         test_result = self._tool_executor.execute(
             ToolType.TEST_RUNNER,
             {
-                "action": "python",
-                "path": str(output_path),
+                "action": "pytest",
+                "path": str(context.target_project.path),
             },
         )
 
         return AgentResult(
             success=True,
-            message="Code generated and written.",
+            message="Project implementation completed.",
             data={
                 "agent": self.name,
-                "file": str(output_path),
-                "code": code,
+                "generated_files": generated_files,
                 "test_result": test_result,
             },
         )

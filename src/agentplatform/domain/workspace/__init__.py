@@ -1,9 +1,15 @@
-from agentplatform.domain.workspace.workspace import Workspace
-from agentplatform.domain.workspace.workspace_identity import (
+"""
+Workspace domain.
+"""
+
+from .project import Project
+from .workspace import (
+    Workspace,
     WorkspaceIdentity,
 )
 
 __all__ = [
+    "Project",
     "Workspace",
     "WorkspaceIdentity",
 ]

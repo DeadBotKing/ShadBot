@@ -75,31 +75,11 @@ def register_default_capabilities(
         ),
     ]
 
-    trader_capabilities = [
-        Capability(
-            CapabilityType.MARKET_ANALYSIS,
-            "Analyze market data.",
-        ),
-        Capability(
-            CapabilityType.FEATURE_ENGINEERING,
-            "Create trading features.",
-        ),
-        Capability(
-            CapabilityType.MODEL_TRAINING,
-            "Train machine learning models.",
-        ),
-        Capability(
-            CapabilityType.MODEL_EVALUATION,
-            "Evaluate trading models.",
-        ),
-    ]
-
     assignments = {
         AgentRole.ENGINEER: engineer_capabilities,
         AgentRole.ARCHITECT: architect_capabilities,
         AgentRole.RESEARCHER: researcher_capabilities,
         AgentRole.REVIEWER: reviewer_capabilities,
-        AgentRole.TRADER: trader_capabilities,
     }
 
     for role, capabilities in assignments.items():

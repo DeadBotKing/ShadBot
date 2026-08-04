@@ -6,7 +6,7 @@ Agent task domain model.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from uuid import UUID, uuid4
 
@@ -26,11 +26,15 @@ class AgentTask:
 
     task_type: TaskType
 
-    id: UUID = uuid4()
+    id: UUID = field(
+        default_factory=uuid4,
+    )
+
+    created_at: datetime = field(
+        default_factory=lambda: datetime.now(timezone.utc),
+    )
 
     status: TaskStatus = TaskStatus.CREATED
-
-    created_at: datetime = datetime.now(timezone.utc)
 
     def assign(self) -> "AgentTask":
         """

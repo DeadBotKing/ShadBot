@@ -26,14 +26,34 @@ class CapabilityType(str, Enum):
 
     ARCHITECTURE_DESIGN = "architecture_design"
 
+    REQUIREMENT_ANALYSIS = "requirement_analysis"
+
     TECHNOLOGY_SELECTION = "technology_selection"
 
     SYSTEM_ANALYSIS = "system_analysis"
 
-    MARKET_ANALYSIS = "market_analysis"
+    WORKSPACE_SCAN = "workspace_scan"
 
-    FEATURE_ENGINEERING = "feature_engineering"
+    DEPENDENCY_ANALYSIS = "dependency_analysis"
+
+    KNOWLEDGE_GENERATION = "knowledge_generation"
+
+    RUNTIME_MONITORING = "runtime_monitoring"
+
+    VALIDATION = "validation"
 
     MODEL_TRAINING = "model_training"
 
     MODEL_EVALUATION = "model_evaluation"
+
+    EXPERIMENT_DESIGN = "experiment_design"
+
+    IMPLEMENTATION = "implementation"
+
+    REFACTORING = "refactoring"
+
+    RESEARCH = "research"
+
+    ARCHITECTURE_UNDERSTANDING = "architecture_understanding"
+
+    TESTING = "testing"

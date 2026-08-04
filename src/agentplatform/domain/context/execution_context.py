@@ -11,6 +11,11 @@ from datetime import datetime, timezone
 from typing import Any
 from uuid import UUID, uuid4
 
+from agentplatform.domain.workspace import (
+    Project,
+    Workspace,
+)
+
 
 @dataclass(frozen=True, slots=True)
 class AgentExecutionContext:
@@ -29,6 +34,10 @@ class AgentExecutionContext:
     task_id: UUID
 
     instructions: str
+
+    workspace: Workspace | None = None
+
+    target_project: Project | None = None
 
     task_title: str = ""
 

@@ -1,13 +1,17 @@
 """
 ShadBot Agent Platform
 
-Execution loop exports.
+Execution loops.
 """
 
-from agentplatform.application.loop.agent_execution_loop import (
+from .agent_execution_loop import (
     AgentExecutionLoop,
+)
+from .project_execution import (
+    ProjectExecutionService,
 )
 
 __all__ = [
     "AgentExecutionLoop",
+    "ProjectExecutionService",
 ]

@@ -8,14 +8,20 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from agentplatform.application.decision import (
-    DecisionEngine,
+from agentplatform.application.brain import (
+    AgentBrain,
 )
 from agentplatform.application.runtime import (
     AgentRuntimeService,
 )
 from agentplatform.application.runtime.retry_coordinator import (
     RetryCoordinator,
+)
+from agentplatform.application.tasks import (
+    ProjectTaskService,
+)
+from agentplatform.application.validation import (
+    ValidationEngine,
 )
 from agentplatform.domain.context import (
     AgentExecutionContext,
@@ -31,17 +37,18 @@ from agentplatform.domain.tasks import (
 @dataclass(slots=True)
 class AgentExecutionLoop:
     """
-    High-level autonomous execution loop.
-
-    Coordinates:
-    - Runtime execution
-    - Decision evaluation
-    - Retry handling
+    Enterprise autonomous agent execution pipeline.
     """
 
+    brain: AgentBrain
+
     runtime: AgentRuntimeService
-    decision_engine: DecisionEngine
+
     retry_coordinator: RetryCoordinator
+
+    validation_engine: ValidationEngine
+
+    task_service: ProjectTaskService
 
     def execute(
         self,
@@ -49,38 +56,10 @@ class AgentExecutionLoop:
         context: AgentExecutionContext,
     ) -> list[AgentResult]:
         """
-        Execute task until accepted or retry limit reached.
+        Execute complete agent pipeline through runtime.
         """
 
-        results = self.runtime.execute(
+        return self.runtime.execute(
             task,
             context,
         )
-
-        decision = self.decision_engine.decide(
-            results,
-        )
-
-        retry_count = 0
-
-        while self.retry_coordinator.should_retry(
-            decision,
-            retry_count,
-        ):
-            context = self.retry_coordinator.prepare_retry_context(
-                context,
-                decision,
-            )
-
-            retry_count += 1
-
-            results = self.runtime.execute(
-                task,
-                context,
-            )
-
-            decision = self.decision_engine.decide(
-                results,
-            )
-
-        return results

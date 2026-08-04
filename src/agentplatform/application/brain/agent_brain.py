@@ -1,29 +1,69 @@
 """
 ShadBot Agent Platform
 
-Agent brain.
+Agent brain coordinator.
 """
 
 from __future__ import annotations
 
-from agentplatform.application.llm import LLMProvider
-from agentplatform.application.prompt import PromptBuilder
+from collections.abc import Sequence
+
+from agentplatform.application.brain.brain_decision import (
+    BrainDecision,
+)
+from agentplatform.application.brain.brain_memory import (
+    BrainMemory,
+)
+from agentplatform.application.brain.brain_planning import (
+    BrainPlanning,
+)
+from agentplatform.application.brain.brain_reasoning import (
+    BrainReasoning,
+)
+from agentplatform.application.brain.brain_reflection import (
+    BrainReflection,
+)
+from agentplatform.application.brain.brain_validation import (
+    BrainValidation,
+)
+from agentplatform.application.decision import (
+    DecisionResult,
+)
+from agentplatform.application.planning import (
+    AgentExecutionPlan,
+)
 from agentplatform.domain.agents import AgentRole
-from agentplatform.domain.context import AgentExecutionContext
+from agentplatform.domain.context import (
+    AgentExecutionContext,
+)
+from agentplatform.domain.results import (
+    AgentResult,
+)
+from agentplatform.domain.tasks import (
+    AgentTask,
+)
 
 
 class AgentBrain:
     """
-    Connects agent reasoning with LLM.
+    Coordinates agent cognitive capabilities.
     """
 
     def __init__(
         self,
-        llm: LLMProvider,
-        prompt_builder: PromptBuilder | None = None,
+        reasoning: BrainReasoning,
+        planning: BrainPlanning | None = None,
+        memory: BrainMemory | None = None,
+        reflection: BrainReflection | None = None,
+        decision: BrainDecision | None = None,
+        validation: BrainValidation | None = None,
     ) -> None:
-        self._llm = llm
-        self._prompt_builder = prompt_builder or PromptBuilder()
+        self._reasoning = reasoning
+        self._planning = planning or BrainPlanning()
+        self._memory = memory
+        self._reflection = reflection or BrainReflection()
+        self._decision = decision or BrainDecision()
+        self._validation = validation or BrainValidation()
 
     def think(
         self,
@@ -31,22 +71,73 @@ class AgentBrain:
         context: AgentExecutionContext,
     ) -> str:
         """
-        Generate agent response.
+        Execute reasoning.
         """
 
-        prompt = self._prompt_builder.build(
+        return self._reasoning.reason(
             role,
             context,
         )
 
-        if hasattr(self._llm, "generate_for_agent"):
-            return self._llm.generate_for_agent(
-                role,
-                prompt,
-            )
+    def plan(
+        self,
+        task: AgentTask,
+    ) -> AgentExecutionPlan:
+        """
+        Create execution plan.
+        """
 
-        response = self._llm.generate(
-            prompt,
+        return self._planning.plan(
+            task,
         )
 
-        return str(response)
+    def remember_context(
+        self,
+        context: AgentExecutionContext,
+    ) -> dict[str, object]:
+        """
+        Retrieve memory context.
+        """
+
+        if self._memory is None:
+            return {}
+
+        return self._memory.retrieve(
+            context,
+        )
+
+    def reflect(
+        self,
+        results: list[AgentResult],
+    ) -> dict[str, object]:
+        """
+        Analyze execution.
+        """
+
+        return self._reflection.reflect(
+            results,
+        )
+
+    def decide(
+        self,
+        results: Sequence[AgentResult],
+    ) -> DecisionResult:
+        """
+        Decide next execution action.
+        """
+
+        return self._decision.decide(
+            results,
+        )
+
+    def validate(
+        self,
+        results: list[AgentResult],
+    ) -> dict[str, object]:
+        """
+        Validate execution.
+        """
+
+        return self._validation.validate(
+            results,
+        )

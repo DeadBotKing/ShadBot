@@ -9,6 +9,9 @@ from __future__ import annotations
 import os
 
 from agentplatform.application.brain import AgentBrain
+from agentplatform.application.brain.brain_reasoning import (
+    BrainReasoning,
+)
 from agentplatform.application.llm import LLMProvider
 from agentplatform.application.memory import MemoryService
 from agentplatform.application.registry import AgentRegistry
@@ -53,8 +56,12 @@ def register_default_agents(
             model="qwen2.5-coder:7b",
         )
 
-    brain = AgentBrain(
+    reasoning = BrainReasoning(
         llm=llm,
+    )
+
+    brain = AgentBrain(
+        reasoning=reasoning,
     )
 
     memory_repository = InMemoryMemoryRepository()
@@ -96,6 +103,7 @@ def register_default_agents(
         ReviewerAgent(
             brain=brain,
             memory_service=memory_service,
+            tool_executor=tool_executor,
         ),
     )
 

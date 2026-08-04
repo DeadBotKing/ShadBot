@@ -1,3 +1,6 @@
+from agentplatform.application.workspace.workspace_factory import (
+    WorkspaceFactory,
+)
 from agentplatform.application.workspace.workspace_manager import (
     WorkspaceManager,
 )
@@ -8,4 +11,5 @@ from agentplatform.application.workspace.workspace_registry import (
 __all__ = [
     "WorkspaceManager",
     "WorkspaceRegistry",
+    "WorkspaceFactory",
 ]

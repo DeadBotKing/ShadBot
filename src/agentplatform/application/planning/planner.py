@@ -36,34 +36,31 @@ class AgentPlanner:
         Create execution plan based on task type.
         """
 
-        agents: list[AgentRole] = []
+        task_type = task.task_type.value
 
-        if task.task_type.value in {
-            "implementation",
-            "model_training",
-        }:
+        if task_type == "implementation":
             agents = [
-                AgentRole.RESEARCHER,
                 AgentRole.ARCHITECT,
                 AgentRole.ENGINEER,
                 AgentRole.REVIEWER,
             ]
 
-        elif task.task_type.value == "review":
+        elif task_type == "model_training":
+            agents = [
+                AgentRole.ARCHITECT,
+                AgentRole.ML_SCIENTIST,
+                AgentRole.ENGINEER,
+                AgentRole.REVIEWER,
+            ]
+
+        elif task_type == "review":
             agents = [
                 AgentRole.REVIEWER,
             ]
 
-        elif task.task_type.value == "research":
+        elif task_type == "research":
             agents = [
                 AgentRole.RESEARCHER,
-            ]
-
-        elif task.task_type.value == "trading_analysis":
-            agents = [
-                AgentRole.RESEARCHER,
-                AgentRole.TRADER,
-                AgentRole.REVIEWER,
             ]
 
         else:

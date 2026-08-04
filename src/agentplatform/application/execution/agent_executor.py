@@ -23,20 +23,28 @@ class AgentExecutor:
     ) -> AgentResult:
         """
         Execute an agent.
-
-        Args:
-            agent: Agent implementation.
-            context: Runtime execution context.
-
-        Returns:
-            Agent execution result.
         """
 
         try:
-            return agent.execute(context)
+            result = agent.execute(
+                context,
+            )
+
+            if not isinstance(
+                result,
+                AgentResult,
+            ):
+                raise TypeError(
+                    "Agent must return AgentResult.",
+                )
+
+            return result
 
         except Exception as exc:
             return AgentResult(
                 success=False,
                 message=str(exc),
+                data={
+                    "agent": agent.name,
+                },
             )
