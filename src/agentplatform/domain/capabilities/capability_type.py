@@ -57,3 +57,45 @@ class CapabilityType(str, Enum):
     ARCHITECTURE_UNDERSTANDING = "architecture_understanding"
 
     TESTING = "testing"
+
+    RUNTIME_ANALYSIS = "runtime_analysis"
+
+    FAILURE_ANALYSIS = "failure_analysis"
+
+    PERFORMANCE_ANALYSIS = "performance_analysis"
+
+    ANOMALY_DETECTION = "anomaly_detection"
+
+    SECURITY_ANALYSIS = "security_analysis"
+
+    STYLE_ANALYSIS = "style_analysis"
+
+    COVERAGE_ANALYSIS = "coverage_analysis"
+
+    REGRESSION_ANALYSIS = "regression_analysis"
+
+    HYPERPARAMETER_SEARCH = "hyperparameter_search"
+
+    MODEL_IMPROVEMENT = "model_improvement"
+
+    RETRAINING = "retraining"
+
+    EXPERIMENT_TRACKING = "experiment_tracking"
+
+    IDEA_GENERATION = "idea_generation"
+
+    PROTOTYPE_DEVELOPMENT = "prototype_development"
+
+    EXPERIMENT_EXECUTION = "experiment_execution"
+
+    TECHNOLOGY_RESEARCH = "technology_research"
+
+    FEASIBILITY_ANALYSIS = "feasibility_analysis"
+
+    INNOVATION_ANALYSIS = "innovation_analysis"
+
+    IMPROVEMENT_LOOP = "improvement_loop"
+
+    PROJECT_ANALYSIS = "project_analysis"
+
+    DOCUMENTATION_ANALYSIS = "documentation_analysis"

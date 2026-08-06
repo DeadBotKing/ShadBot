@@ -56,3 +56,27 @@ class AgentExecutionContext:
     execution_id: UUID = field(default_factory=uuid4)
 
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+
+    def with_memory_context(
+        self,
+        memory_context: dict[str, object],
+    ) -> "AgentExecutionContext":
+        """
+        Create context copy with memory.
+        """
+
+        return AgentExecutionContext(
+            project_id=self.project_id,
+            task_id=self.task_id,
+            instructions=self.instructions,
+            workspace=self.workspace,
+            target_project=self.target_project,
+            task_title=self.task_title,
+            task_description=self.task_description,
+            task_type=self.task_type,
+            intelligence_context=self.intelligence_context,
+            metadata=self.metadata,
+            memory_context=memory_context,
+            execution_id=self.execution_id,
+            created_at=self.created_at,
+        )

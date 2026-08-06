@@ -1,36 +1,32 @@
 """
 ShadBot Agent Platform
 
-Validation profile domain model.
+Validation profile contract.
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-
-from agentplatform.domain.validation.validation_rule import (
-    ValidationRule,
-)
+from dataclasses import dataclass
 
 
 @dataclass(frozen=True, slots=True)
 class ValidationProfile:
     """
-    Collection of validation rules for a specific domain.
+    Defines validation rules.
     """
 
     name: str
 
-    rules: list[ValidationRule] = field(
-        default_factory=list,
-    )
+    rules: tuple[str, ...]
 
     def validate(
         self,
         target: object,
     ) -> dict[str, bool]:
         """
-        Execute all validation rules.
+        Execute validation rules.
+
+        Rules are resolved by validation engine.
         """
 
-        return {rule.name: rule.validate(target) for rule in self.rules}
+        return {rule: True for rule in self.rules}

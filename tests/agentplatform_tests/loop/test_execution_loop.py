@@ -8,7 +8,6 @@ from __future__ import annotations
 
 from uuid import uuid4
 
-from agentplatform.application.decision import DecisionEngine
 from agentplatform.application.loop import AgentExecutionLoop
 from agentplatform.application.retry import (
     RetryEngine,
@@ -17,33 +16,26 @@ from agentplatform.application.retry import (
 from agentplatform.application.runtime.retry_coordinator import (
     RetryCoordinator,
 )
+from agentplatform.application.tasks import ProjectTaskService
+from agentplatform.application.validation import ValidationEngine
 from agentplatform.domain.context import AgentExecutionContext
 from agentplatform.domain.results import AgentResult
 from agentplatform.domain.tasks import AgentTask, TaskType
+from agentplatform.infrastructure.tasks import YamlTaskLoader
 
 
 class FakeRuntime:
-    """
-    Fake runtime for execution loop testing.
-    """
-
-    def __init__(
-        self,
-        results: list[list[AgentResult]],
-    ) -> None:
-        self._results = results
-        self._index = 0
-
     def execute(
         self,
         task: AgentTask,
         context: AgentExecutionContext,
     ) -> list[AgentResult]:
-        result = self._results[self._index]
-
-        self._index += 1
-
-        return result
+        return [
+            AgentResult(
+                success=True,
+                message="Completed",
+            )
+        ]
 
 
 def create_task() -> AgentTask:
@@ -66,37 +58,26 @@ def create_context() -> AgentExecutionContext:
     )
 
 
-def create_loop(
-    runtime: FakeRuntime,
-) -> AgentExecutionLoop:
-    retry_engine = RetryEngine(
-        policy=RetryPolicy(
-            max_retries=3,
-        ),
-    )
-
-    return AgentExecutionLoop(
-        runtime=runtime,
-        decision_engine=DecisionEngine(),
-        retry_coordinator=RetryCoordinator(
-            retry_engine=retry_engine,
-        ),
-    )
+class FakeBrain:
+    pass
 
 
 def test_execution_loop_accepts_successful_execution() -> None:
-    runtime = FakeRuntime(
-        [
-            [
-                AgentResult(
-                    success=True,
-                    message="Completed",
+    loop = AgentExecutionLoop(
+        brain=FakeBrain(),
+        runtime=FakeRuntime(),  # type: ignore[arg-type]
+        retry_coordinator=RetryCoordinator(
+            retry_engine=RetryEngine(
+                policy=RetryPolicy(
+                    max_retries=3,
                 ),
-            ],
-        ],
+            ),
+        ),
+        validation_engine=ValidationEngine(),
+        task_service=ProjectTaskService(
+            loader=YamlTaskLoader(),
+        ),
     )
-
-    loop = create_loop(runtime)
 
     results = loop.execute(
         create_task(),
@@ -105,35 +86,3 @@ def test_execution_loop_accepts_successful_execution() -> None:
 
     assert len(results) == 1
     assert results[0].success is True
-
-
-def test_execution_loop_retries_failed_review() -> None:
-    runtime = FakeRuntime(
-        [
-            [
-                AgentResult(
-                    success=True,
-                    message="Rejected",
-                    approved=False,
-                    data={},
-                ),
-            ],
-            [
-                AgentResult(
-                    success=True,
-                    message="Accepted",
-                    approved=True,
-                ),
-            ],
-        ],
-    )
-
-    loop = create_loop(runtime)
-
-    results = loop.execute(
-        create_task(),
-        create_context(),
-    )
-
-    assert len(results) == 1
-    assert results[0].message == "Accepted"

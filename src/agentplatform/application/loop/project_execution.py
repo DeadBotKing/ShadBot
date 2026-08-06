@@ -102,7 +102,7 @@ class ProjectExecutionService:
         task = AgentTask(
             id=UUID(selected_task.id),
             title=selected_task.title,
-            description=selected_task.title,
+            description=selected_task.description,
             task_type=TaskType(
                 selected_task.task_type,
             ),
@@ -112,12 +112,25 @@ class ProjectExecutionService:
             task,
         )
 
-        context.metadata.update(
-            {
+        context = AgentExecutionContext(
+            project_id=context.project_id,
+            task_id=running_task.id,
+            instructions=(f"Execute task: {running_task.title}"),
+            workspace=context.workspace,
+            target_project=context.target_project,
+            task_title=running_task.title,
+            task_description=running_task.description,
+            task_type=running_task.task_type.value,
+            intelligence_context=context.intelligence_context,
+            metadata={
+                **context.metadata,
                 "task_status": running_task.status.value,
                 "workspace": "ShadBotWorkspace",
                 "project": project_path.name,
-            }
+            },
+            memory_context=context.memory_context,
+            execution_id=context.execution_id,
+            created_at=context.created_at,
         )
 
         results = self._execution_loop.execute(

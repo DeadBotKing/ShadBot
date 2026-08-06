@@ -1,7 +1,7 @@
 """
 ShadBot Agent Platform
 
-Memory service.
+Project memory service.
 """
 
 from __future__ import annotations
@@ -9,46 +9,69 @@ from __future__ import annotations
 from uuid import UUID
 
 from agentplatform.domain.memory import (
-    MemoryEntry,
+    MemoryRecord,
     MemoryRepository,
 )
 
 
 class MemoryService:
     """
-    Application service for agent memory.
+    Application service for persistent project memory.
     """
 
     def __init__(
         self,
         repository: MemoryRepository,
     ) -> None:
+
         self._repository = repository
 
     def remember(
         self,
-        project_id: UUID,
-        content: str,
-        source: str,
-        confidence: float = 1.0,
-    ) -> MemoryEntry:
-        entry = MemoryEntry(
-            project_id=project_id,
-            content=content,
-            source=source,
-            confidence=confidence,
+        record: MemoryRecord,
+    ) -> MemoryRecord:
+        """
+        Store new project memory.
+        """
+
+        return self._repository.save(
+            record,
         )
-
-        self._repository.save(entry)
-
-        return entry
 
     def recall(
         self,
         project_id: UUID,
-    ) -> list[MemoryEntry]:
-        return list(
-            self._repository.get_project_memory(
-                project_id,
-            )
+    ) -> list[MemoryRecord]:
+        """
+        Retrieve project memories.
+        """
+
+        return self._repository.get_project_memory(
+            project_id,
+        )
+
+    def search(
+        self,
+        project_id: UUID,
+        query: str,
+    ) -> list[MemoryRecord]:
+        """
+        Search project knowledge.
+        """
+
+        return self._repository.search(
+            project_id,
+            query,
+        )
+
+    def delete(
+        self,
+        memory_id: UUID,
+    ) -> None:
+        """
+        Remove memory.
+        """
+
+        self._repository.delete(
+            memory_id,
         )

@@ -1,34 +1,30 @@
 """
 ShadBot Project Intelligence
 
-Agent Context Package Domain Model
+Agent handoff package.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import Any
 from uuid import UUID
 
-from projectintelligence.domain.handoff.agent_context_metadata import (
+from .agent_context_metadata import (
     AgentContextMetadata,
 )
-from projectintelligence.domain.handoff.evolution_summary import (
-    EvolutionSummary,
+from .project_architecture import (
+    ProjectArchitecture,
+)
+from .project_state import (
+    ProjectState,
 )
 
 
 @dataclass(frozen=True, slots=True)
 class AgentContextPackage:
     """
-    Stable knowledge package exposed to Agent Platform.
-
-    This model is the boundary between:
-    Project Intelligence Engine
-    and
-    Autonomous Coding Agents.
-
-    Agents consume this package only and must not depend
-    on internal Project Intelligence implementation details.
+    Complete project vision delivered to agents.
     """
 
     project_id: UUID
@@ -37,36 +33,40 @@ class AgentContextPackage:
 
     summary: str
 
-    technologies: tuple[str, ...] = field(
-        default_factory=tuple,
-    )
+    architecture: ProjectArchitecture
 
-    frameworks: tuple[str, ...] = field(
-        default_factory=tuple,
-    )
-
-    languages: tuple[str, ...] = field(
-        default_factory=tuple,
-    )
+    state: ProjectState
 
     dependencies: dict[str, str] = field(
         default_factory=dict,
     )
 
-    architecture_description: str | None = None
+    risks: tuple[str, ...] = ()
 
-    conventions: tuple[str, ...] = field(
-        default_factory=tuple,
+    recommendations: tuple[str, ...] = ()
+
+    extra: dict[str, Any] = field(
+        default_factory=dict,
     )
 
-    constraints: tuple[str, ...] = field(
-        default_factory=tuple,
-    )
+    def to_dict(
+        self,
+    ) -> dict[str, object]:
 
-    recommendations: tuple[str, ...] = field(
-        default_factory=tuple,
-    )
-
-    current_state: str | None = None
-
-    evolution: EvolutionSummary | None = None
+        return {
+            "project_id": str(
+                self.project_id,
+            ),
+            "metadata": self.metadata.to_dict(),
+            "summary": self.summary,
+            "architecture": (self.architecture.to_dict()),
+            "state": (self.state.to_dict()),
+            "dependencies": self.dependencies,
+            "risks": list(
+                self.risks,
+            ),
+            "recommendations": list(
+                self.recommendations,
+            ),
+            "extra": self.extra,
+        }

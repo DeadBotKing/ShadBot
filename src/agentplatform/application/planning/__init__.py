@@ -1,13 +1,20 @@
 """
-Agent planning application module.
+ShadBot Agent Platform
+
+Planning application package.
 """
 
-from agentplatform.application.planning.planner import (
-    AgentExecutionPlan,
-    AgentPlanner,
+from agentplatform.domain.planning import (
+    ExecutionPlan,
+    PlanningRequest,
 )
 
+from .planner import AgentPlanner
+from .planning_strategy import PlanningStrategy
+
 __all__ = [
-    "AgentExecutionPlan",
     "AgentPlanner",
+    "PlanningStrategy",
+    "ExecutionPlan",
+    "PlanningRequest",
 ]

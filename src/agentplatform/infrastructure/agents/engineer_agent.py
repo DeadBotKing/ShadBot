@@ -1,7 +1,7 @@
 """
-Agent Platform
+ShadBot Agent Platform
 
-Engineer agent implementation.
+Enterprise Engineer Agent.
 """
 
 from __future__ import annotations
@@ -14,8 +14,9 @@ from agentplatform.application.generation import (
 from agentplatform.application.tooling import (
     ToolExecutor,
 )
-from agentplatform.domain.architecture import (
-    ArchitecturePlan,
+from agentplatform.domain.capabilities import (
+    Capability,
+    CapabilityType,
 )
 from agentplatform.domain.context import (
     AgentExecutionContext,
@@ -32,7 +33,7 @@ from .base_agent import BaseAgent
 
 class EngineerAgent(BaseAgent):
     """
-    Responsible for implementation and code engineering tasks.
+    Responsible for software implementation.
     """
 
     def __init__(
@@ -40,67 +41,69 @@ class EngineerAgent(BaseAgent):
         code_generation_service: CodeGenerationService,
         tool_executor: ToolExecutor,
     ) -> None:
+
+        super().__init__(
+            capabilities=[
+                Capability(
+                    CapabilityType.CODE_GENERATION,
+                    "Generate production code.",
+                ),
+                Capability(
+                    CapabilityType.CODE_REFACTORING,
+                    "Refactor existing implementations.",
+                ),
+                Capability(
+                    CapabilityType.TEST_GENERATION,
+                    "Generate automated tests.",
+                ),
+                Capability(
+                    CapabilityType.DEBUGGING,
+                    "Analyze and fix software issues.",
+                ),
+                Capability(
+                    CapabilityType.IMPLEMENTATION,
+                    "Implement approved architecture plans.",
+                ),
+                Capability(
+                    CapabilityType.REFACTORING,
+                    "Improve existing code quality.",
+                ),
+                Capability(
+                    CapabilityType.FAILURE_ANALYSIS,
+                    "Analyze implementation failures.",
+                ),
+                Capability(
+                    CapabilityType.PERFORMANCE_ANALYSIS,
+                    "Analyze implementation performance.",
+                ),
+                Capability(
+                    CapabilityType.SECURITY_ANALYSIS,
+                    "Apply secure coding practices.",
+                ),
+            ],
+        )
+
         self._code_generation_service = code_generation_service
+
         self._tool_executor = tool_executor
 
     @property
     def name(self) -> str:
-        """
-        Agent unique name.
-        """
-
         return "engineer"
 
     def run(
         self,
         context: AgentExecutionContext,
     ) -> AgentResult:
-        """
-        Execute engineering task.
-        """
 
         plan = context.metadata.get(
             "architecture_plan",
         )
 
         if plan is None:
-            architect_result = context.metadata.get(
-                "agent_results",
-                {},
-            ).get(
-                "architect",
-                {},
-            )
-
-            plan = architect_result.get(
-                "architecture_plan",
-            )
-
-        if plan is None:
             return AgentResult(
                 success=False,
-                message="Architecture plan not found in execution context.",
-                data={
-                    "agent": self.name,
-                },
-            )
-
-        if not isinstance(
-            plan,
-            ArchitecturePlan,
-        ):
-            return AgentResult(
-                success=False,
-                message="Invalid architecture plan type.",
-                data={
-                    "agent": self.name,
-                },
-            )
-
-        if context.target_project is None:
-            return AgentResult(
-                success=False,
-                message="Target project is not selected.",
+                message="Architecture plan required.",
                 data={
                     "agent": self.name,
                 },
@@ -108,30 +111,46 @@ class EngineerAgent(BaseAgent):
 
         generated_files: list[str] = []
 
-        for architecture_file in plan.files:
-            file_path = Path(context.target_project.path) / architecture_file.path
+        if context.target_project is None:
+            return AgentResult(
+                success=False,
+                message="Target project required.",
+                data={
+                    "agent": self.name,
+                },
+            )
+
+        for file_plan in plan.file_plan:
 
             artifact = self._code_generation_service.generate(
                 context=context,
-                file_path=file_path,
-                instructions=(
-                    "You are Engineer Agent.\n"
-                    "Generate production quality code.\n"
-                    f"Create only this file:\n"
-                    f"{architecture_file.path}\n"
-                    "Do not explain.\n"
-                    "Return only code."
+                file_path=(
+                    Path(
+                        context.target_project.path,
+                    )
+                    / file_plan.path
                 ),
+                instructions=("Implement according to " "approved architecture."),
             )
 
             generated_files.append(
-                str(artifact.path),
+                str(
+                    artifact.path,
+                ),
             )
 
-        test_result = self._tool_executor.execute(
+        build = self._tool_executor.execute(
+            ToolType.BUILD_RUNNER,
+            {
+                "path": str(
+                    context.target_project.path,
+                ),
+            },
+        )
+
+        tests = self._tool_executor.execute(
             ToolType.TEST_RUNNER,
             {
-                "action": "pytest",
                 "path": str(
                     context.target_project.path,
                 ),
@@ -140,10 +159,14 @@ class EngineerAgent(BaseAgent):
 
         return AgentResult(
             success=True,
-            message="Project implementation completed.",
+            message="Engineering completed.",
             data={
                 "agent": self.name,
+                "capabilities": [
+                    capability.capability_type.value for capability in self.capabilities
+                ],
                 "generated_files": generated_files,
-                "test_result": test_result,
+                "build": build,
+                "tests": tests,
             },
         )

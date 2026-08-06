@@ -6,25 +6,42 @@ Memory repository contract.
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from abc import ABC, abstractmethod
 from uuid import UUID
 
-from .memory_entry import MemoryEntry
+from .memory_record import MemoryRecord
 
 
-class MemoryRepository:
+class MemoryRepository(ABC):
     """
-    Memory persistence contract.
+    Contract for project memory persistence.
     """
 
+    @abstractmethod
     def save(
         self,
-        entry: MemoryEntry,
-    ) -> None:
+        record: MemoryRecord,
+    ) -> MemoryRecord:
         raise NotImplementedError
 
+    @abstractmethod
     def get_project_memory(
         self,
         project_id: UUID,
-    ) -> Sequence[MemoryEntry]:
+    ) -> list[MemoryRecord]:
+        raise NotImplementedError
+
+    @abstractmethod
+    def search(
+        self,
+        project_id: UUID,
+        query: str,
+    ) -> list[MemoryRecord]:
+        raise NotImplementedError
+
+    @abstractmethod
+    def delete(
+        self,
+        memory_id: UUID,
+    ) -> None:
         raise NotImplementedError

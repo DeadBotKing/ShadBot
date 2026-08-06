@@ -14,8 +14,14 @@ from agentplatform.application.bootstrap import (
 from agentplatform.application.loop.project_execution import (
     ProjectExecutionService,
 )
+from agentplatform.application.workspace.workspace_factory import (
+    WorkspaceFactory,
+)
 from agentplatform.domain.context import (
     AgentExecutionContext,
+)
+from agentplatform.domain.workspace import (
+    Project,
 )
 
 
@@ -36,11 +42,7 @@ def main() -> None:
 
     args = parser.parse_args()
 
-    workspace_root = (
-        Path(__file__).parent
-        / ".."
-        / "ShadBotWorkspace"
-    ).resolve()
+    workspace_root = (Path(__file__).parent / ".." / "ShadBotWorkspace").resolve()
 
     project_path = workspace_root / args.project
 
@@ -52,10 +54,24 @@ def main() -> None:
         execution_loop=execution_loop,
     )
 
+    project = Project(
+        name=args.project,
+        path=project_path,
+        project_type="software",
+    )
+
+    workspace = WorkspaceFactory().create(
+        name="ShadBotWorkspace",
+        root_path=workspace_root,
+        projects=(project,),
+    )
+
     context = AgentExecutionContext(
         project_id=uuid4(),
         task_id=uuid4(),
         instructions="Execute selected project task.",
+        workspace=workspace,
+        target_project=project,
     )
 
     results = project_executor.execute_project(
@@ -73,10 +89,7 @@ def main() -> None:
         results,
         start=1,
     ):
-        print(
-            f"[{index}] success={result.success} "
-            f"message={result.message}"
-        )
+        print(f"[{index}] success={result.success} " f"message={result.message}")
 
 
 if __name__ == "__main__":

@@ -62,6 +62,7 @@ class YamlTaskLoader(TaskLoader):
                     id=str(item.get("id", "")),
                     phase=str(item.get("phase", "")),
                     title=str(item.get("title", "")),
+                    description=str(item.get("description", "")),
                     task_type=str(item.get("type", "")),
                     priority=str(item.get("priority", "low")),
                     status=str(item.get("status", "pending")),

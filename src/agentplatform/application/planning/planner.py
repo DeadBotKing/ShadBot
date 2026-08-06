@@ -1,75 +1,68 @@
 """
-Agent Planner.
+ShadBot Agent Platform
 
-Creates execution plans from tasks.
+Agent planning engine.
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-
 from agentplatform.domain.agents import AgentRole
-from agentplatform.domain.tasks import AgentTask
-
-
-@dataclass(frozen=True, slots=True)
-class AgentExecutionPlan:
-    """
-    Planned execution pipeline for a task.
-    """
-
-    task: AgentTask
-
-    agents: list[AgentRole] = field(default_factory=list)
+from agentplatform.domain.planning import (
+    ExecutionPlan,
+    PlanningRequest,
+)
 
 
 class AgentPlanner:
     """
-    Creates agent execution pipelines.
+    Creates execution pipelines from planning requests.
     """
 
-    def create_plan(
+    def plan(
         self,
-        task: AgentTask,
-    ) -> AgentExecutionPlan:
+        request: PlanningRequest,
+    ) -> ExecutionPlan:
         """
-        Create execution plan based on task type.
+        Create execution plan based on task.
         """
 
-        task_type = task.task_type.value
+        task_type = request.task.task_type.value
 
         if task_type == "implementation":
-            agents = [
+
+            agents = (
                 AgentRole.PROJECT_INTELLIGENCE,
                 AgentRole.ARCHITECT,
                 AgentRole.ENGINEER,
                 AgentRole.REVIEWER,
-            ]
+            )
 
         elif task_type == "model_training":
-            agents = [
+
+            agents = (
                 AgentRole.ARCHITECT,
                 AgentRole.ML_SCIENTIST,
                 AgentRole.ENGINEER,
                 AgentRole.REVIEWER,
-            ]
+            )
 
         elif task_type == "review":
-            agents = [
-                AgentRole.REVIEWER,
-            ]
+
+            agents = (AgentRole.REVIEWER,)
 
         elif task_type == "research":
-            agents = [
-                AgentRole.RESEARCHER,
-            ]
+
+            agents = (AgentRole.RESEARCHER,)
 
         else:
-            agents = [
-                AgentRole.ARCHITECT,
-            ]
 
-        return AgentExecutionPlan(
-            task=task,
+            agents = (AgentRole.ARCHITECT,)
+
+        return ExecutionPlan(
+            task=request.task,
             agents=agents,
+            metadata={
+                "task_type": task_type,
+                "project_id": (str(request.project_id) if request.project_id else None),
+            },
         )

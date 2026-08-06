@@ -6,30 +6,30 @@ Validation engine.
 
 from __future__ import annotations
 
-from agentplatform.application.validation.validation_result import (
-    ValidationResult,
-)
 from agentplatform.domain.validation import (
     ValidationProfile,
+    ValidationRequest,
 )
+
+from .validation_result import ValidationResult
 
 
 class ValidationEngine:
     """
-    Executes validation profiles.
+    Executes validation workflows.
     """
 
     def validate(
         self,
+        request: ValidationRequest,
         profile: ValidationProfile,
-        target: object,
     ) -> ValidationResult:
         """
-        Execute validation rules.
+        Execute validation profile against target.
         """
 
         results = profile.validate(
-            target,
+            request.target,
         )
 
         failures = [name for name, passed in results.items() if not passed]

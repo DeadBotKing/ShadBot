@@ -1,0 +1,86 @@
+Phase 4 — Agent Capability & Tool Execution Layer
+
+├── 4.1 Capability Architecture
+│
+│   ├── 4.1.1 Capability Definition Upgrade
+│   ├── 4.1.2 Capability Metadata System
+│   ├── 4.1.3 Capability Registry
+│   ├── 4.1.4 Capability Discovery
+│   └── 4.1.5 Capability Permission Model
+│
+│
+├── 4.2 Tool System
+│
+│   ├── 4.2.1 Tool Domain Model
+│   ├── 4.2.2 Tool Contract Interface
+│   ├── 4.2.3 Tool Registry
+│   ├── 4.2.4 Tool Metadata
+│   ├── 4.2.5 Tool Discovery
+│   ├── 4.2.6 Tool Permission Control
+│   └── 4.2.7 Tool Execution Engine
+│
+│
+├── 4.3 Capability Execution Engine
+│
+│   ├── 4.3.1 Capability Executor
+│   ├── 4.3.2 Capability Resolver
+│   ├── 4.3.3 Capability → Tool Mapping
+│   ├── 4.3.4 Execution Context Injection
+│   ├── 4.3.5 Execution Lifecycle
+│   └── 4.3.6 Execution Result Handling
+│
+│
+├── 4.4 Agent Action System
+│
+│   ├── Action Entity
+│   ├── Action Request
+│   ├── Action Result
+│   ├── Action Dispatcher
+│   └── Action Lifecycle Manager
+│
+│
+├── 4.5 Agent Command System
+│
+│   ├── Command Entity
+│   ├── Command Contract
+│   ├── Command Dispatcher
+│   └── Command Handler Registry
+│
+│
+├── 4.6 Agent Ability Binding
+│
+│   ├── Agent → Capability Binding
+│   ├── Capability → Tool Binding
+│   ├── Tool → Execution Binding
+│   └── Runtime Ability Validation
+│
+│
+├── 4.7 Built-in Agent Abilities
+│
+│   ├── Architect Ability
+│   ├── Engineer Ability
+│   ├── Reviewer Ability
+│   ├── Researcher Ability
+│   ├── QA Ability
+│   ├── Project Intelligence Ability
+│   ├── ML Scientist Ability
+│   └── R&D Ability
+│
+│
+├── 4.8 Agent Tooling Foundation
+│
+│   ├── File System Tools
+│   ├── Code Analysis Tools
+│   ├── Code Generation Tools
+│   ├── Testing Tools
+│   ├── Git Tools
+│   ├── Research Tools
+│   └── Trading Tools
+│
+│
+└── 4.9 Capability Validation
+
+    ├── Capability Tests
+    ├── Tool Tests
+    ├── Execution Tests
+    └── Runtime Integration Tests

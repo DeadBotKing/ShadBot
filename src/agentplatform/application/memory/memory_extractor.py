@@ -8,42 +8,53 @@ from __future__ import annotations
 
 from uuid import UUID
 
-from agentplatform.domain.memory import MemoryEntry
-from agentplatform.domain.review import ReviewResult
+from agentplatform.domain.memory import (
+    MemoryRecord,
+    MemoryType,
+)
+from agentplatform.domain.review import (
+    ReviewResult,
+)
 
 
 class MemoryExtractor:
     """
-    Extracts reusable knowledge from review results.
+    Extracts reusable knowledge from agent results.
     """
 
     def extract(
         self,
         project_id: UUID,
         review: ReviewResult,
-    ) -> list[MemoryEntry]:
+    ) -> list[MemoryRecord]:
         """
-        Convert review feedback into memories.
+        Convert review feedback into persistent memories.
         """
 
-        memories: list[MemoryEntry] = []
+        memories: list[MemoryRecord] = []
 
         for issue in review.issues:
             memories.append(
-                MemoryEntry(
+                MemoryRecord(
                     project_id=project_id,
-                    content=issue,
-                    source="reviewer",
+                    agent="reviewer",
+                    memory_type=MemoryType.LESSON_LEARNED,
+                    content={
+                        "issue": issue,
+                    },
                     confidence=0.9,
                 )
             )
 
         for suggestion in review.suggestions:
             memories.append(
-                MemoryEntry(
+                MemoryRecord(
                     project_id=project_id,
-                    content=suggestion,
-                    source="reviewer",
+                    agent="reviewer",
+                    memory_type=MemoryType.IMPROVEMENT,
+                    content={
+                        "suggestion": suggestion,
+                    },
                     confidence=0.85,
                 )
             )

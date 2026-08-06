@@ -8,7 +8,6 @@ from __future__ import annotations
 
 import os
 
-from agentplatform.application.brain import AgentBrain
 from agentplatform.application.brain.brain_reasoning import (
     BrainReasoning,
 )
@@ -26,14 +25,29 @@ from agentplatform.infrastructure.agents.architect_agent import (
 from agentplatform.infrastructure.agents.engineer_agent import (
     EngineerAgent,
 )
+from agentplatform.infrastructure.agents.ml_scientist_agent import (
+    MLScientistAgent,
+)
 from agentplatform.infrastructure.agents.project_intelligence_agent import (
     ProjectIntelligenceAgent,
+)
+from agentplatform.infrastructure.agents.qa_agent import (
+    QAAgent,
 )
 from agentplatform.infrastructure.agents.researcher_agent import (
     ResearcherAgent,
 )
 from agentplatform.infrastructure.agents.reviewer_agent import (
     ReviewerAgent,
+)
+from agentplatform.infrastructure.agents.rnd_agent import (
+    RND_Agent,
+)
+from agentplatform.infrastructure.agents.runtime_observer_agent import (
+    RuntimeObserverAgent,
+)
+from agentplatform.infrastructure.brain.agent_brain_factory import (
+    AgentBrainFactory,
 )
 from agentplatform.infrastructure.llm import RoutedLLMProvider
 from agentplatform.infrastructure.memory import (
@@ -66,18 +80,34 @@ def register_default_agents(
         llm=llm,
     )
 
-    brain = AgentBrain(
+    brain_factory = AgentBrainFactory(
         reasoning=reasoning,
-    )
-
-    code_generation_service = CodeGenerationService(
-        brain=brain,
     )
 
     memory_repository = InMemoryMemoryRepository()
 
     memory_service = MemoryService(
         repository=memory_repository,
+    )
+
+    architect_brain = brain_factory.create(
+        AgentRole.ARCHITECT,
+    )
+
+    researcher_brain = brain_factory.create(
+        AgentRole.RESEARCHER,
+    )
+
+    engineer_brain = brain_factory.create(
+        AgentRole.ENGINEER,
+    )
+
+    reviewer_brain = brain_factory.create(
+        AgentRole.REVIEWER,
+    )
+
+    ml_scientist_brain = brain_factory.create(
+        AgentRole.ML_SCIENTIST,
     )
 
     registry.register(
@@ -91,7 +121,7 @@ def register_default_agents(
         AgentRole.ARCHITECT,
         ArchitectAgent(
             role=AgentRole.ARCHITECT,
-            brain=brain,
+            brain=architect_brain,
             tool_executor=tool_executor,
             memory_service=memory_service,
         ),
@@ -101,16 +131,39 @@ def register_default_agents(
         AgentRole.RESEARCHER,
         ResearcherAgent(
             role=AgentRole.RESEARCHER,
-            brain=brain,
+            brain=researcher_brain,
             tool_executor=tool_executor,
             memory_service=memory_service,
         ),
     )
 
     registry.register(
+        AgentRole.RND,
+        RND_Agent(
+            tool_executor=tool_executor,
+        ),
+    )
+
+    registry.register(
+        AgentRole.QA,
+        QAAgent(
+            tool_executor=tool_executor,
+        ),
+    )
+
+    registry.register(
+        AgentRole.ML_SCIENTIST,
+        MLScientistAgent(
+            tool_executor=tool_executor,
+        ),
+    )
+
+    registry.register(
         AgentRole.ENGINEER,
         EngineerAgent(
-            code_generation_service=code_generation_service,
+            code_generation_service=CodeGenerationService(
+                brain=engineer_brain,
+            ),
             tool_executor=tool_executor,
         ),
     )
@@ -118,8 +171,15 @@ def register_default_agents(
     registry.register(
         AgentRole.REVIEWER,
         ReviewerAgent(
-            brain=brain,
+            brain=reviewer_brain,
             memory_service=memory_service,
+            tool_executor=tool_executor,
+        ),
+    )
+
+    registry.register(
+        AgentRole.RUNTIME_OBSERVER,
+        RuntimeObserverAgent(
             tool_executor=tool_executor,
         ),
     )

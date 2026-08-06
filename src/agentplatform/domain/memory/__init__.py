@@ -1,11 +1,19 @@
 """
-Agent memory domain objects.
+ShadBot Agent Platform
+
+Memory domain package.
 """
 
-from .memory_entry import MemoryEntry
+from .experience_record import ExperienceRecord
+from .knowledge_record import KnowledgeRecord
+from .memory_record import MemoryRecord
 from .memory_repository import MemoryRepository
+from .memory_type import MemoryType
 
 __all__ = [
-    "MemoryEntry",
+    "MemoryRecord",
+    "MemoryType",
     "MemoryRepository",
+    "ExperienceRecord",
+    "KnowledgeRecord",
 ]

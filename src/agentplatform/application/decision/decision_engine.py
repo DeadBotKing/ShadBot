@@ -8,10 +8,10 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 
-from agentplatform.application.decision.decision_result import (
+from agentplatform.domain.decision import (
     DecisionResult,
+    DecisionStatus,
 )
-from agentplatform.domain.decision import DecisionStatus
 from agentplatform.domain.results import AgentResult
 
 

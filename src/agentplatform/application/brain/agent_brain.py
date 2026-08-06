@@ -7,15 +7,16 @@ Agent brain coordinator.
 from __future__ import annotations
 
 from collections.abc import Sequence
+from uuid import UUID
 
 from agentplatform.application.brain.brain_decision import (
     BrainDecision,
 )
-from agentplatform.application.brain.brain_memory import (
-    BrainMemory,
-)
 from agentplatform.application.brain.brain_planning import (
     BrainPlanning,
+)
+from agentplatform.application.brain.brain_profile import (
+    BrainProfile,
 )
 from agentplatform.application.brain.brain_reasoning import (
     BrainReasoning,
@@ -26,52 +27,70 @@ from agentplatform.application.brain.brain_reflection import (
 from agentplatform.application.brain.brain_validation import (
     BrainValidation,
 )
+from agentplatform.application.context import (
+    BrainContextFactory,
+)
 from agentplatform.application.decision import (
     DecisionResult,
 )
-from agentplatform.application.planning import (
-    AgentExecutionPlan,
+from agentplatform.domain.agents import (
+    AgentRole,
 )
-from agentplatform.domain.agents import AgentRole
 from agentplatform.domain.context import (
-    AgentExecutionContext,
+    BrainContext,
+)
+from agentplatform.domain.planning import (
+    ExecutionPlan,
+    PlanningRequest,
 )
 from agentplatform.domain.results import (
     AgentResult,
-)
-from agentplatform.domain.tasks import (
-    AgentTask,
 )
 
 
 class AgentBrain:
     """
-    Coordinates agent cognitive capabilities.
+    Main cognitive coordinator.
     """
 
     def __init__(
         self,
         reasoning: BrainReasoning,
+        context_factory: BrainContextFactory,
         planning: BrainPlanning | None = None,
-        memory: BrainMemory | None = None,
         reflection: BrainReflection | None = None,
         decision: BrainDecision | None = None,
         validation: BrainValidation | None = None,
+        profile: BrainProfile | None = None,
     ) -> None:
+
         self._reasoning = reasoning
+        self._context_factory = context_factory
         self._planning = planning or BrainPlanning()
-        self._memory = memory
         self._reflection = reflection or BrainReflection()
         self._decision = decision or BrainDecision()
         self._validation = validation or BrainValidation()
+        self._profile = profile
+
+    def build_context(
+        self,
+        project_id: UUID,
+    ) -> BrainContext:
+        """
+        Create cognitive context.
+        """
+
+        return self._context_factory.create(
+            project_id,
+        )
 
     def think(
         self,
         role: AgentRole,
-        context: AgentExecutionContext,
+        context: BrainContext,
     ) -> str:
         """
-        Execute reasoning.
+        Execute reasoning using full brain context.
         """
 
         return self._reasoning.reason(
@@ -81,38 +100,20 @@ class AgentBrain:
 
     def plan(
         self,
-        task: AgentTask,
-    ) -> AgentExecutionPlan:
+        request: PlanningRequest,
+    ) -> ExecutionPlan:
         """
         Create execution plan.
         """
 
         return self._planning.plan(
-            task,
-        )
-
-    def remember_context(
-        self,
-        context: AgentExecutionContext,
-    ) -> dict[str, object]:
-        """
-        Retrieve memory context.
-        """
-
-        if self._memory is None:
-            return {}
-
-        return self._memory.retrieve(
-            context,
+            request,
         )
 
     def reflect(
         self,
         results: list[AgentResult],
     ) -> dict[str, object]:
-        """
-        Analyze execution.
-        """
 
         return self._reflection.reflect(
             results,
@@ -122,9 +123,6 @@ class AgentBrain:
         self,
         results: Sequence[AgentResult],
     ) -> DecisionResult:
-        """
-        Decide next execution action.
-        """
 
         return self._decision.decide(
             results,
@@ -134,10 +132,14 @@ class AgentBrain:
         self,
         results: list[AgentResult],
     ) -> dict[str, object]:
-        """
-        Validate execution.
-        """
 
         return self._validation.validate(
             results,
         )
+
+    @property
+    def profile(
+        self,
+    ) -> BrainProfile | None:
+
+        return self._profile

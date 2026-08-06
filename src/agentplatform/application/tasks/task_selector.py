@@ -21,6 +21,8 @@ class SelectableTask:
 
     title: str
 
+    description: str
+
     task_type: str
 
     priority: str

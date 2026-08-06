@@ -26,3 +26,5 @@ class AgentRole(str, Enum):
     RUNTIME_OBSERVER = "runtime_observer"
 
     ML_SCIENTIST = "ml_scientist"
+
+    RND = "rnd"

@@ -7,10 +7,12 @@ Brain planning capability.
 from __future__ import annotations
 
 from agentplatform.application.planning import (
-    AgentExecutionPlan,
     AgentPlanner,
 )
-from agentplatform.domain.tasks import AgentTask
+from agentplatform.domain.planning import (
+    ExecutionPlan,
+    PlanningRequest,
+)
 
 
 class BrainPlanning:
@@ -26,12 +28,12 @@ class BrainPlanning:
 
     def plan(
         self,
-        task: AgentTask,
-    ) -> AgentExecutionPlan:
+        request: PlanningRequest,
+    ) -> ExecutionPlan:
         """
         Create execution plan.
         """
 
-        return self._planner.create_plan(
-            task,
+        return self._planner.plan(
+            request,
         )
