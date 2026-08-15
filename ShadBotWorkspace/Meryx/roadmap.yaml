@@ -1,4 +1,0 @@
-phases:
-  - id: "phase_1"
-    name: "Foundation"
-    status: "running"
