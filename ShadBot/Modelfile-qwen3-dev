@@ -1,0 +1,5 @@
+FROM qwen3-coder-next
+
+PARAMETER num_ctx 4096
+PARAMETER num_predict 2048
+PARAMETER temperature 0.2

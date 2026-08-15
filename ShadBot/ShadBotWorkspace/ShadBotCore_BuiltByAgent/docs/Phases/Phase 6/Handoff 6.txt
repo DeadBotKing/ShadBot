@@ -1,0 +1,364 @@
+# Phase 6 — Agent Orchestration
+## Handoff Document
+
+## Mission
+
+Implement the Agent Orchestration Layer of ShadBot.
+
+This phase is responsible for coordinating multiple agents, routing tasks, managing execution pipelines, transferring context between agents, collecting results, recovering from failures, and monitoring orchestration behavior.
+
+This phase does NOT implement:
+- Agent intelligence
+- Agent reasoning
+- Agent memory
+- Agent capabilities
+- Tool execution
+
+Those responsibilities belong to:
+- Phase 5 — Brain Orchestrator
+- Phase 4 — Agent Capability & Tool Execution Layer
+
+
+--------------------------------------------------
+
+# Core Objective
+
+Build the orchestration engine that can receive a task from Brain, decide:
+
+1. Which Agent should execute it
+2. In what order Agents should work
+3. How Agents communicate and transfer responsibility
+4. How results are combined
+5. How failures are recovered
+
+
+The final system behavior should support:
+
+Task
+ ↓
+Task Routing
+ ↓
+Agent Selection
+ ↓
+Pipeline Creation
+ ↓
+Agent Execution
+ ↓
+Agent Handoff
+ ↓
+Result Aggregation
+ ↓
+Validation
+ ↓
+Completion / Recovery
+
+
+--------------------------------------------------
+
+# Phase Structure
+
+
+## 6.1 Task Routing
+
+Purpose:
+Determine where a task should go.
+
+Responsibilities:
+
+- Analyze incoming task metadata
+- Understand required capability
+- Identify suitable agent category
+- Select execution route
+
+Must include:
+
+- Task Classification
+- Task Capability Analysis
+- Task Routing Strategy
+- Agent Route Decision
+- Routing Validation
+
+
+Input:
+
+TaskRequest
+
+Output:
+
+AgentRouteDecision
+
+
+--------------------------------------------------
+
+## 6.2 Agent Selection
+
+Purpose:
+Choose the best Agent for execution.
+
+Responsibilities:
+
+- Discover available agents
+- Match task requirements with agent abilities
+- Evaluate agent profile
+- Check availability
+- Rank candidates
+
+
+Must include:
+
+- Agent Discovery
+- Capability Matching
+- Profile Evaluation
+- Availability Check
+- Priority Evaluation
+- Selection Decision
+
+
+Input:
+
+AgentRouteDecision
+
+Output:
+
+SelectedAgent
+
+
+--------------------------------------------------
+
+## 6.3 Pipeline Management
+
+Purpose:
+Control multi-step execution workflows.
+
+Responsibilities:
+
+- Create execution pipeline
+- Manage steps
+- Track progress
+- Handle dependencies
+- Detect completion
+
+
+Must include:
+
+- Pipeline Definition
+- Pipeline Builder
+- Pipeline Execution Manager
+- Pipeline State Tracking
+- Dependency Management
+- Completion Detection
+
+
+Input:
+
+Task + Selected Agents
+
+Output:
+
+ExecutionPipeline
+
+
+--------------------------------------------------
+
+## 6.4 Agent Handoff
+
+Purpose:
+Transfer work between Agents safely.
+
+Example:
+
+Architect Agent
+        ↓
+Engineer Agent
+        ↓
+QA Agent
+
+
+Must preserve:
+
+- Task context
+- Previous decisions
+- Generated artifacts
+- Execution history
+- Constraints
+
+
+Must include:
+
+- Handoff Request
+- Context Builder
+- Handoff Validation
+- Agent Transition Manager
+- Handoff History Tracking
+
+
+Input:
+
+AgentExecutionResult
+
+Output:
+
+AgentHandoffContext
+
+
+--------------------------------------------------
+
+## 6.5 Result Aggregation
+
+Purpose:
+Combine outputs from multiple Agents.
+
+Responsibilities:
+
+- Collect results
+- Normalize outputs
+- Resolve conflicts
+- Build final response
+
+
+Must include:
+
+- Result Collection
+- Result Normalization
+- Result Evaluation
+- Conflict Resolution
+- Final Result Builder
+- Reporting
+
+
+Input:
+
+Multiple Agent Results
+
+Output:
+
+AggregatedResult
+
+
+--------------------------------------------------
+
+## 6.6 Failure Recovery
+
+Purpose:
+Handle execution failures automatically.
+
+Examples:
+
+- Agent failure
+- Tool failure
+- Invalid output
+- Timeout
+
+
+Must include:
+
+- Failure Detection
+- Failure Classification
+- Recovery Strategy Selection
+- Retry Management
+- Alternative Agent Routing
+- Recovery Validation
+
+
+Input:
+
+Execution Failure
+
+Output:
+
+RecoveryResult
+
+
+--------------------------------------------------
+
+## 6.7 Orchestration Monitoring
+
+Purpose:
+Observe orchestration health.
+
+Must track:
+
+- Agent execution time
+- Pipeline status
+- Failure rate
+- Bottlenecks
+- Agent performance
+
+
+Must include:
+
+- Execution Monitoring
+- Agent Performance Tracking
+- Pipeline Monitoring
+- Bottleneck Detection
+- Orchestration Metrics
+
+
+--------------------------------------------------
+
+# Integration Points
+
+
+Consumes:
+
+Phase 5 Brain Orchestrator
+- Goal
+- Plan
+- Intent
+- Reasoning Output
+
+
+Uses:
+
+Phase 4 Capability Layer
+- Agent capabilities
+- Tool permissions
+- Execution contracts
+
+
+Produces:
+
+Agent execution lifecycle
+
+
+--------------------------------------------------
+
+# Final Acceptance Criteria
+
+
+Phase 6 is complete when:
+
+✅ Brain can send a task to Orchestrator
+
+✅ Orchestrator can select proper Agent
+
+✅ Multiple Agents can execute sequential workflows
+
+✅ Agents can handoff context
+
+✅ Results can be merged
+
+✅ Failures can trigger recovery
+
+✅ Execution metrics are available
+
+✅ No manual coordination is required
+
+
+Final System Flow:
+
+User / Task File
+        ↓
+Brain Orchestrator
+        ↓
+Agent Orchestrator
+        ↓
+Agents
+        ↓
+Tools
+        ↓
+Results
+        ↓
+Brain Validation
+        ↓
+Completed Task

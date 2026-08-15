@@ -1,0 +1,17 @@
+tasks:
+  - id: "e82a4d91-3b62-4c8e-a973-1f8a4b2c8d55"
+    phase: "phase_1"
+    title: "Implement Enterprise Financial Indicator Engine"
+    description: |
+      Create a production-grade Python market analysis service in 'src/indicators/' that calculates financial indicators from time-series price data.
+      
+      Requirements:
+      1. Domain Model: Define an immutable dataclass 'PriceBar' (timestamp, open, high, low, close, volume) and 'IndicatorSignal' (indicator_name, value, signal_type: BUY/SELL/NEUTRAL).
+      2. Simple Moving Average (SMA): Implement 'calculate_sma(prices: list[float], period: int) -> list[float]' with validation for empty lists and period length.
+      3. Exponential Moving Average (EMA): Implement 'calculate_ema(prices: list[float], period: int) -> list[float]'.
+      4. Relative Strength Index (RSI): Implement 'calculate_rsi(prices: list[float], period: int = 14) -> list[float]' returning values between 0 and 100.
+      5. Signal Generator: Create a service class 'MarketAnalyzer' that evaluates RSI (RSI < 30 = BUY, RSI > 70 = SELL, otherwise NEUTRAL).
+      6. Quality Standards: Include complete PEP 484 type annotations, professional Google-style docstrings, and robust exception handling (e.g., ValueError for invalid periods).
+    type: "implementation"
+    priority: "critical"
+    status: "pending"
