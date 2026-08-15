@@ -59,7 +59,7 @@ def _print_build_banner() -> None:
     print("=" * 75)
 
 
-def main() -> None:
+def main() -> int:
     _print_build_banner()
 
     parser = argparse.ArgumentParser(
@@ -127,11 +127,28 @@ def main() -> None:
         results,
         start=1,
     ):
-        elapsed = result.data.get("elapsed_seconds", 0.0)
+        elapsed = float(result.data.get("elapsed_seconds", 0.0))
         agent_name = str(result.data.get("agent", f"agent_{index}")).ljust(22)
         status_str = "SUCCESS" if result.success else "FAILED"
+
+        print(
+            f"[{index}] {agent_name} {status_str:<8} "
+            f"{elapsed:>7.2f}s  {result.message}"
+        )
+
+    failed = [result for result in results if not result.success]
+
     print("=" * 75)
+    print(
+        f"Agents: {len(results)} | "
+        f"Succeeded: {len(results) - len(failed)} | "
+        f"Failed: {len(failed)}"
+    )
+    print("=" * 75)
+
+    # Exit non-zero on failure so CI and shell callers can detect it.
+    return 1 if failed or not results else 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

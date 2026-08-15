@@ -6,6 +6,8 @@ Agent brain coordinator.
 
 from __future__ import annotations
 
+from typing import Any
+
 from collections.abc import Sequence
 from uuid import UUID
 

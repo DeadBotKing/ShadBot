@@ -6,6 +6,8 @@ Agent planning engine.
 
 from __future__ import annotations
 
+from typing import Any
+
 from agentplatform.domain.agents import AgentRole
 from agentplatform.domain.planning import (
     ExecutionPlan,

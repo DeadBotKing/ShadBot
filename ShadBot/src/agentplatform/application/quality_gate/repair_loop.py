@@ -32,10 +32,43 @@ class RepairLoopManager:
 
     def decide(self, report: CompleteQualityReport) -> RepairLoopDecision:
         if report.approved:
-            return RepairLoopDecision(False, "none", "Quality Gate passed; no repair required.")
-        failed = [c.check_name for c in report.check_results if not c.passed]
+            return RepairLoopDecision(
+                False,
+                "none",
+                "Quality Gate passed; no repair required.",
+            )
+
+        failed = [
+            check.check_name
+            for check in report.check_results
+            if not check.skipped and not check.passed
+        ]
+
+        skipped = [
+            check.check_name for check in report.check_results if check.skipped
+        ]
+
+        if not failed:
+            # Nothing actually failed: the gate proved nothing because every
+            # check was skipped. Repairing code would be wrong; the environment
+            # needs fixing instead.
+            return RepairLoopDecision(
+                trigger_repair=False,
+                target_agent="none",
+                repair_instructions=(
+                    "Quality Gate is inconclusive: no check could be executed "
+                    f"(skipped: {', '.join(skipped) or 'all'}). "
+                    "Install the quality tooling before trusting this result."
+                ),
+            )
+
+        instructions = f"Fix failing quality checks: {', '.join(failed)}"
+
+        if skipped:
+            instructions += f" (not verified: {', '.join(skipped)})"
+
         return RepairLoopDecision(
             trigger_repair=True,
             target_agent="engineer",
-            repair_instructions=f"Fix failing quality checks: {', '.join(failed)}",
+            repair_instructions=instructions,
         )

@@ -16,10 +16,12 @@ from .validators import (
     PytestValidator,
     RuffValidator,
     SecurityValidator,
+    SyntaxValidator,
 )
 
 __all__ = [
     "CheckResult",
+    "SyntaxValidator",
     "PytestValidator",
     "RuffValidator",
     "BlackValidator",

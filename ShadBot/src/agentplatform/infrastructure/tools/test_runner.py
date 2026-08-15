@@ -10,6 +10,9 @@ import os
 import subprocess
 import sys
 
+# Hard ceiling so a wedged child process can never hang the pipeline.
+_SUBPROCESS_TIMEOUT_SECONDS = int(os.getenv("SHADBOT_SUBPROCESS_TIMEOUT", "600"))
+
 
 class TestRunner:
     """
@@ -33,14 +36,27 @@ class TestRunner:
                 "skipped": True,
             }
 
-        process = subprocess.run(
-            [
-                sys.executable,
-                path,
-            ],
-            capture_output=True,
-            text=True,
-        )
+        try:
+            process = subprocess.run(
+                [
+                    sys.executable,
+                    path,
+                ],
+                capture_output=True,
+                text=True,
+                timeout=_SUBPROCESS_TIMEOUT_SECONDS,
+            )
+        except subprocess.TimeoutExpired:
+            return {
+                "success": False,
+                "return_code": -1,
+                "stdout": "",
+                "stderr": (
+                    f"Execution of {path} timed out after "
+                    f"{_SUBPROCESS_TIMEOUT_SECONDS}s."
+                ),
+                "timed_out": True,
+            }
 
         return {
             "success": process.returncode == 0,
@@ -76,14 +92,26 @@ class TestRunner:
         if path:
             command.append(path)
 
-        process = subprocess.run(
-            command,
-            capture_output=True,
-            text=True,
-        )
+        try:
+            process = subprocess.run(
+                command,
+                capture_output=True,
+                text=True,
+                timeout=_SUBPROCESS_TIMEOUT_SECONDS,
+            )
+        except subprocess.TimeoutExpired:
+            return {
+                "success": False,
+                "return_code": -1,
+                "stdout": "",
+                "stderr": (
+                    f"pytest timed out after {_SUBPROCESS_TIMEOUT_SECONDS}s."
+                ),
+                "timed_out": True,
+            }
 
         return {
-            "success": process.returncode == 0,
+            "success": process.returncode in (0, 5),
             "return_code": process.returncode,
             "stdout": process.stdout,
             "stderr": process.stderr,

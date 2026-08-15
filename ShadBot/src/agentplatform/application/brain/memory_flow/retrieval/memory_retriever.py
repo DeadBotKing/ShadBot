@@ -6,6 +6,8 @@ Memory Retriever
 
 from __future__ import annotations
 
+from typing import Any
+
 from agentplatform.domain.memory import (
     MemoryRepository,
 )

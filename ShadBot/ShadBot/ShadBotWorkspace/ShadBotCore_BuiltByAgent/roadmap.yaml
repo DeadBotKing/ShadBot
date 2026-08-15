@@ -1,4 +1,0 @@
-phases:
-  - id: "phase_1_to_12"
-    name: "Autonomous Meta-Agent Bootstrapping"
-    status: "running"
