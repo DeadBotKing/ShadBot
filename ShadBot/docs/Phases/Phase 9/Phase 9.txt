@@ -1,0 +1,68 @@
+Phase 9 — Quality Gate System
+
+
+├── 9.1 Pytest Validation
+│
+│   ├── Test Discovery
+│   ├── Unit Test Execution
+│   ├── Integration Test Execution
+│   ├── Regression Test Execution
+│   ├── Test Result Collection
+│   └── Test Failure Analysis
+
+
+├── 9.2 Ruff Validation
+│
+│   ├── Code Style Analysis
+│   ├── Import Validation
+│   ├── Static Code Checks
+│   ├── Rule Configuration Management
+│   ├── Violation Reporting
+│   └── Auto Fix Management
+
+
+├── 9.3 Black Validation
+│
+│   ├── Code Formatting Check
+│   ├── Formatting Consistency Validation
+│   ├── Format Enforcement
+│   └── Formatting Report Generation
+
+
+├── 9.4 MyPy Validation
+│
+│   ├── Type Analysis
+│   ├── Type Error Detection
+│   ├── Type Coverage Analysis
+│   ├── Type Configuration Management
+│   └── Type Validation Reporting
+
+
+├── 9.5 Security Validation
+│
+│   ├── Dependency Security Scan
+│   ├── Secret Detection
+│   ├── Vulnerability Detection
+│   ├── Permission Validation
+│   ├── Security Rule Enforcement
+│   └── Security Report Generation
+
+
+├── 9.6 Architecture Validation
+│
+│   ├── Layer Dependency Validation
+│   ├── Module Boundary Checking
+│   ├── Import Rule Validation
+│   ├── Architecture Rule Enforcement
+│   ├── Design Pattern Validation
+│   └── Architecture Violation Reporting
+
+
+└── 9.7 Quality Gate Orchestrator ⭐ اضافه پیشنهادی
+
+    ├── Quality Pipeline Manager
+    ├── Validation Order Controller
+    ├── Gate Decision Engine
+    ├── Failure Feedback System
+    ├── Auto Repair Trigger
+    └── Quality Report Aggregation

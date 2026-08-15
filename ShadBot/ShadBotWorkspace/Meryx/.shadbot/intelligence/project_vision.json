@@ -1,0 +1,44 @@
+{
+    "identity": {
+        "project_id": "cdc7260c-95c4-4d8c-aeee-8c71b69158a7",
+        "name": "",
+        "path": "/home/user/ShadBotWorkspace/Meryx",
+        "created_at": "2026-08-10T17:44:25.857229+00:00"
+    },
+    "architecture": {
+        "description": "",
+        "modules": [],
+        "patterns": [],
+        "dependencies": {}
+    },
+    "technologies": {
+        "languages": [],
+        "frameworks": [],
+        "tools": [],
+        "databases": []
+    },
+    "development": {
+        "completed_tasks": [],
+        "pending_tasks": [],
+        "active_tasks": [],
+        "decisions": []
+    },
+    "quality": {
+        "tests_status": "unknown",
+        "validation_status": "unknown",
+        "known_issues": [],
+        "risks": []
+    },
+    "runtime": {
+        "health_status": "unknown",
+        "performance_notes": [],
+        "runtime_errors": []
+    },
+    "changes": {
+        "changed_files": [],
+        "commits": [],
+        "summary": ""
+    },
+    "recommendations": [],
+    "generated_at": "2026-08-10T17:44:25.857255+00:00"
+}
