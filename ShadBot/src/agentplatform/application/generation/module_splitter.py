@@ -148,11 +148,24 @@ class ModuleSplitter:
             )
 
         if not modules:
-            return [SplitModule(path=default_path, content=code)]
+            return [
+                SplitModule(
+                    path=default_path,
+                    content=self.strip_source_root_imports(code),
+                )
+            ]
 
-        return self._propagate_shared_imports(
+        repaired = self._propagate_shared_imports(
             self._merge_duplicates(modules),
         )
+
+        return [
+            SplitModule(
+                path=module.path,
+                content=self.strip_source_root_imports(module.content),
+            )
+            for module in repaired
+        ]
 
     @staticmethod
     def _sanitise(raw: str) -> str | None:
@@ -314,3 +327,41 @@ class ModuleSplitter:
             )
 
         return repaired
+
+    @staticmethod
+    def strip_source_root_imports(
+        content: str,
+        source_roots: tuple[str, ...] = ("src", "lib", "source"),
+    ) -> str:
+        """
+        Rewrite imports that wrongly include the source-root directory.
+
+        `src/` is on sys.path, so it is not part of any package name.
+        Models shown a path like `src/agentplatform/domain/models.py`
+        routinely answer with:
+
+            from src.agentplatform.domain.models import Agent
+
+        which raises ModuleNotFoundError. Run 3 produced 5 unimportable
+        modules from this single mistake, all reported as
+        "No module named 'src.agentplatform.domain.agents'".
+
+        The prompt now states the correct import path, but small models
+        ignore instructions, so this repairs the output deterministically.
+        """
+
+        pattern = re.compile(
+            r"^(?P<indent>[ \t]*)"
+            r"(?P<kind>from|import)[ \t]+"
+            r"(?P<root>" + "|".join(source_roots) + r")\."
+            r"(?P<rest>[A-Za-z0-9_.]+)",
+            re.MULTILINE,
+        )
+
+        def _replace(match: re.Match[str]) -> str:
+            return (
+                f"{match.group('indent')}{match.group('kind')} "
+                f"{match.group('rest')}"
+            )
+
+        return pattern.sub(_replace, content)

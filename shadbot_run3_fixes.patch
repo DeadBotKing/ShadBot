@@ -1,0 +1,619 @@
+diff --git a/ShadBot/src/agentplatform/application/generation/code_generation_service.py b/ShadBot/src/agentplatform/application/generation/code_generation_service.py
+index f3de883..290b13a 100644
+--- a/ShadBot/src/agentplatform/application/generation/code_generation_service.py
++++ b/ShadBot/src/agentplatform/application/generation/code_generation_service.py
+@@ -6,6 +6,7 @@ Code generation service.
+ 
+ from __future__ import annotations
+ 
++import ast
+ from dataclasses import replace
+ from pathlib import Path
+ 
+@@ -147,6 +148,39 @@ class CodeGenerationService:
+                 + ", ".join(str(p.relative_to(root)) for p in written),
+             )
+ 
++        # The model sometimes answers a request for file A with content it
++        # labels as file B, so the planned module is silently never written.
++        # Run 3 lost domain/agents/agent_role.py this way: AgentRole ended up
++        # inside agent_contract.py and five modules then failed to import
++        # "agentplatform.domain.agents.agent_role".
++        requested = file_path.resolve()
++
++        if requested not in written and self._is_within(requested, root):
++            print(
++                f"[CODE GENERATION] Model did not emit the requested file "
++                f"{relative_target}; writing a re-export shim so planned "
++                f"imports resolve.",
++            )
++
++            shim = self._build_shim(
++                requested=requested,
++                written=written,
++                root=root,
++            )
++
++            shim_artifact = GeneratedArtifact(
++                path=requested,
++                content=shim,
++                artifact_type=ArtifactType.SOURCE_CODE,
++            )
++
++            self._artifact_service.save(shim_artifact)
++
++            written.append(requested)
++
++            if primary is None:
++                primary = shim_artifact
++
+         self._ensure_packages(written, root)
+ 
+         if primary is None:
+@@ -164,6 +198,96 @@ class CodeGenerationService:
+ 
+         return primary
+ 
++    def _build_shim(
++        self,
++        requested: Path,
++        written: list[Path],
++        root: Path,
++    ) -> str:
++        """
++        Build a module that re-exports symbols the model put elsewhere.
++
++        The planned module name is what the rest of the generated project
++        imports. If the model wrote those symbols into a different file, a
++        re-export keeps the planned import path working instead of leaving a
++        hole that breaks every dependent module.
++
++        When nothing suitable is found the shim raises NotImplementedError:
++        an honest failure, never a silent empty module that would let the
++        gate pass.
++        """
++
++        expected_symbol = "".join(
++            part.capitalize() for part in requested.stem.split("_")
++        )
++
++        for candidate in written:
++            try:
++                source = candidate.read_text(encoding="utf-8")
++                tree = ast.parse(source)
++            except (OSError, SyntaxError):
++                continue
++
++            names = [
++                node.name
++                for node in tree.body
++                if isinstance(node, (ast.ClassDef, ast.FunctionDef))
++            ]
++
++            match = next(
++                (name for name in names if name.lower() == expected_symbol.lower()),
++                None,
++            )
++
++            if match is None:
++                continue
++
++            module_path = self._module_path(candidate, root)
++
++            return (
++                f'"""Re-export of {match}.\n\n'
++                f"The generator emitted {match} into "
++                f"{self._relative_to_root(candidate, root)} instead of this\n"
++                f"module. This shim preserves the planned import path.\n"
++                f'"""\n\n'
++                f"from {module_path} import {match}\n\n"
++                f'__all__ = ["{match}"]\n'
++            )
++
++        return (
++            f'"""Placeholder for {requested.name}.\n\n'
++            f"The code generator did not produce this planned module.\n"
++            f'"""\n\n\n'
++            f"raise NotImplementedError(\n"
++            f'    "{requested.name} was planned but never generated. "\n'
++            f'    "Re-run the engineer agent for this module."\n'
++            f")\n"
++        )
++
++    def _module_path(
++        self,
++        path: Path,
++        root: Path,
++    ) -> str:
++        """
++        Dotted import path for a written module.
++        """
++
++        relative = self._relative_to_root(path, root)
++
++        if relative.endswith(".py"):
++            relative = relative[: -len(".py")]
++
++        parts = [part for part in relative.split("/") if part]
++
++        if parts and parts[0] in {"src", "lib", "source"}:
++            parts = parts[1:]
++
++        if parts and parts[-1] == "__init__":
++            parts = parts[:-1]
++
++        return ".".join(parts)
++
+     def _resolve_root(
+         self,
+         file_path: Path,
+diff --git a/ShadBot/src/agentplatform/application/generation/module_splitter.py b/ShadBot/src/agentplatform/application/generation/module_splitter.py
+index bec310f..d754217 100644
+--- a/ShadBot/src/agentplatform/application/generation/module_splitter.py
++++ b/ShadBot/src/agentplatform/application/generation/module_splitter.py
+@@ -148,12 +148,25 @@ class ModuleSplitter:
+             )
+ 
+         if not modules:
+-            return [SplitModule(path=default_path, content=code)]
++            return [
++                SplitModule(
++                    path=default_path,
++                    content=self.strip_source_root_imports(code),
++                )
++            ]
+ 
+-        return self._propagate_shared_imports(
++        repaired = self._propagate_shared_imports(
+             self._merge_duplicates(modules),
+         )
+ 
++        return [
++            SplitModule(
++                path=module.path,
++                content=self.strip_source_root_imports(module.content),
++            )
++            for module in repaired
++        ]
++
+     @staticmethod
+     def _sanitise(raw: str) -> str | None:
+         """
+@@ -314,3 +327,41 @@ class ModuleSplitter:
+             )
+ 
+         return repaired
++
++    @staticmethod
++    def strip_source_root_imports(
++        content: str,
++        source_roots: tuple[str, ...] = ("src", "lib", "source"),
++    ) -> str:
++        """
++        Rewrite imports that wrongly include the source-root directory.
++
++        `src/` is on sys.path, so it is not part of any package name.
++        Models shown a path like `src/agentplatform/domain/models.py`
++        routinely answer with:
++
++            from src.agentplatform.domain.models import Agent
++
++        which raises ModuleNotFoundError. Run 3 produced 5 unimportable
++        modules from this single mistake, all reported as
++        "No module named 'src.agentplatform.domain.agents'".
++
++        The prompt now states the correct import path, but small models
++        ignore instructions, so this repairs the output deterministically.
++        """
++
++        pattern = re.compile(
++            r"^(?P<indent>[ \t]*)"
++            r"(?P<kind>from|import)[ \t]+"
++            r"(?P<root>" + "|".join(source_roots) + r")\."
++            r"(?P<rest>[A-Za-z0-9_.]+)",
++            re.MULTILINE,
++        )
++
++        def _replace(match: re.Match[str]) -> str:
++            return (
++                f"{match.group('indent')}{match.group('kind')} "
++                f"{match.group('rest')}"
++            )
++
++        return pattern.sub(_replace, content)
+diff --git a/ShadBot/src/agentplatform/application/prompt/prompt_builder.py b/ShadBot/src/agentplatform/application/prompt/prompt_builder.py
+index 4c21407..7f71b37 100644
+--- a/ShadBot/src/agentplatform/application/prompt/prompt_builder.py
++++ b/ShadBot/src/agentplatform/application/prompt/prompt_builder.py
+@@ -107,10 +107,17 @@ class PromptBuilder:
+         sibling_block = ""
+ 
+         if siblings:
+-            listed = "\n".join(f"- {path}" for path in siblings)
++            # Show the IMPORT PATH, not the file path. Given
++            # "src/agentplatform/domain/models.py" the model writes
++            # "from src.agentplatform.domain.models import X", which fails
++            # because src/ is the source root and not part of any package.
++            listed = "\n".join(
++                f"- {self._import_path(path)}" for path in siblings
++            )
+             sibling_block = (
+-                "\nOther modules in this project (import from them when "
+-                f"needed, do NOT re-implement them):\n{listed}\n"
++                "\nModules that already exist in this project. Import from "
++                "them by these EXACT dotted paths; do NOT re-implement "
++                f"them:\n{listed}\n"
+             )
+ 
+         feedback = _clip(context.metadata.get("review_feedback", ""))
+@@ -129,11 +136,18 @@ class PromptBuilder:
+ 
+         layer = self._infer_layer(target_file)
+ 
++        own_import_path = self._import_path(target_file)
++
+         return f"""Write ONE Python file: {module_name}
+ 
+ FULL PATH:
+ {target_file}
+ 
++THIS MODULE'S IMPORT PATH:
++{own_import_path}
++(the 'src/' directory is the source root and is NEVER part of an import
++statement - never write "from src.something import X")
++
+ WHAT {module_name} MUST DO (this and nothing else):
+ {purpose}
+ 
+@@ -151,6 +165,10 @@ HARD REQUIREMENTS:
+   @dataclass(frozen=True).
+ - Import what you use. Every name you reference must be defined or imported
+   in THIS file.
++- Import ONLY what this file actually uses. Do not import a module just
++  because it exists.
++- NEVER create a circular import: if module A imports B, then B must not
++  import A. Depend downwards only (entry point -> application -> domain).
+ - No placeholder bodies. No `pass` where logic belongs. No TODO comments.
+   If you cannot implement something, raise NotImplementedError with a message
+   explaining what is missing.
+@@ -159,6 +177,33 @@ HARD REQUIREMENTS:
+ 
+ Return the file contents inside a single ```python code block."""
+ 
++    @staticmethod
++    def _import_path(target_file: str) -> str:
++        """
++        Convert a repository file path into its Python import path.
++
++        `src/` is a source root, not a package: it is on sys.path and must
++        never appear in an import statement. Run 3 produced 5 unimportable
++        modules purely because the model echoed the `src/` prefix back as
++        `from src.agentplatform.domain... import ...`.
++        """
++
++        path = target_file.replace("\\", "/").strip().lstrip("./")
++
++        if path.endswith(".py"):
++            path = path[: -len(".py")]
++
++        parts = [segment for segment in path.split("/") if segment]
++
++        # Drop a leading source-root directory.
++        if parts and parts[0] in {"src", "lib", "source"}:
++            parts = parts[1:]
++
++        if parts and parts[-1] == "__init__":
++            parts = parts[:-1]
++
++        return ".".join(parts)
++
+     @staticmethod
+     def _infer_layer(target_file: str) -> str:
+         """
+diff --git a/ShadBot/src/agentplatform/application/quality_gate/validators.py b/ShadBot/src/agentplatform/application/quality_gate/validators.py
+index 7d89ab1..d1bc1b5 100644
+--- a/ShadBot/src/agentplatform/application/quality_gate/validators.py
++++ b/ShadBot/src/agentplatform/application/quality_gate/validators.py
+@@ -720,7 +720,22 @@ for path in sorted(source_root.rglob("*.py")):
+             if frame.filename == str(path):
+                 line = f":{frame.lineno}"
+                 break
+-        failures.append((str(rel) + line, f"{type(exc).__name__}: {exc}"))
++
++        detail = "%s: %s" % (type(exc).__name__, exc)
++
++        # A cycle surfaces as "cannot import name X from <the module that is
++        # still being imported>". Name it explicitly: the raw message sends
++        # people hunting for a missing symbol that is actually present.
++        if isinstance(exc, ImportError):
++            text = str(exc)
++            if "partially initialized" in text or "most likely due to a circular import" in text:
++                detail = "CIRCULAR IMPORT: %s" % text
++            elif "cannot import name" in text:
++                frames = {f.filename for f in tb}
++                if str(path) in frames and len(frames) > 1:
++                    detail = "CIRCULAR IMPORT (or missing symbol): %s" % text
++
++        failures.append((str(rel) + line, detail))
+ 
+ print(json.dumps({"ok": ok, "failures": failures}))
+ '''
+diff --git a/ShadBot/tests/agentplatform_tests/quality_gate/test_import_path_repair.py b/ShadBot/tests/agentplatform_tests/quality_gate/test_import_path_repair.py
+new file mode 100644
+index 0000000..5300cb4
+--- /dev/null
++++ b/ShadBot/tests/agentplatform_tests/quality_gate/test_import_path_repair.py
+@@ -0,0 +1,273 @@
++"""
++ShadBot Agent Platform
++
++Regression tests for run-3 defects.
++
++  BUG P - the model echoed the source root back into import statements
++          ("from src.agentplatform.domain... import X"), so 5 of 10 generated
++          modules raised ModuleNotFoundError.
++
++  BUG Q - the model answered a request for file A with content labelled as
++          file B, so the planned module was never written and every dependent
++          import broke. Run 3 lost domain/agents/agent_role.py this way.
++
++  BUG R - circular imports were reported as "cannot import name X", sending
++          the reader hunting for a symbol that is actually present.
++"""
++
++from __future__ import annotations
++
++from pathlib import Path
++from uuid import uuid4
++
++from agentplatform.application.generation import (
++    CodeGenerationService,
++    ModuleSplitter,
++)
++from agentplatform.application.prompt.prompt_builder import (
++    CODEGEN_FILE_KEY,
++    CODEGEN_PURPOSE_KEY,
++    CODEGEN_SIBLINGS_KEY,
++    PromptBuilder,
++)
++from agentplatform.application.quality_gate import ImportValidator
++from agentplatform.domain.agents import AgentRole
++from agentplatform.domain.context import AgentExecutionContext
++
++
++# ---------------------------------------------------------------------------
++# BUG P - source root leaking into imports
++# ---------------------------------------------------------------------------
++
++
++def test_strip_source_root_imports_rewrites_from_imports() -> None:
++    code = (
++        "from src.agentplatform.domain.agents.agent_role import AgentRole\n"
++        "from src.agentplatform.application.release.release_service import R\n"
++    )
++
++    fixed = ModuleSplitter.strip_source_root_imports(code)
++
++    assert "from src." not in fixed
++    assert "from agentplatform.domain.agents.agent_role import AgentRole" in fixed
++
++
++def test_strip_source_root_imports_rewrites_plain_imports() -> None:
++    fixed = ModuleSplitter.strip_source_root_imports(
++        "import src.agentplatform.domain.models\n",
++    )
++
++    assert fixed.strip() == "import agentplatform.domain.models"
++
++
++def test_strip_source_root_imports_leaves_legitimate_names() -> None:
++    """
++    A package genuinely called `source_control` must not be mangled.
++    """
++
++    code = (
++        "from source_control import Repo\n"
++        "from srcutils import helper\n"
++        "import sources\n"
++    )
++
++    assert ModuleSplitter.strip_source_root_imports(code) == code
++
++
++def test_splitter_applies_import_repair() -> None:
++    code = (
++        "# src/pkg/a.py\n"
++        "from src.pkg.b import Thing\n"
++        "\n"
++        "# src/pkg/b.py\n"
++        "class Thing:\n"
++        "    pass\n"
++    )
++
++    modules = ModuleSplitter().split(code, default_path="src/pkg/a.py")
++
++    joined = "\n".join(m.content for m in modules)
++
++    assert "from src.pkg" not in joined
++    assert "from pkg.b import Thing" in joined
++
++
++def test_prompt_states_the_dotted_import_path() -> None:
++    context = AgentExecutionContext(
++        project_id=uuid4(),
++        task_id=uuid4(),
++        instructions="x",
++        task_title="T",
++        metadata={
++            CODEGEN_FILE_KEY: "src/agentplatform/domain/models.py",
++            CODEGEN_PURPOSE_KEY: "Entities",
++            CODEGEN_SIBLINGS_KEY: ["src/agentplatform/domain/agents.py"],
++        },
++    )
++
++    prompt = PromptBuilder().build(AgentRole.ENGINEER, context)
++
++    assert "agentplatform.domain.models" in prompt
++    assert "- agentplatform.domain.agents" in prompt
++    assert "never write" in prompt.lower()
++
++
++def test_prompt_forbids_circular_imports() -> None:
++    context = AgentExecutionContext(
++        project_id=uuid4(),
++        task_id=uuid4(),
++        instructions="x",
++        task_title="T",
++        metadata={
++            CODEGEN_FILE_KEY: "src/pkg/mod.py",
++            CODEGEN_PURPOSE_KEY: "Something",
++        },
++    )
++
++    prompt = PromptBuilder().build(AgentRole.ENGINEER, context)
++
++    assert "circular import" in prompt.lower()
++
++
++# ---------------------------------------------------------------------------
++# BUG Q - planned module never written
++# ---------------------------------------------------------------------------
++
++
++class _MisdirectingBrain:
++    """Answers a request for file A with content labelled as file B."""
++
++    def think(self, role: object, context: object) -> str:
++        return (
++            "```python\n"
++            "# src/pkg/other.py\n"
++            "from enum import Enum\n"
++            "\n"
++            "class AgentRole(Enum):\n"
++            '    """Roles."""\n'
++            '    ENGINEER = "Engineer"\n'
++            "```"
++        )
++
++
++def test_missing_planned_module_gets_a_reexport_shim(tmp_path: Path) -> None:
++    """
++    The run-3 failure: AgentRole landed in agent_contract.py, agent_role.py
++    was never written, and 5 modules failed to import it.
++    """
++
++    service = CodeGenerationService(
++        brain=_MisdirectingBrain(),
++        project_root=tmp_path,
++    )
++
++    context = AgentExecutionContext(
++        project_id=uuid4(),
++        task_id=uuid4(),
++        instructions="x",
++        task_title="T",
++        metadata={},
++    )
++
++    service.generate(
++        context=context,
++        file_path=tmp_path / "src/pkg/agent_role.py",
++        instructions="x",
++        purpose="Agent role enumeration",
++    )
++
++    planned = tmp_path / "src/pkg/agent_role.py"
++
++    assert planned.exists(), "planned module must always be created"
++
++    content = planned.read_text(encoding="utf-8")
++
++    assert "from pkg.other import AgentRole" in content
++    assert "src." not in content
++
++
++def test_shim_makes_the_project_importable(tmp_path: Path) -> None:
++    service = CodeGenerationService(
++        brain=_MisdirectingBrain(),
++        project_root=tmp_path,
++    )
++
++    context = AgentExecutionContext(
++        project_id=uuid4(),
++        task_id=uuid4(),
++        instructions="x",
++        task_title="T",
++        metadata={},
++    )
++
++    service.generate(
++        context=context,
++        file_path=tmp_path / "src/pkg/agent_role.py",
++        instructions="x",
++        purpose="Agent role enumeration",
++    )
++
++    result = ImportValidator().validate(str(tmp_path))
++
++    assert result.passed is True
++
++
++class _SilentBrain:
++    def think(self, role: object, context: object) -> str:
++        return "```python\n# src/pkg/unrelated.py\nX = 1\n```"
++
++
++def test_shim_raises_when_nothing_matches(tmp_path: Path) -> None:
++    """
++    No matching symbol means an honest NotImplementedError, never a silent
++    empty module that would let the gate pass.
++    """
++
++    service = CodeGenerationService(
++        brain=_SilentBrain(),
++        project_root=tmp_path,
++    )
++
++    context = AgentExecutionContext(
++        project_id=uuid4(),
++        task_id=uuid4(),
++        instructions="x",
++        task_title="T",
++        metadata={},
++    )
++
++    service.generate(
++        context=context,
++        file_path=tmp_path / "src/pkg/missing_thing.py",
++        instructions="x",
++        purpose="Something",
++    )
++
++    content = (tmp_path / "src/pkg/missing_thing.py").read_text(encoding="utf-8")
++
++    assert "NotImplementedError" in content
++
++
++# ---------------------------------------------------------------------------
++# BUG R - circular import diagnosis
++# ---------------------------------------------------------------------------
++
++
++def test_circular_import_is_named_as_such(tmp_path: Path) -> None:
++    pkg = tmp_path / "src" / "pkg"
++    pkg.mkdir(parents=True)
++
++    (pkg / "__init__.py").write_text("", encoding="utf-8")
++    (pkg / "a.py").write_text(
++        "from pkg.b import B\n\n\nclass A:\n    pass\n",
++        encoding="utf-8",
++    )
++    (pkg / "b.py").write_text(
++        "from pkg.a import A\n\n\nclass B:\n    pass\n",
++        encoding="utf-8",
++    )
++
++    result = ImportValidator().validate(str(tmp_path))
++
++    assert result.passed is False
++    assert "CIRCULAR IMPORT" in result.details

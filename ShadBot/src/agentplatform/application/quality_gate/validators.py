@@ -720,7 +720,22 @@ for path in sorted(source_root.rglob("*.py")):
             if frame.filename == str(path):
                 line = f":{frame.lineno}"
                 break
-        failures.append((str(rel) + line, f"{type(exc).__name__}: {exc}"))
+
+        detail = "%s: %s" % (type(exc).__name__, exc)
+
+        # A cycle surfaces as "cannot import name X from <the module that is
+        # still being imported>". Name it explicitly: the raw message sends
+        # people hunting for a missing symbol that is actually present.
+        if isinstance(exc, ImportError):
+            text = str(exc)
+            if "partially initialized" in text or "most likely due to a circular import" in text:
+                detail = "CIRCULAR IMPORT: %s" % text
+            elif "cannot import name" in text:
+                frames = {f.filename for f in tb}
+                if str(path) in frames and len(frames) > 1:
+                    detail = "CIRCULAR IMPORT (or missing symbol): %s" % text
+
+        failures.append((str(rel) + line, detail))
 
 print(json.dumps({"ok": ok, "failures": failures}))
 '''

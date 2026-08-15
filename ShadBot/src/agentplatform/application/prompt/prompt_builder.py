@@ -107,10 +107,17 @@ class PromptBuilder:
         sibling_block = ""
 
         if siblings:
-            listed = "\n".join(f"- {path}" for path in siblings)
+            # Show the IMPORT PATH, not the file path. Given
+            # "src/agentplatform/domain/models.py" the model writes
+            # "from src.agentplatform.domain.models import X", which fails
+            # because src/ is the source root and not part of any package.
+            listed = "\n".join(
+                f"- {self._import_path(path)}" for path in siblings
+            )
             sibling_block = (
-                "\nOther modules in this project (import from them when "
-                f"needed, do NOT re-implement them):\n{listed}\n"
+                "\nModules that already exist in this project. Import from "
+                "them by these EXACT dotted paths; do NOT re-implement "
+                f"them:\n{listed}\n"
             )
 
         feedback = _clip(context.metadata.get("review_feedback", ""))
@@ -129,10 +136,17 @@ class PromptBuilder:
 
         layer = self._infer_layer(target_file)
 
+        own_import_path = self._import_path(target_file)
+
         return f"""Write ONE Python file: {module_name}
 
 FULL PATH:
 {target_file}
+
+THIS MODULE'S IMPORT PATH:
+{own_import_path}
+(the 'src/' directory is the source root and is NEVER part of an import
+statement - never write "from src.something import X")
 
 WHAT {module_name} MUST DO (this and nothing else):
 {purpose}
@@ -151,6 +165,10 @@ HARD REQUIREMENTS:
   @dataclass(frozen=True).
 - Import what you use. Every name you reference must be defined or imported
   in THIS file.
+- Import ONLY what this file actually uses. Do not import a module just
+  because it exists.
+- NEVER create a circular import: if module A imports B, then B must not
+  import A. Depend downwards only (entry point -> application -> domain).
 - No placeholder bodies. No `pass` where logic belongs. No TODO comments.
   If you cannot implement something, raise NotImplementedError with a message
   explaining what is missing.
@@ -158,6 +176,33 @@ HARD REQUIREMENTS:
   without a TypeError or AttributeError.
 
 Return the file contents inside a single ```python code block."""
+
+    @staticmethod
+    def _import_path(target_file: str) -> str:
+        """
+        Convert a repository file path into its Python import path.
+
+        `src/` is a source root, not a package: it is on sys.path and must
+        never appear in an import statement. Run 3 produced 5 unimportable
+        modules purely because the model echoed the `src/` prefix back as
+        `from src.agentplatform.domain... import ...`.
+        """
+
+        path = target_file.replace("\\", "/").strip().lstrip("./")
+
+        if path.endswith(".py"):
+            path = path[: -len(".py")]
+
+        parts = [segment for segment in path.split("/") if segment]
+
+        # Drop a leading source-root directory.
+        if parts and parts[0] in {"src", "lib", "source"}:
+            parts = parts[1:]
+
+        if parts and parts[-1] == "__init__":
+            parts = parts[:-1]
+
+        return ".".join(parts)
 
     @staticmethod
     def _infer_layer(target_file: str) -> str:
