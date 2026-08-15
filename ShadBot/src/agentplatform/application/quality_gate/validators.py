@@ -85,20 +85,27 @@ def _truncate(text: str) -> str:
     return cleaned[:_MAX_DETAIL_CHARS] + "\n... [output truncated]"
 
 
-def _combine_output(stdout: str, stderr: str, return_code: int) -> str:
+def _combine_output(
+    stdout: str | None,
+    stderr: str | None,
+    return_code: int,
+) -> str:
     """
     Build a meaningful message.
 
     Ruff, black and pytest report findings on STDOUT and leave STDERR empty,
     so relying on STDERR alone produces blank error messages.
+
+    Either stream can be None when a decoding thread fails, so both are
+    normalised defensively before use.
     """
 
     parts: list[str] = []
 
-    if stdout.strip():
+    if stdout and stdout.strip():
         parts.append(stdout.strip())
 
-    if stderr.strip():
+    if stderr and stderr.strip():
         parts.append(stderr.strip())
 
     if not parts:
@@ -118,6 +125,8 @@ def _resolve_tool(module_name: str) -> list[str] | None:
         [sys.executable, "-m", module_name, "--version"],
         capture_output=True,
         text=True,
+        encoding="utf-8",
+        errors="replace",
         timeout=60,
     )
 
@@ -182,6 +191,8 @@ def _run_tool(
             cwd=str(target),
             capture_output=True,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             timeout=_DEFAULT_TOOL_TIMEOUT_SECONDS,
         )
     except subprocess.TimeoutExpired:

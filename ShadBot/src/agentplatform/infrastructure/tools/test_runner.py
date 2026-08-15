@@ -44,6 +44,8 @@ class TestRunner:
                 ],
                 capture_output=True,
                 text=True,
+                encoding="utf-8",
+                errors="replace",
                 timeout=_SUBPROCESS_TIMEOUT_SECONDS,
             )
         except subprocess.TimeoutExpired:
@@ -61,8 +63,8 @@ class TestRunner:
         return {
             "success": process.returncode == 0,
             "return_code": process.returncode,
-            "stdout": process.stdout,
-            "stderr": process.stderr,
+            "stdout": process.stdout or "",
+            "stderr": process.stderr or "",
         }
 
     def run_pytest(
@@ -97,6 +99,8 @@ class TestRunner:
                 command,
                 capture_output=True,
                 text=True,
+                encoding="utf-8",
+                errors="replace",
                 timeout=_SUBPROCESS_TIMEOUT_SECONDS,
             )
         except subprocess.TimeoutExpired:
@@ -113,6 +117,6 @@ class TestRunner:
         return {
             "success": process.returncode in (0, 5),
             "return_code": process.returncode,
-            "stdout": process.stdout,
-            "stderr": process.stderr,
+            "stdout": process.stdout or "",
+            "stderr": process.stderr or "",
         }

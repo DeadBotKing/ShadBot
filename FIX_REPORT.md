@@ -210,3 +210,51 @@ assert rep.overall_score == 1.0
 ۴. **گزارش‌های داخل `ShadBotWorkspace/`** هنوز ادعای «۱۰۰٪ کامل / V1.0 منتشر شد» دارند. حالا که گیت واقعی داریم، بهتر است این‌ها بازتولید شوند.
 
 ۵. **کد تولیدشده توسط ایجنت** در `ShadBotWorkspace/ShadBotCore_BuiltByAgent/` هنوز اجراشدنی نیست: چند فایل در یک فایل چسبیده‌اند، ایمپورت‌های شکسته، بدنه‌های `pass`. این مشکل prompt/parsing لایه تولید است، نه گیت.
+
+---
+
+## پیوست — باگ H: کرش انکودینگ در ویندوز (این باگ از خود من بود)
+
+**علامت:** بعد از اینکه هر ۹ ایجنت SUCCESS شدند، خودِ گیت کیفیت کرش کرد:
+
+```
+UnicodeDecodeError: 'charmap' codec can't decode byte 0x81 in position 5132
+  (Thread-57 _readerthread, cp1252)
+→ AttributeError: 'NoneType' object has no attribute 'strip'
+   validators.py:98  _combine_output
+```
+
+**ریشه:** `subprocess.run(..., text=True)` بدون پارامتر `encoding=`، از کدک پیش‌فرض
+سیستم‌عامل استفاده می‌کند. روی لینوکس این UTF-8 است و مشکلی پیش نمی‌آید، اما روی
+ویندوز فارسی **cp1252** است. وقتی `ruff` خروجی UTF-8 تولید می‌کند (مثلاً چون کد شما
+شامل متن فارسی، emoji یا کاراکتر `—` است)، ترد خواننده‌ی subprocess با
+`UnicodeDecodeError` می‌میرد. نتیجه این است که `result.stdout` به‌جای رشته `None`
+می‌شود — به همین دلیل خطایی که در نهایت می‌بینید `AttributeError` است نه خطای
+انکودینگ، و این گمراه‌کننده است.
+
+**اصلاح — دو لایه دفاعی:**
+
+۱. **علت اصلی:** به تمام ۱۴ فراخوانی subprocess در ۱۲ فایل پارامترهای
+   `encoding="utf-8", errors="replace"` اضافه شد. `errors="replace"` تضمین می‌کند
+   حتی بایت واقعاً نامعتبر هم به‌جای کرش، به `` تبدیل شود.
+
+۲. **دفاع در عمق:** `_combine_output` حالا امضای `stdout: str | None,
+   stderr: str | None` دارد و قبل از `.strip()` مقدار `None` را بررسی می‌کند.
+   همین کار برای `test_runner.py` هم انجام شد (`process.stdout or ""`).
+
+**۳ تست رگرسیون اضافه شد:**
+
+| تست | چه چیزی را اثبات می‌کند |
+|-----|-------------------------|
+| `test_combine_output_survives_none_streams` | با `stdout=None` دیگر `AttributeError` نمی‌دهد |
+| `test_subprocess_calls_pin_utf8_encoding` | هیچ `text=True` بدون `encoding="utf-8"` باقی نمانده |
+| `test_validator_handles_unicode_tool_output` | پروژه‌ای با متن فارسی از گیت رد می‌شود |
+
+**تأیید عملی:** `ruff` نصب شد و روی یک پروژه‌ی آزمایشی حاوی فارسی، emoji و
+`€ ± § ° ÿ` اجرا شد. خروجی کامل و بدون کرش decode شد.
+
+> **قانون برای آینده:** هر فراخوانی جدید `subprocess` در این پروژه **باید**
+> `encoding="utf-8", errors="replace"` داشته باشد. تست
+> `test_subprocess_calls_pin_utf8_encoding` این قانون را نگه می‌دارد.
+
+**وضعیت سوئیت:** ۲۲۳ passed + ۱ skipped (۲۲۱ قبلی + ۳ تست جدید).

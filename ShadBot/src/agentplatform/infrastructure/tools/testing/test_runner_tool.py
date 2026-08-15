@@ -73,6 +73,8 @@ class TestRunnerTool(ToolContract):
             cwd=context.working_directory,
             capture_output=True,
             text=True,
+            encoding="utf-8",
+            errors="replace",
         )
 
         result = TestResult(

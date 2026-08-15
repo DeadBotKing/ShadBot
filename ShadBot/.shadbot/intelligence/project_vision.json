@@ -1,9 +1,9 @@
 {
     "identity": {
-        "project_id": "6e55c7a4-6ac4-45b4-b2e4-2e2331b3f05b",
+        "project_id": "b26d765f-7fa1-495e-83ff-43042915ece5",
         "name": "",
         "path": ".",
-        "created_at": "2026-08-15T12:50:41.545641+00:00"
+        "created_at": "2026-08-15T13:45:16.175400+00:00"
     },
     "architecture": {
         "description": "",
@@ -40,5 +40,5 @@
         "summary": ""
     },
     "recommendations": [],
-    "generated_at": "2026-08-15T12:50:41.545669+00:00"
+    "generated_at": "2026-08-15T13:45:16.175446+00:00"
 }

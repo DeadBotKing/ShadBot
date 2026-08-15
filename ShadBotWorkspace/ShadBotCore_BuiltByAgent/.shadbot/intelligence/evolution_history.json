@@ -58,5 +58,20 @@
         "impact_summary": "1 project evolution changes detected.",
         "evolution_id": "e13cf696-62dc-40a7-b8cc-6e1fca771653",
         "created_at": "2026-08-15T09:07:31.938677+00:00"
+    },
+    {
+        "project_id": "b4c6f1ec-ce44-4bfa-a5a3-921d310e9fca",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "2390e180-f72c-46aa-8e18-f46538f71e87",
+        "created_at": "2026-08-15T14:19:45.248412+00:00"
     }
 ]

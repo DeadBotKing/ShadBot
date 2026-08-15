@@ -362,3 +362,69 @@ def test_orchestrator_attaches_quality_reports() -> None:
     assert isinstance(gate_report["passed"], bool)
     assert isinstance(gate_report["checks"], list)
     assert gate_report["checks"]
+
+
+# --------------------------------------------------------------------------
+# Regression: Windows cp1252 decoding crash.
+# --------------------------------------------------------------------------
+
+
+def test_combine_output_survives_none_streams() -> None:
+    """
+    Regression guard.
+
+    On Windows a subprocess reader thread can die on a UnicodeDecodeError,
+    leaving stdout/stderr as None. _combine_output must not raise
+    AttributeError in that case.
+    """
+
+    from agentplatform.application.quality_gate.validators import _combine_output
+
+    assert "5" in _combine_output(None, None, 5)
+    assert "found" in _combine_output("found", None, 1)
+    assert "boom" in _combine_output(None, "boom", 1)
+
+
+def test_subprocess_calls_pin_utf8_encoding() -> None:
+    """
+    Regression guard.
+
+    Without an explicit encoding, subprocess uses the OS default (cp1252 on
+    Windows) and crashes on UTF-8 tool output.
+    """
+
+    import inspect
+    import re
+
+    from agentplatform.application.quality_gate import validators
+
+    source = inspect.getsource(validators)
+
+    # Every `text=True` must be immediately followed by an explicit utf-8
+    # encoding, otherwise the OS default codec is used.
+    unpinned = re.findall(
+        r'text=True,(?!\s*\n\s*encoding="utf-8")',
+        source,
+    )
+
+    assert not unpinned, f"{len(unpinned)} subprocess call(s) without utf-8 encoding"
+    assert source.count("text=True") > 0
+
+
+def test_validator_handles_unicode_tool_output(tmp_path: Path) -> None:
+    """
+    A project containing non-ASCII source must not break the gate.
+    """
+
+    (tmp_path / "unicode_module.py").write_text(
+        '"""ماژول تست با متن فارسی و emoji 🚀."""\n'
+        "\n"
+        "\n"
+        "def greet() -> str:\n"
+        '    return "سلام دنیا"\n',
+        encoding="utf-8",
+    )
+
+    result = SyntaxValidator().validate(str(tmp_path))
+
+    assert result.passed is True
