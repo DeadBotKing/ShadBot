@@ -10,8 +10,14 @@ from .artifact_service import (
 from .code_generation_service import (
     CodeGenerationService,
 )
+from .module_splitter import (
+    ModuleSplitter,
+    SplitModule,
+)
 
 __all__ = [
     "ArtifactService",
     "CodeGenerationService",
+    "ModuleSplitter",
+    "SplitModule",
 ]

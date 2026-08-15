@@ -36,6 +36,7 @@ from .validators import (
     PytestValidator,
     RuffValidator,
     SecurityValidator,
+    ImportValidator,
     SyntaxValidator,
 )
 
@@ -70,6 +71,7 @@ class DeterministicQualityGate:
     def __init__(
         self,
         syntax_val: SyntaxValidator | None = None,
+        import_val: ImportValidator | None = None,
         pytest_val: PytestValidator | None = None,
         ruff_val: RuffValidator | None = None,
         black_val: BlackValidator | None = None,
@@ -79,6 +81,7 @@ class DeterministicQualityGate:
         verbose: bool = True,
     ) -> None:
         self.syntax_val = syntax_val or SyntaxValidator()
+        self.import_val = import_val or ImportValidator()
         self.pytest_val = pytest_val or PytestValidator()
         self.ruff_val = ruff_val or RuffValidator()
         self.black_val = black_val or BlackValidator()
@@ -99,6 +102,7 @@ class DeterministicQualityGate:
         scan_root = str(source_root if source_root.exists() else target)
 
         syntax = self.syntax_val.validate(scan_root)
+        imports = self.import_val.validate(str(target))
         tests = self.pytest_val.validate(str(target))
         lint = self.ruff_val.validate(str(target))
         typing_check = self.mypy_val.validate(str(target))
@@ -107,6 +111,7 @@ class DeterministicQualityGate:
 
         checks = (
             syntax,
+            imports,
             tests,
             lint,
             typing_check,

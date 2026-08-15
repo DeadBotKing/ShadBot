@@ -127,6 +127,10 @@ class ProjectExecutionService:
                 "task_status": running_task.status.value,
                 "workspace": "ShadBotWorkspace",
                 "project": project_path.name,
+                # Explicit gate target. The orchestrator prefers
+                # target_project.path, but keeping this in sync guarantees the
+                # deterministic gate can never fall back to the platform root.
+                "project_path": str(project_path.resolve()),
             },
             memory_context=context.memory_context,
             execution_id=context.execution_id,

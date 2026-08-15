@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import time
 from dataclasses import replace
+from pathlib import Path
 from typing import Sequence
 from uuid import uuid4
 
@@ -46,6 +47,8 @@ from agentplatform.application.platform import (
     PlatformFinalizationService,
 )
 from agentplatform.application.quality_gate import (
+    CheckResult,
+    DeterministicGateReport,
     DeterministicQualityGate,
     QualityGateServiceLayer,
 )
@@ -285,14 +288,26 @@ class AgentOrchestrator:
             agg_pkg.success,
         )
 
-        from pathlib import Path
-        project_path_str = str(current_context.metadata.get("project_path", "."))
-        project_path = Path(project_path_str)
-        if not project_path.exists():
-            project_path = Path(".")
+        try:
+            project_path = self._resolve_target_project_path(current_context)
+        except ValueError as exc:
+            # No valid target. Report every check as SKIPPED rather than
+            # validating the platform itself. A skipped gate is NOT a pass.
+            print("\n" + "=" * 75)
+            print(f"[QUALITY GATE SKIPPED] {exc}")
+            print("=" * 75)
 
-        det_report = self.deterministic_gate.verify_deterministic(project_path)
-        qg_report, qg_decision = self.quality_gate_srv.validate_project(current_context.project_id, str(project_path))
+            det_report = self._unverifiable_report(str(exc))
+            qg_report, qg_decision = self.quality_gate_srv.validate_project(
+                current_context.project_id,
+                str(Path.cwd()),
+            )
+            project_path = Path.cwd()
+        else:
+            print(f"[QUALITY GATE TARGET] {project_path}")
+
+            det_report = self.deterministic_gate.verify_deterministic(project_path)
+            qg_report, qg_decision = self.quality_gate_srv.validate_project(current_context.project_id, str(project_path))
 
         det_dict = det_report.to_dict() if hasattr(det_report, "to_dict") else det_report.__dict__
         qg_dict = qg_report.to_dict() if hasattr(qg_report, "to_dict") else qg_report.__dict__
@@ -497,3 +512,111 @@ class AgentOrchestrator:
                 return True
 
         return False
+
+    @staticmethod
+    def _unverifiable_report(reason: str) -> DeterministicGateReport:
+        """
+        Build a gate report for the case where no target could be resolved.
+
+        Every check is SKIPPED and passed is False. This keeps the "skipped is
+        not a pass" invariant: an unverifiable pipeline must never look green.
+        """
+
+        checks = tuple(
+            CheckResult(
+                check_name=name,
+                passed=False,
+                details=f"Quality gate target unresolved. {reason}",
+                score=0.0,
+                skipped=True,
+            )
+            for name in (
+                "syntax",
+                "imports",
+                "pytest",
+                "ruff",
+                "mypy",
+                "security",
+                "architecture",
+            )
+        )
+
+        return DeterministicGateReport(
+            passed=False,
+            syntax_valid=False,
+            tests_passed=False,
+            lint_passed=False,
+            typecheck_passed=False,
+            summary=(
+                "UNVERIFIABLE (no target project) | executed=0/7 | "
+                "skipped=all"
+            ),
+            checks=checks,
+        )
+
+    @staticmethod
+    def _resolve_target_project_path(
+        context: AgentExecutionContext,
+    ) -> Path:
+        """
+        Resolve the directory the quality gate must validate.
+
+        The gate MUST run against the generated project, never against the
+        ShadBot platform itself. Previously this fell back to Path(".") when
+        the path could not be determined, which silently validated ShadBot's
+        own 1094 source files and reported the platform's pre-existing
+        findings as if they were the agent's output.
+
+        Resolution order:
+            1. context.target_project.path  (set by run_agent.py)
+            2. context.metadata["project_path"]  (legacy escape hatch)
+
+        Raises:
+            ValueError: if no usable target directory can be determined.
+                Failing loudly is mandatory - a silent fallback produces a
+                confident but meaningless verdict.
+        """
+
+        candidates: list[tuple[str, object]] = []
+
+        target_project = getattr(context, "target_project", None)
+        if target_project is not None:
+            candidates.append(
+                ("context.target_project.path", getattr(target_project, "path", None)),
+            )
+
+        metadata = getattr(context, "metadata", None) or {}
+        if metadata.get("project_path"):
+            candidates.append(
+                ('metadata["project_path"]', metadata["project_path"]),
+            )
+
+        for source, raw in candidates:
+            if not raw:
+                continue
+
+            resolved = Path(str(raw)).resolve()
+
+            if not resolved.exists():
+                print(
+                    f"[QUALITY GATE TARGET] Ignoring {source}: "
+                    f"path does not exist ({resolved}).",
+                )
+                continue
+
+            if not resolved.is_dir():
+                print(
+                    f"[QUALITY GATE TARGET] Ignoring {source}: "
+                    f"not a directory ({resolved}).",
+                )
+                continue
+
+            return resolved
+
+        raise ValueError(
+            "Cannot determine the target project directory for the "
+            "deterministic quality gate. Set context.target_project.path to "
+            "the generated project. Refusing to fall back to the current "
+            "working directory, which would validate the ShadBot platform "
+            "itself and produce a meaningless verdict.",
+        )

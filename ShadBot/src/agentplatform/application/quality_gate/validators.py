@@ -28,6 +28,7 @@ Design rules honoured:
 from __future__ import annotations
 
 import ast
+import json
 import os
 import shutil
 import subprocess
@@ -674,4 +675,191 @@ class SyntaxValidator:
             passed=True,
             details=f"All {parsed} Python file(s) parse successfully.",
             score=1.0,
+        )
+
+
+# Executed in a throwaway subprocess so that importing generated code can
+# never mutate the gate's own interpreter state.
+_IMPORT_PROBE = r'''
+import importlib.util
+import json
+import pathlib
+import sys
+import traceback
+
+root = pathlib.Path(sys.argv[1]).resolve()
+source_root = root / "src" if (root / "src").is_dir() else root
+sys.path.insert(0, str(source_root))
+
+SKIP = {".git", ".venv", "venv", "__pycache__", "node_modules", "build", "dist"}
+
+ok, failures = [], []
+
+for path in sorted(source_root.rglob("*.py")):
+    if any(part in SKIP for part in path.parts):
+        continue
+    if path.name == "__init__.py":
+        continue
+
+    rel = path.relative_to(source_root)
+    module = ".".join(rel.with_suffix("").parts)
+
+    try:
+        spec = importlib.util.spec_from_file_location(module, path)
+        if spec is None or spec.loader is None:
+            failures.append((str(rel), "could not create module spec"))
+            continue
+        loaded = importlib.util.module_from_spec(spec)
+        sys.modules[module] = loaded
+        spec.loader.exec_module(loaded)
+        ok.append(str(rel))
+    except BaseException as exc:
+        line = ""
+        tb = traceback.extract_tb(sys.exc_info()[2])
+        for frame in reversed(tb):
+            if frame.filename == str(path):
+                line = f":{frame.lineno}"
+                break
+        failures.append((str(rel) + line, f"{type(exc).__name__}: {exc}"))
+
+print(json.dumps({"ok": ok, "failures": failures}))
+'''
+
+
+class ImportValidator:
+    """
+    Validates that generated modules can actually be imported.
+
+    Rationale:
+        A syntax check only proves a file parses. Generated code routinely
+        parses while being completely unloadable, because the model emitted
+        `from .models import Agent` for a module that was never written.
+        ShadBotCore_BuiltByAgent passed the syntax check with 14 files of
+        which 0 could be imported.
+
+        This check is the difference between "the text is valid Python" and
+        "the code exists".
+
+    The probe runs in a subprocess: importing arbitrary generated code
+    executes module-level statements, which must not touch the gate process.
+    """
+
+    def validate(self, project_path: str) -> CheckResult:
+        target = Path(project_path)
+
+        if not target.exists():
+            return CheckResult(
+                check_name="imports",
+                passed=False,
+                details=f"Target path does not exist: {target}",
+                score=0.0,
+                skipped=True,
+            )
+
+        source_root = target / "src" if (target / "src").is_dir() else target
+
+        candidates = [
+            path
+            for path in source_root.rglob("*.py")
+            if not any(
+                part
+                in {
+                    ".git",
+                    ".venv",
+                    "venv",
+                    "__pycache__",
+                    "node_modules",
+                    "build",
+                    "dist",
+                }
+                for part in path.parts
+            )
+            and path.name != "__init__.py"
+        ]
+
+        if not candidates:
+            return CheckResult(
+                check_name="imports",
+                passed=False,
+                details=f"No importable Python modules under {source_root}. Check SKIPPED.",
+                score=0.0,
+                skipped=True,
+            )
+
+        try:
+            completed = subprocess.run(
+                [sys.executable, "-c", _IMPORT_PROBE, str(target)],
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                timeout=_DEFAULT_TOOL_TIMEOUT_SECONDS,
+                cwd=str(target),
+            )
+        except subprocess.TimeoutExpired:
+            return CheckResult(
+                check_name="imports",
+                passed=False,
+                details=(
+                    f"Import probe timed out after "
+                    f"{_DEFAULT_TOOL_TIMEOUT_SECONDS}s. Generated code likely "
+                    f"blocks at module level."
+                ),
+                score=0.0,
+            )
+        except OSError as exc:
+            return CheckResult(
+                check_name="imports",
+                passed=False,
+                details=f"Could not launch import probe: {exc}",
+                score=0.0,
+                skipped=True,
+            )
+
+        stdout = completed.stdout or ""
+
+        payload: dict[str, object] | None = None
+
+        for line in reversed(stdout.strip().splitlines()):
+            if line.startswith("{"):
+                try:
+                    payload = json.loads(line)
+                except ValueError:
+                    payload = None
+                break
+
+        if payload is None:
+            return CheckResult(
+                check_name="imports",
+                passed=False,
+                details=_combine_output(
+                    completed.stdout,
+                    completed.stderr,
+                    completed.returncode,
+                ),
+                score=0.0,
+            )
+
+        ok = list(payload.get("ok", []))
+        failures = list(payload.get("failures", []))
+        total = len(ok) + len(failures)
+
+        if not failures:
+            return CheckResult(
+                check_name="imports",
+                passed=True,
+                details=f"All {total} generated module(s) import successfully.",
+                score=1.0,
+            )
+
+        lines = [f"{name}: {reason}" for name, reason in failures]
+
+        return CheckResult(
+            check_name="imports",
+            passed=False,
+            details=_truncate(
+                f"{len(failures)}/{total} module(s) cannot be imported:\n"
+                + "\n".join(lines)
+            ),
+            score=round(len(ok) / total, 2) if total else 0.0,
         )

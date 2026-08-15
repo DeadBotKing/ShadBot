@@ -1,0 +1,1283 @@
+diff --git a/ShadBot/src/agentplatform/application/generation/__init__.py b/ShadBot/src/agentplatform/application/generation/__init__.py
+index be3412b..f96126b 100644
+--- a/ShadBot/src/agentplatform/application/generation/__init__.py
++++ b/ShadBot/src/agentplatform/application/generation/__init__.py
+@@ -10,8 +10,14 @@ from .artifact_service import (
+ from .code_generation_service import (
+     CodeGenerationService,
+ )
++from .module_splitter import (
++    ModuleSplitter,
++    SplitModule,
++)
+ 
+ __all__ = [
+     "ArtifactService",
+     "CodeGenerationService",
++    "ModuleSplitter",
++    "SplitModule",
+ ]
+diff --git a/ShadBot/src/agentplatform/application/generation/code_generation_service.py b/ShadBot/src/agentplatform/application/generation/code_generation_service.py
+index 016e03a..30fa00e 100644
+--- a/ShadBot/src/agentplatform/application/generation/code_generation_service.py
++++ b/ShadBot/src/agentplatform/application/generation/code_generation_service.py
+@@ -15,6 +15,9 @@ from agentplatform.application.brain import (
+ from agentplatform.application.generation.artifact_service import (
+     ArtifactService,
+ )
++from agentplatform.application.generation.module_splitter import (
++    ModuleSplitter,
++)
+ from agentplatform.domain.agents import (
+     AgentRole,
+ )
+@@ -40,10 +43,14 @@ class CodeGenerationService:
+         brain: AgentBrain,
+         extractor: CodeExtractor | None = None,
+         artifact_service: ArtifactService | None = None,
++        splitter: ModuleSplitter | None = None,
++        project_root: Path | None = None,
+     ) -> None:
+         self._brain = brain
+         self._extractor = extractor or CodeExtractor()
+         self._artifact_service = artifact_service or ArtifactService()
++        self._splitter = splitter or ModuleSplitter()
++        self._project_root = project_root
+ 
+     def generate(
+         self,
+@@ -69,14 +76,173 @@ class CodeGenerationService:
+             response,
+         )
+ 
+-        artifact = GeneratedArtifact(
+-            path=file_path,
+-            content=code,
+-            artifact_type=ArtifactType.SOURCE_CODE,
+-        )
++        root = self._resolve_root(file_path)
+ 
+-        self._artifact_service.save(
+-            artifact,
++        modules = self._splitter.split(
++            code=code,
++            default_path=self._relative_to_root(file_path, root),
+         )
+ 
+-        return artifact
++        primary: GeneratedArtifact | None = None
++        written: list[Path] = []
++
++        for module in modules:
++            target = (root / module.path).resolve()
++
++            # Never escape the project root, whatever the model emitted.
++            if not self._is_within(target, root):
++                print(
++                    f"[CODE GENERATION] Rejected out-of-tree module path: "
++                    f"{module.path}",
++                )
++                continue
++
++            artifact = GeneratedArtifact(
++                path=target,
++                content=module.content,
++                artifact_type=ArtifactType.SOURCE_CODE,
++            )
++
++            self._artifact_service.save(
++                artifact,
++            )
++
++            written.append(target)
++
++            if primary is None or target == file_path.resolve():
++                primary = artifact
++
++        if len(modules) > 1:
++            print(
++                f"[CODE GENERATION] Split response into {len(written)} module(s): "
++                + ", ".join(str(p.relative_to(root)) for p in written),
++            )
++
++        self._ensure_packages(written, root)
++
++        if primary is None:
++            # Every candidate path was rejected: persist at the requested path
++            # rather than silently producing nothing.
++            primary = GeneratedArtifact(
++                path=file_path,
++                content=code,
++                artifact_type=ArtifactType.SOURCE_CODE,
++            )
++
++            self._artifact_service.save(
++                primary,
++            )
++
++        return primary
++
++    def _resolve_root(
++        self,
++        file_path: Path,
++    ) -> Path:
++        """
++        Determine the project root that split paths are relative to.
++        """
++
++        if self._project_root is not None:
++            return self._project_root.resolve()
++
++        resolved = file_path.resolve()
++
++        # Split paths are conventionally rooted at the directory containing
++        # `src/`, so walk up past it when present.
++        for parent in resolved.parents:
++            if parent.name == "src":
++                return parent.parent
++
++        return resolved.parent
++
++    @staticmethod
++    def _relative_to_root(
++        file_path: Path,
++        root: Path,
++    ) -> str:
++        """
++        Express the requested file path relative to the project root.
++        """
++
++        resolved = file_path.resolve()
++
++        try:
++            return str(resolved.relative_to(root)).replace("\\", "/")
++        except ValueError:
++            return resolved.name
++
++    @staticmethod
++    def _is_within(
++        target: Path,
++        root: Path,
++    ) -> bool:
++        """
++        Whether `target` lives inside `root`.
++        """
++
++        try:
++            target.relative_to(root)
++        except ValueError:
++            return False
++
++        return True
++
++    def _ensure_packages(
++        self,
++        written: list[Path],
++        root: Path,
++    ) -> None:
++        """
++        Create missing __init__.py files.
++
++        Generated code uses relative imports (`from .models import Agent`),
++        which cannot resolve without package markers. The agent never emits
++        them, so the platform must.
++        """
++
++        created = 0
++
++        for path in written:
++            directory = path.parent
++
++            while self._within(directory, root):
++                marker = directory / "__init__.py"
++
++                if not marker.exists():
++                    marker.parent.mkdir(parents=True, exist_ok=True)
++                    marker.write_text(
++                        '"""Package marker generated by ShadBot."""\n',
++                        encoding="utf-8",
++                    )
++                    created += 1
++
++                if directory == root:
++                    break
++
++                directory = directory.parent
++
++        if created:
++            print(f"[CODE GENERATION] Created {created} missing __init__.py file(s).")
++
++    @staticmethod
++    def _within(
++        directory: Path,
++        root: Path,
++    ) -> bool:
++        """
++        Whether `directory` is inside `root`, excluding the `src` dir itself.
++        """
++
++        if directory == root:
++            return False
++
++        try:
++            relative = directory.relative_to(root)
++        except ValueError:
++            return False
++
++        parts = relative.parts
++
++        # `src/` is a source root, not a package.
++        return bool(parts) and parts != ("src",)
+diff --git a/ShadBot/src/agentplatform/application/generation/module_splitter.py b/ShadBot/src/agentplatform/application/generation/module_splitter.py
+new file mode 100644
+index 0000000..bec310f
+--- /dev/null
++++ b/ShadBot/src/agentplatform/application/generation/module_splitter.py
+@@ -0,0 +1,316 @@
++"""
++ShadBot Agent Platform
++
++Multi-module response splitting.
++
++Purpose:
++    LLMs asked for one module routinely answer with SEVERAL modules in a
++    single response, delimited by a path comment:
++
++        # src/agentplatform/domain/models.py
++        @dataclass
++        class Agent: ...
++
++        # src/agentplatform/domain/services.py
++        from .models import Agent
++
++    Writing that blob into one file produces a syntactically valid file whose
++    imports can never resolve (`from .models import Agent` when models.py was
++    never written). That is exactly how ShadBotCore_BuiltByAgent ended up with
++    14 files of which 0 were importable and 7 were byte-identical.
++
++Responsibility:
++    Detect those delimiters and split one response into (relative_path, code)
++    pairs so each module lands at its declared path.
++
++Dependencies:
++    Standard library only (ast, re).
++
++Design rules honoured:
++    - Rule 27: no fake implementations. If no delimiter is found the input is
++      returned unchanged as a single unit rather than guessed at.
++    - Rule 18: failures are reported, not swallowed.
++"""
++
++from __future__ import annotations
++
++import ast
++import re
++from dataclasses import dataclass
++
++# A path delimiter comment on its own line:
++#     # src/agentplatform/domain/models.py
++#     # File: src/foo/bar.py
++#     # --- src/foo/bar.py ---
++_PATH_COMMENT = re.compile(
++    r"""^[ \t]*\#[ \t]*
++        (?:-{2,}[ \t]*)?
++        (?:file[ \t]*:[ \t]*|path[ \t]*:[ \t]*)?
++        (?P<path>
++            (?:[A-Za-z0-9_.\-]+/)*
++            [A-Za-z0-9_.\-]+\.py
++        )
++        [ \t]*
++        (?:-{2,})?
++        [ \t]*$
++    """,
++    re.VERBOSE | re.MULTILINE | re.IGNORECASE,
++)
++
++# Paths we must never write to, regardless of what the model claims.
++_FORBIDDEN_SEGMENTS = frozenset({"..", "~"})
++
++
++@dataclass(frozen=True, slots=True)
++class SplitModule:
++    """
++    One module extracted from a multi-module response.
++    """
++
++    path: str
++
++    content: str
++
++    @property
++    def is_parseable(self) -> bool:
++        """
++        Whether the extracted content is valid Python.
++        """
++
++        try:
++            ast.parse(self.content)
++        except SyntaxError:
++            return False
++
++        return True
++
++
++class ModuleSplitter:
++    """
++    Splits a multi-module LLM response into individual modules.
++    """
++
++    def split(
++        self,
++        code: str,
++        default_path: str,
++    ) -> list[SplitModule]:
++        """
++        Split `code` into modules.
++
++        Args:
++            code: Raw code extracted from the LLM response.
++            default_path: Path to use when the response contains no
++                delimiters, i.e. the module the agent actually asked for.
++
++        Returns:
++            One SplitModule per detected module. Never empty: a response with
++            no delimiters yields a single module at `default_path`.
++        """
++
++        if not code.strip():
++            return [SplitModule(path=default_path, content=code)]
++
++        matches = list(_PATH_COMMENT.finditer(code))
++
++        if not matches:
++            return [SplitModule(path=default_path, content=code)]
++
++        modules: list[SplitModule] = []
++
++        # Content before the first delimiter (imports, module docstring) is
++        # prepended to the first module rather than discarded.
++        preamble = code[: matches[0].start()].strip()
++
++        for index, match in enumerate(matches):
++            start = match.end()
++            end = (
++                matches[index + 1].start()
++                if index + 1 < len(matches)
++                else len(code)
++            )
++
++            body = code[start:end].strip()
++
++            if index == 0 and preamble:
++                body = f"{preamble}\n\n{body}".strip()
++
++            if not body:
++                continue
++
++            path = self._sanitise(match.group("path"))
++
++            if path is None:
++                continue
++
++            modules.append(
++                SplitModule(path=path, content=body + "\n"),
++            )
++
++        if not modules:
++            return [SplitModule(path=default_path, content=code)]
++
++        return self._propagate_shared_imports(
++            self._merge_duplicates(modules),
++        )
++
++    @staticmethod
++    def _sanitise(raw: str) -> str | None:
++        """
++        Reject path traversal and absolute paths.
++
++        Returns None when the path is unsafe.
++        """
++
++        path = raw.strip().replace("\\", "/").lstrip("/")
++
++        if not path.endswith(".py"):
++            return None
++
++        segments = [s for s in path.split("/") if s]
++
++        if any(segment in _FORBIDDEN_SEGMENTS for segment in segments):
++            return None
++
++        if not segments:
++            return None
++
++        return "/".join(segments)
++
++    @staticmethod
++    def _merge_duplicates(
++        modules: list[SplitModule],
++    ) -> list[SplitModule]:
++        """
++        Concatenate modules that declare the same path.
++
++        A model occasionally emits the same path twice (e.g. adding methods to
++        a class it defined earlier). Concatenating is closer to intent than
++        letting the later block silently overwrite the earlier one.
++        """
++
++        ordered: list[str] = []
++        merged: dict[str, list[str]] = {}
++
++        for module in modules:
++            if module.path not in merged:
++                merged[module.path] = []
++                ordered.append(module.path)
++
++            merged[module.path].append(module.content.rstrip())
++
++        return [
++            SplitModule(
++                path=path,
++                content="\n\n".join(merged[path]) + "\n",
++            )
++            for path in ordered
++        ]
++
++    @staticmethod
++    def _propagate_shared_imports(
++        modules: list[SplitModule],
++    ) -> list[SplitModule]:
++        """
++        Re-add stdlib imports the model declared only once.
++
++        When a model emits several modules in one response it typically writes
++        `from typing import List` at the very top and then uses `List` in every
++        subsequent module. Once split, those later modules raise NameError.
++
++        This collects absolute (non-relative) imports from all modules and
++        prepends the ones a module actually references but does not import.
++        Only names genuinely used are added, so no unused imports appear.
++        """
++
++        if len(modules) < 2:
++            return modules
++
++        # name -> import statement that binds it
++        available: dict[str, str] = {}
++
++        for module in modules:
++            try:
++                tree = ast.parse(module.content)
++            except SyntaxError:
++                continue
++
++            for node in tree.body:
++                if isinstance(node, ast.Import):
++                    for alias in node.names:
++                        bound = alias.asname or alias.name.split(".")[0]
++                        available.setdefault(bound, f"import {alias.name}")
++                        if alias.asname:
++                            available[bound] = f"import {alias.name} as {alias.asname}"
++
++                elif isinstance(node, ast.ImportFrom):
++                    # Relative imports are module-specific; never propagate.
++                    if node.level:
++                        continue
++                    if node.module is None:
++                        continue
++                    for alias in node.names:
++                        if alias.name == "*":
++                            continue
++                        bound = alias.asname or alias.name
++                        statement = f"from {node.module} import {alias.name}"
++                        if alias.asname:
++                            statement += f" as {alias.asname}"
++                        available.setdefault(bound, statement)
++
++        if not available:
++            return modules
++
++        repaired: list[SplitModule] = []
++
++        for module in modules:
++            try:
++                tree = ast.parse(module.content)
++            except SyntaxError:
++                repaired.append(module)
++                continue
++
++            bound: set[str] = set()
++            used: set[str] = set()
++
++            for node in ast.walk(tree):
++                if isinstance(node, ast.Import):
++                    for alias in node.names:
++                        bound.add(alias.asname or alias.name.split(".")[0])
++                elif isinstance(node, ast.ImportFrom):
++                    for alias in node.names:
++                        bound.add(alias.asname or alias.name)
++                elif isinstance(node, (ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef)):
++                    bound.add(node.name)
++                elif isinstance(node, ast.Name):
++                    if isinstance(node.ctx, ast.Store):
++                        bound.add(node.id)
++                    else:
++                        used.add(node.id)
++                elif isinstance(node, ast.Attribute):
++                    root = node
++                    while isinstance(root, ast.Attribute):
++                        root = root.value  # type: ignore[assignment]
++                    if isinstance(root, ast.Name):
++                        used.add(root.id)
++
++            missing = sorted(
++                name
++                for name in used - bound
++                if name in available
++            )
++
++            if not missing:
++                repaired.append(module)
++                continue
++
++            header = "\n".join(available[name] for name in missing)
++
++            repaired.append(
++                SplitModule(
++                    path=module.path,
++                    content=f"{header}\n\n{module.content.lstrip()}",
++                ),
++            )
++
++        return repaired
+diff --git a/ShadBot/src/agentplatform/application/loop/project_execution.py b/ShadBot/src/agentplatform/application/loop/project_execution.py
+index 0b19609..25a1740 100644
+--- a/ShadBot/src/agentplatform/application/loop/project_execution.py
++++ b/ShadBot/src/agentplatform/application/loop/project_execution.py
+@@ -127,6 +127,10 @@ class ProjectExecutionService:
+                 "task_status": running_task.status.value,
+                 "workspace": "ShadBotWorkspace",
+                 "project": project_path.name,
++                # Explicit gate target. The orchestrator prefers
++                # target_project.path, but keeping this in sync guarantees the
++                # deterministic gate can never fall back to the platform root.
++                "project_path": str(project_path.resolve()),
+             },
+             memory_context=context.memory_context,
+             execution_id=context.execution_id,
+diff --git a/ShadBot/src/agentplatform/application/orchestration/agent_orchestrator.py b/ShadBot/src/agentplatform/application/orchestration/agent_orchestrator.py
+index 2133aa2..92a3421 100644
+--- a/ShadBot/src/agentplatform/application/orchestration/agent_orchestrator.py
++++ b/ShadBot/src/agentplatform/application/orchestration/agent_orchestrator.py
+@@ -11,6 +11,7 @@ from __future__ import annotations
+ 
+ import time
+ from dataclasses import replace
++from pathlib import Path
+ from typing import Sequence
+ from uuid import uuid4
+ 
+@@ -46,6 +47,8 @@ from agentplatform.application.platform import (
+     PlatformFinalizationService,
+ )
+ from agentplatform.application.quality_gate import (
++    CheckResult,
++    DeterministicGateReport,
+     DeterministicQualityGate,
+     QualityGateServiceLayer,
+ )
+@@ -285,14 +288,26 @@ class AgentOrchestrator:
+             agg_pkg.success,
+         )
+ 
+-        from pathlib import Path
+-        project_path_str = str(current_context.metadata.get("project_path", "."))
+-        project_path = Path(project_path_str)
+-        if not project_path.exists():
+-            project_path = Path(".")
++        try:
++            project_path = self._resolve_target_project_path(current_context)
++        except ValueError as exc:
++            # No valid target. Report every check as SKIPPED rather than
++            # validating the platform itself. A skipped gate is NOT a pass.
++            print("\n" + "=" * 75)
++            print(f"[QUALITY GATE SKIPPED] {exc}")
++            print("=" * 75)
++
++            det_report = self._unverifiable_report(str(exc))
++            qg_report, qg_decision = self.quality_gate_srv.validate_project(
++                current_context.project_id,
++                str(Path.cwd()),
++            )
++            project_path = Path.cwd()
++        else:
++            print(f"[QUALITY GATE TARGET] {project_path}")
+ 
+-        det_report = self.deterministic_gate.verify_deterministic(project_path)
+-        qg_report, qg_decision = self.quality_gate_srv.validate_project(current_context.project_id, str(project_path))
++            det_report = self.deterministic_gate.verify_deterministic(project_path)
++            qg_report, qg_decision = self.quality_gate_srv.validate_project(current_context.project_id, str(project_path))
+ 
+         det_dict = det_report.to_dict() if hasattr(det_report, "to_dict") else det_report.__dict__
+         qg_dict = qg_report.to_dict() if hasattr(qg_report, "to_dict") else qg_report.__dict__
+@@ -497,3 +512,111 @@ class AgentOrchestrator:
+                 return True
+ 
+         return False
++
++    @staticmethod
++    def _unverifiable_report(reason: str) -> DeterministicGateReport:
++        """
++        Build a gate report for the case where no target could be resolved.
++
++        Every check is SKIPPED and passed is False. This keeps the "skipped is
++        not a pass" invariant: an unverifiable pipeline must never look green.
++        """
++
++        checks = tuple(
++            CheckResult(
++                check_name=name,
++                passed=False,
++                details=f"Quality gate target unresolved. {reason}",
++                score=0.0,
++                skipped=True,
++            )
++            for name in (
++                "syntax",
++                "imports",
++                "pytest",
++                "ruff",
++                "mypy",
++                "security",
++                "architecture",
++            )
++        )
++
++        return DeterministicGateReport(
++            passed=False,
++            syntax_valid=False,
++            tests_passed=False,
++            lint_passed=False,
++            typecheck_passed=False,
++            summary=(
++                "UNVERIFIABLE (no target project) | executed=0/7 | "
++                "skipped=all"
++            ),
++            checks=checks,
++        )
++
++    @staticmethod
++    def _resolve_target_project_path(
++        context: AgentExecutionContext,
++    ) -> Path:
++        """
++        Resolve the directory the quality gate must validate.
++
++        The gate MUST run against the generated project, never against the
++        ShadBot platform itself. Previously this fell back to Path(".") when
++        the path could not be determined, which silently validated ShadBot's
++        own 1094 source files and reported the platform's pre-existing
++        findings as if they were the agent's output.
++
++        Resolution order:
++            1. context.target_project.path  (set by run_agent.py)
++            2. context.metadata["project_path"]  (legacy escape hatch)
++
++        Raises:
++            ValueError: if no usable target directory can be determined.
++                Failing loudly is mandatory - a silent fallback produces a
++                confident but meaningless verdict.
++        """
++
++        candidates: list[tuple[str, object]] = []
++
++        target_project = getattr(context, "target_project", None)
++        if target_project is not None:
++            candidates.append(
++                ("context.target_project.path", getattr(target_project, "path", None)),
++            )
++
++        metadata = getattr(context, "metadata", None) or {}
++        if metadata.get("project_path"):
++            candidates.append(
++                ('metadata["project_path"]', metadata["project_path"]),
++            )
++
++        for source, raw in candidates:
++            if not raw:
++                continue
++
++            resolved = Path(str(raw)).resolve()
++
++            if not resolved.exists():
++                print(
++                    f"[QUALITY GATE TARGET] Ignoring {source}: "
++                    f"path does not exist ({resolved}).",
++                )
++                continue
++
++            if not resolved.is_dir():
++                print(
++                    f"[QUALITY GATE TARGET] Ignoring {source}: "
++                    f"not a directory ({resolved}).",
++                )
++                continue
++
++            return resolved
++
++        raise ValueError(
++            "Cannot determine the target project directory for the "
++            "deterministic quality gate. Set context.target_project.path to "
++            "the generated project. Refusing to fall back to the current "
++            "working directory, which would validate the ShadBot platform "
++            "itself and produce a meaningless verdict.",
++        )
+diff --git a/ShadBot/src/agentplatform/application/quality_gate/__init__.py b/ShadBot/src/agentplatform/application/quality_gate/__init__.py
+index 7110550..b7fae5a 100644
+--- a/ShadBot/src/agentplatform/application/quality_gate/__init__.py
++++ b/ShadBot/src/agentplatform/application/quality_gate/__init__.py
+@@ -16,11 +16,13 @@ from .validators import (
+     PytestValidator,
+     RuffValidator,
+     SecurityValidator,
++    ImportValidator,
+     SyntaxValidator,
+ )
+ 
+ __all__ = [
+     "CheckResult",
++    "ImportValidator",
+     "SyntaxValidator",
+     "PytestValidator",
+     "RuffValidator",
+diff --git a/ShadBot/src/agentplatform/application/quality_gate/deterministic_quality_gate.py b/ShadBot/src/agentplatform/application/quality_gate/deterministic_quality_gate.py
+index 23431c2..592f8e9 100644
+--- a/ShadBot/src/agentplatform/application/quality_gate/deterministic_quality_gate.py
++++ b/ShadBot/src/agentplatform/application/quality_gate/deterministic_quality_gate.py
+@@ -36,6 +36,7 @@ from .validators import (
+     PytestValidator,
+     RuffValidator,
+     SecurityValidator,
++    ImportValidator,
+     SyntaxValidator,
+ )
+ 
+@@ -70,6 +71,7 @@ class DeterministicQualityGate:
+     def __init__(
+         self,
+         syntax_val: SyntaxValidator | None = None,
++        import_val: ImportValidator | None = None,
+         pytest_val: PytestValidator | None = None,
+         ruff_val: RuffValidator | None = None,
+         black_val: BlackValidator | None = None,
+@@ -79,6 +81,7 @@ class DeterministicQualityGate:
+         verbose: bool = True,
+     ) -> None:
+         self.syntax_val = syntax_val or SyntaxValidator()
++        self.import_val = import_val or ImportValidator()
+         self.pytest_val = pytest_val or PytestValidator()
+         self.ruff_val = ruff_val or RuffValidator()
+         self.black_val = black_val or BlackValidator()
+@@ -99,6 +102,7 @@ class DeterministicQualityGate:
+         scan_root = str(source_root if source_root.exists() else target)
+ 
+         syntax = self.syntax_val.validate(scan_root)
++        imports = self.import_val.validate(str(target))
+         tests = self.pytest_val.validate(str(target))
+         lint = self.ruff_val.validate(str(target))
+         typing_check = self.mypy_val.validate(str(target))
+@@ -107,6 +111,7 @@ class DeterministicQualityGate:
+ 
+         checks = (
+             syntax,
++            imports,
+             tests,
+             lint,
+             typing_check,
+diff --git a/ShadBot/src/agentplatform/application/quality_gate/validators.py b/ShadBot/src/agentplatform/application/quality_gate/validators.py
+index 6d40351..17c34b4 100644
+--- a/ShadBot/src/agentplatform/application/quality_gate/validators.py
++++ b/ShadBot/src/agentplatform/application/quality_gate/validators.py
+@@ -28,6 +28,7 @@ Design rules honoured:
+ from __future__ import annotations
+ 
+ import ast
++import json
+ import os
+ import shutil
+ import subprocess
+@@ -675,3 +676,190 @@ class SyntaxValidator:
+             details=f"All {parsed} Python file(s) parse successfully.",
+             score=1.0,
+         )
++
++
++# Executed in a throwaway subprocess so that importing generated code can
++# never mutate the gate's own interpreter state.
++_IMPORT_PROBE = r'''
++import importlib.util
++import json
++import pathlib
++import sys
++import traceback
++
++root = pathlib.Path(sys.argv[1]).resolve()
++source_root = root / "src" if (root / "src").is_dir() else root
++sys.path.insert(0, str(source_root))
++
++SKIP = {".git", ".venv", "venv", "__pycache__", "node_modules", "build", "dist"}
++
++ok, failures = [], []
++
++for path in sorted(source_root.rglob("*.py")):
++    if any(part in SKIP for part in path.parts):
++        continue
++    if path.name == "__init__.py":
++        continue
++
++    rel = path.relative_to(source_root)
++    module = ".".join(rel.with_suffix("").parts)
++
++    try:
++        spec = importlib.util.spec_from_file_location(module, path)
++        if spec is None or spec.loader is None:
++            failures.append((str(rel), "could not create module spec"))
++            continue
++        loaded = importlib.util.module_from_spec(spec)
++        sys.modules[module] = loaded
++        spec.loader.exec_module(loaded)
++        ok.append(str(rel))
++    except BaseException as exc:
++        line = ""
++        tb = traceback.extract_tb(sys.exc_info()[2])
++        for frame in reversed(tb):
++            if frame.filename == str(path):
++                line = f":{frame.lineno}"
++                break
++        failures.append((str(rel) + line, f"{type(exc).__name__}: {exc}"))
++
++print(json.dumps({"ok": ok, "failures": failures}))
++'''
++
++
++class ImportValidator:
++    """
++    Validates that generated modules can actually be imported.
++
++    Rationale:
++        A syntax check only proves a file parses. Generated code routinely
++        parses while being completely unloadable, because the model emitted
++        `from .models import Agent` for a module that was never written.
++        ShadBotCore_BuiltByAgent passed the syntax check with 14 files of
++        which 0 could be imported.
++
++        This check is the difference between "the text is valid Python" and
++        "the code exists".
++
++    The probe runs in a subprocess: importing arbitrary generated code
++    executes module-level statements, which must not touch the gate process.
++    """
++
++    def validate(self, project_path: str) -> CheckResult:
++        target = Path(project_path)
++
++        if not target.exists():
++            return CheckResult(
++                check_name="imports",
++                passed=False,
++                details=f"Target path does not exist: {target}",
++                score=0.0,
++                skipped=True,
++            )
++
++        source_root = target / "src" if (target / "src").is_dir() else target
++
++        candidates = [
++            path
++            for path in source_root.rglob("*.py")
++            if not any(
++                part
++                in {
++                    ".git",
++                    ".venv",
++                    "venv",
++                    "__pycache__",
++                    "node_modules",
++                    "build",
++                    "dist",
++                }
++                for part in path.parts
++            )
++            and path.name != "__init__.py"
++        ]
++
++        if not candidates:
++            return CheckResult(
++                check_name="imports",
++                passed=False,
++                details=f"No importable Python modules under {source_root}. Check SKIPPED.",
++                score=0.0,
++                skipped=True,
++            )
++
++        try:
++            completed = subprocess.run(
++                [sys.executable, "-c", _IMPORT_PROBE, str(target)],
++                capture_output=True,
++                text=True,
++                encoding="utf-8",
++                errors="replace",
++                timeout=_DEFAULT_TOOL_TIMEOUT_SECONDS,
++                cwd=str(target),
++            )
++        except subprocess.TimeoutExpired:
++            return CheckResult(
++                check_name="imports",
++                passed=False,
++                details=(
++                    f"Import probe timed out after "
++                    f"{_DEFAULT_TOOL_TIMEOUT_SECONDS}s. Generated code likely "
++                    f"blocks at module level."
++                ),
++                score=0.0,
++            )
++        except OSError as exc:
++            return CheckResult(
++                check_name="imports",
++                passed=False,
++                details=f"Could not launch import probe: {exc}",
++                score=0.0,
++                skipped=True,
++            )
++
++        stdout = completed.stdout or ""
++
++        payload: dict[str, object] | None = None
++
++        for line in reversed(stdout.strip().splitlines()):
++            if line.startswith("{"):
++                try:
++                    payload = json.loads(line)
++                except ValueError:
++                    payload = None
++                break
++
++        if payload is None:
++            return CheckResult(
++                check_name="imports",
++                passed=False,
++                details=_combine_output(
++                    completed.stdout,
++                    completed.stderr,
++                    completed.returncode,
++                ),
++                score=0.0,
++            )
++
++        ok = list(payload.get("ok", []))
++        failures = list(payload.get("failures", []))
++        total = len(ok) + len(failures)
++
++        if not failures:
++            return CheckResult(
++                check_name="imports",
++                passed=True,
++                details=f"All {total} generated module(s) import successfully.",
++                score=1.0,
++            )
++
++        lines = [f"{name}: {reason}" for name, reason in failures]
++
++        return CheckResult(
++            check_name="imports",
++            passed=False,
++            details=_truncate(
++                f"{len(failures)}/{total} module(s) cannot be imported:\n"
++                + "\n".join(lines)
++            ),
++            score=round(len(ok) / total, 2) if total else 0.0,
++        )
+diff --git a/ShadBot/tests/agentplatform_tests/quality_gate/test_gate_target_and_imports.py b/ShadBot/tests/agentplatform_tests/quality_gate/test_gate_target_and_imports.py
+new file mode 100644
+index 0000000..01b1180
+--- /dev/null
++++ b/ShadBot/tests/agentplatform_tests/quality_gate/test_gate_target_and_imports.py
+@@ -0,0 +1,278 @@
++"""
++ShadBot Agent Platform
++
++Regression tests for the three defects found auditing ShadBotCore_BuiltByAgent:
++
++  BUG I  - the deterministic gate validated the ShadBot platform itself
++           instead of the generated project, because it fell back to Path(".")
++           whenever the target could not be resolved.
++
++  BUG J  - multi-module LLM responses were written verbatim into one file,
++           producing parseable but unimportable code.
++
++  BUG K  - the gate had no import check, so 14 files of which 0 could be
++           imported were reported as [PASS] syntax.
++"""
++
++from __future__ import annotations
++
++from pathlib import Path
++from uuid import uuid4
++
++import pytest
++
++from agentplatform.application.generation import ModuleSplitter
++from agentplatform.application.orchestration.agent_orchestrator import (
++    AgentOrchestrator,
++)
++from agentplatform.application.quality_gate import ImportValidator
++from agentplatform.domain.context import AgentExecutionContext
++from agentplatform.domain.workspace import Project
++
++
++def _context(
++    project_path: Path | None,
++    metadata: dict[str, object] | None = None,
++) -> AgentExecutionContext:
++    project = (
++        Project(
++            name="target",
++            path=project_path,
++            project_type="software",
++        )
++        if project_path is not None
++        else None
++    )
++
++    return AgentExecutionContext(
++        project_id=uuid4(),
++        task_id=uuid4(),
++        instructions="test",
++        target_project=project,
++        metadata=metadata or {},
++    )
++
++
++# ---------------------------------------------------------------------------
++# BUG I - gate target resolution
++# ---------------------------------------------------------------------------
++
++
++def test_gate_target_uses_target_project_path(tmp_path: Path) -> None:
++    project = tmp_path / "GeneratedProject"
++    project.mkdir()
++
++    resolved = AgentOrchestrator._resolve_target_project_path(
++        _context(project),
++    )
++
++    assert resolved == project.resolve()
++
++
++def test_gate_target_never_falls_back_to_cwd() -> None:
++    """
++    The defect: an unresolvable target silently became Path("."), so the gate
++    validated ShadBot's own source tree and reported the platform's 23
++    architecture violations as if the agent had produced them.
++    """
++
++    with pytest.raises(ValueError, match="Cannot determine the target project"):
++        AgentOrchestrator._resolve_target_project_path(_context(None))
++
++
++def test_gate_target_rejects_nonexistent_path(tmp_path: Path) -> None:
++    missing = tmp_path / "does-not-exist"
++
++    with pytest.raises(ValueError):
++        AgentOrchestrator._resolve_target_project_path(_context(missing))
++
++
++def test_gate_target_falls_back_to_metadata(tmp_path: Path) -> None:
++    project = tmp_path / "FromMetadata"
++    project.mkdir()
++
++    resolved = AgentOrchestrator._resolve_target_project_path(
++        _context(None, {"project_path": str(project)}),
++    )
++
++    assert resolved == project.resolve()
++
++
++def test_gate_target_rejects_file_target(tmp_path: Path) -> None:
++    a_file = tmp_path / "not_a_dir.py"
++    a_file.write_text("x = 1\n", encoding="utf-8")
++
++    with pytest.raises(ValueError):
++        AgentOrchestrator._resolve_target_project_path(_context(a_file))
++
++
++# ---------------------------------------------------------------------------
++# BUG J - multi-module splitting
++# ---------------------------------------------------------------------------
++
++
++CONCATENATED = '''# src/agentplatform/domain/models.py
++
++from dataclasses import dataclass
++from typing import List
++
++@dataclass(frozen=True)
++class Agent:
++    name: str
++
++# src/agentplatform/domain/services.py
++
++from .models import Agent
++
++class DomainService:
++    def all_agents(self) -> List[Agent]:
++        return []
++'''
++
++
++def test_splitter_separates_concatenated_modules() -> None:
++    modules = ModuleSplitter().split(
++        CONCATENATED,
++        default_path="src/agentplatform/domain/agent_role.py",
++    )
++
++    paths = [m.path for m in modules]
++
++    assert paths == [
++        "src/agentplatform/domain/models.py",
++        "src/agentplatform/domain/services.py",
++    ]
++    assert all(m.is_parseable for m in modules)
++
++
++def test_splitter_propagates_shared_stdlib_imports() -> None:
++    """
++    `List` is imported once at the top and used in a later module. After
++    splitting, that module must still import it or it raises NameError.
++    """
++
++    modules = ModuleSplitter().split(CONCATENATED, default_path="x.py")
++
++    services = next(m for m in modules if m.path.endswith("services.py"))
++
++    assert "from typing import List" in services.content
++
++
++def test_splitter_never_propagates_relative_imports() -> None:
++    modules = ModuleSplitter().split(CONCATENATED, default_path="x.py")
++
++    models = next(m for m in modules if m.path.endswith("models.py"))
++
++    assert "from .models import" not in models.content
++
++
++def test_splitter_returns_single_module_when_no_delimiters() -> None:
++    modules = ModuleSplitter().split(
++        "def f() -> int:\n    return 1\n",
++        default_path="src/pkg/mod.py",
++    )
++
++    assert len(modules) == 1
++    assert modules[0].path == "src/pkg/mod.py"
++
++
++def test_splitter_rejects_path_traversal() -> None:
++    hostile = "# ../../../etc/evil.py\nx = 1\n"
++
++    modules = ModuleSplitter().split(hostile, default_path="safe.py")
++
++    assert all(".." not in m.path for m in modules)
++
++
++def test_splitter_merges_duplicate_paths() -> None:
++    duplicated = (
++        "# src/a.py\nx = 1\n\n"
++        "# src/b.py\ny = 2\n\n"
++        "# src/a.py\nz = 3\n"
++    )
++
++    modules = ModuleSplitter().split(duplicated, default_path="d.py")
++
++    paths = [m.path for m in modules]
++
++    assert paths.count("src/a.py") == 1
++
++    merged = next(m for m in modules if m.path == "src/a.py")
++
++    assert "x = 1" in merged.content
++    assert "z = 3" in merged.content
++
++
++# ---------------------------------------------------------------------------
++# BUG K - import validation
++# ---------------------------------------------------------------------------
++
++
++def test_import_validator_fails_parseable_but_unimportable_code(
++    tmp_path: Path,
++) -> None:
++    """
++    The exact ShadBotCore_BuiltByAgent failure: valid syntax, dead imports.
++    """
++
++    src = tmp_path / "src" / "pkg"
++    src.mkdir(parents=True)
++    (src / "__init__.py").write_text("", encoding="utf-8")
++    (src / "service.py").write_text(
++        "from .models import Agent\n\n\nclass Service:\n    pass\n",
++        encoding="utf-8",
++    )
++
++    result = ImportValidator().validate(str(tmp_path))
++
++    assert result.passed is False
++    assert result.skipped is False
++    assert "cannot be imported" in result.details
++
++
++def test_import_validator_passes_working_code(tmp_path: Path) -> None:
++    src = tmp_path / "src" / "pkg"
++    src.mkdir(parents=True)
++    (src / "__init__.py").write_text("", encoding="utf-8")
++    (src / "models.py").write_text(
++        "class Agent:\n    pass\n",
++        encoding="utf-8",
++    )
++    (src / "service.py").write_text(
++        "from pkg.models import Agent\n\n\nclass Service:\n    agent = Agent\n",
++        encoding="utf-8",
++    )
++
++    result = ImportValidator().validate(str(tmp_path))
++
++    assert result.passed is True
++    assert result.score == 1.0
++
++
++def test_import_validator_skips_empty_project(tmp_path: Path) -> None:
++    result = ImportValidator().validate(str(tmp_path))
++
++    assert result.skipped is True
++    assert result.passed is False
++
++
++def test_import_validator_reports_line_numbers(tmp_path: Path) -> None:
++    src = tmp_path / "src"
++    src.mkdir()
++    (src / "broken.py").write_text(
++        "import os\n\nraise RuntimeError('boom')\n",
++        encoding="utf-8",
++    )
++
++    result = ImportValidator().validate(str(tmp_path))
++
++    assert result.passed is False
++    assert "broken.py:3" in result.details
++
++
++def test_import_check_is_part_of_the_gate() -> None:
++    from agentplatform.application.quality_gate import DeterministicQualityGate
++
++    gate = DeterministicQualityGate()
++
++    assert hasattr(gate, "import_val")
