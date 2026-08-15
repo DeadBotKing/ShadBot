@@ -1,0 +1,67 @@
+Phase 6 — Agent Orchestration
+
+├── 6.1 Task Routing
+│
+│   ├── Task Classification
+│   ├── Task Capability Analysis
+│   ├── Task Routing Strategy
+│   ├── Agent Route Decision
+│   └── Routing Validation
+
+
+├── 6.2 Agent Selection
+│
+│   ├── Agent Discovery
+│   ├── Agent Capability Matching
+│   ├── Agent Profile Evaluation
+│   ├── Agent Availability Check
+│   ├── Agent Priority Evaluation
+│   └── Agent Selection Decision
+
+
+├── 6.3 Pipeline Management
+│
+│   ├── Pipeline Definition
+│   ├── Pipeline Builder
+│   ├── Pipeline Execution Manager
+│   ├── Pipeline State Tracking
+│   ├── Pipeline Dependency Management
+│   └── Pipeline Completion Detection
+
+
+├── 6.4 Agent Handoff
+│
+│   ├── Handoff Request
+│   ├── Handoff Context Builder
+│   ├── Handoff Validation
+│   ├── Agent Transition Manager
+│   └── Handoff History Tracking
+
+
+├── 6.5 Result Aggregation
+│
+│   ├── Result Collection
+│   ├── Result Normalization
+│   ├── Result Evaluation
+│   ├── Result Conflict Resolution
+│   ├── Final Result Builder
+│   └── Result Reporting
+
+
+├── 6.6 Failure Recovery
+│
+│   ├── Failure Detection
+│   ├── Failure Classification
+│   ├── Recovery Strategy Selection
+│   ├── Retry Management
+│   ├── Alternative Agent Routing
+│   └── Recovery Validation
+
+
+└── 6.7 Orchestration Monitoring ⭐ اضافه پیشنهادی
+
+    ├── Execution Monitoring
+    ├── Agent Performance Tracking
+    ├── Pipeline Monitoring
+    ├── Bottleneck Detection
+    └── Orchestration Metrics

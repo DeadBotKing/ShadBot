@@ -1,0 +1,44 @@
+{
+    "identity": {
+        "project_id": "058ecdc1-d4e6-4b70-89c9-24fbc89f40d3",
+        "name": "",
+        "path": "C:\\Users\\DeadBotKing\\Desktop\\ShadBot-fixed\\ShadBotWorkspace\\ShadBotCore_BuiltByAgent",
+        "created_at": "2026-08-15T09:07:31.938620+00:00"
+    },
+    "architecture": {
+        "description": "",
+        "modules": [],
+        "patterns": [],
+        "dependencies": {}
+    },
+    "technologies": {
+        "languages": [],
+        "frameworks": [],
+        "tools": [],
+        "databases": []
+    },
+    "development": {
+        "completed_tasks": [],
+        "pending_tasks": [],
+        "active_tasks": [],
+        "decisions": []
+    },
+    "quality": {
+        "tests_status": "unknown",
+        "validation_status": "unknown",
+        "known_issues": [],
+        "risks": []
+    },
+    "runtime": {
+        "health_status": "unknown",
+        "performance_notes": [],
+        "runtime_errors": []
+    },
+    "changes": {
+        "changed_files": [],
+        "commits": [],
+        "summary": ""
+    },
+    "recommendations": [],
+    "generated_at": "2026-08-15T09:07:31.938652+00:00"
+}

@@ -1,0 +1,58 @@
+Phase 8 — Communication Layer
+
+
+├── 8.1 Event Bus
+│
+│   ├── Event Entity
+│   ├── Event Contract
+│   ├── Event Publisher
+│   ├── Event Subscriber
+│   ├── Event Router
+│   ├── Event Queue Management
+│   ├── Event Persistence
+│   └── Event Processing Monitor
+
+
+├── 8.2 Agent Messaging
+│
+│   ├── Message Entity
+│   ├── Message Contract
+│   ├── Message Sender
+│   ├── Message Receiver
+│   ├── Agent Communication Manager
+│   ├── Message Routing
+│   ├── Message Priority Management
+│   ├── Message History Tracking
+│   └── Message Validation
+
+
+├── 8.3 Workflow Events
+│
+│   ├── Workflow Event Definition
+│   ├── Workflow State Events
+│   ├── Workflow Trigger Manager
+│   ├── Workflow Event Handler
+│   ├── Workflow Event Correlation
+│   ├── Workflow Event Tracking
+│   └── Workflow Event Recovery
+
+
+├── 8.4 Async Execution
+│
+│   ├── Async Task Model
+│   ├── Async Executor
+│   ├── Task Queue Manager
+│   ├── Worker Manager
+│   ├── Background Execution Controller
+│   ├── Async Result Handling
+│   ├── Async Failure Handling
+│   └── Async Execution Monitoring
+
+
+└── 8.5 Communication Observability ⭐ اضافه پیشنهادی
+
+    ├── Communication Metrics
+    ├── Event Flow Monitoring
+    ├── Message Trace Tracking
+    ├── Queue Health Monitoring
+    └── Communication Diagnostics

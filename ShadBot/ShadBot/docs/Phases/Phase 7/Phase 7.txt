@@ -1,0 +1,70 @@
+Phase 7 — Runtime System
+
+
+├── 7.1 Agent Runtime
+│
+│   ├── Agent Runtime Instance
+│   ├── Agent Lifecycle Management
+│   ├── Agent Execution Context
+│   ├── Agent Runtime State
+│   ├── Agent Process Controller
+│   └── Agent Runtime Monitor
+
+
+├── 7.2 Brain Runtime
+│
+│   ├── Brain Runtime Instance
+│   ├── Brain Execution Loop
+│   ├── Reasoning Runtime Manager
+│   ├── Brain Context Runtime
+│   ├── Brain State Synchronization
+│   └── Brain Runtime Monitor
+
+
+├── 7.3 Session Runtime
+│
+│   ├── Session Entity
+│   ├── Session Manager
+│   ├── Session Lifecycle
+│   ├── Session Context Storage
+│   ├── Session Recovery Handling
+│   └── Session Termination Manager
+
+
+├── 7.4 State Management
+│
+│   ├── Runtime State Model
+│   ├── State Storage
+│   ├── State Transition Manager
+│   ├── State Synchronization
+│   ├── State Consistency Validation
+│   └── State Cleanup Manager
+
+
+├── 7.5 Checkpoint System
+│
+│   ├── Checkpoint Entity
+│   ├── Checkpoint Creator
+│   ├── Checkpoint Storage
+│   ├── Checkpoint Versioning
+│   ├── Checkpoint Validation
+│   └── Checkpoint Restore Manager
+
+
+├── 7.6 Resume System
+│
+│   ├── Resume Request
+│   ├── Resume Context Loader
+│   ├── Execution Recovery Engine
+│   ├── State Restoration
+│   ├── Resume Validation
+│   └── Execution Continuation Manager
+
+
+└── 7.7 Runtime Observability ⭐ اضافه پیشنهادی
+
+    ├── Runtime Metrics Collector
+    ├── Execution Trace Tracking
+    ├── Runtime Event Logging
+    ├── Performance Monitoring
+    └── Runtime Health Assessment

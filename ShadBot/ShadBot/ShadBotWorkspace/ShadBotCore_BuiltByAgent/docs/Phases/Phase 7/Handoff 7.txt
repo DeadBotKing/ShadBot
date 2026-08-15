@@ -1,0 +1,445 @@
+# Phase 7 — Runtime System
+## Handoff Document
+
+
+## Mission
+
+Implement the Runtime System of ShadBot.
+
+This phase is responsible for creating the execution environment where Agents, Brain, Sessions, and workflows can run continuously, maintain state, recover from interruption, and resume execution safely.
+
+
+This phase does NOT implement:
+
+- Agent intelligence
+- Reasoning logic
+- Agent decision making
+- Capability definition
+- Tool execution logic
+- Agent collaboration strategy
+
+
+Those responsibilities belong to:
+
+Phase 4 — Agent Capability & Tool Execution Layer
+
+Phase 5 — Brain Orchestrator
+
+Phase 6 — Agent Orchestration
+
+
+
+--------------------------------------------------
+
+# Core Objective
+
+Create a reliable runtime foundation capable of:
+
+- Starting Agent execution
+- Managing Brain execution
+- Maintaining sessions
+- Tracking runtime state
+- Creating checkpoints
+- Restoring execution after failure
+- Continuing unfinished tasks
+
+
+Final runtime flow:
+
+Task
+ ↓
+Brain Runtime
+ ↓
+Agent Runtime
+ ↓
+Session Runtime
+ ↓
+State Management
+ ↓
+Checkpoint
+ ↓
+Execution
+ ↓
+Failure / Shutdown
+ ↓
+Resume
+ ↓
+Continue Execution
+
+
+
+--------------------------------------------------
+
+# Phase Structure
+
+
+
+# 7.1 Agent Runtime
+
+## Purpose
+
+Manage lifecycle and execution of individual Agents.
+
+
+Responsibilities:
+
+- Create Agent runtime instance
+- Start Agent execution
+- Stop Agent execution
+- Monitor Agent status
+- Maintain Agent execution context
+
+
+Must include:
+
+- Agent Runtime Instance
+- Agent Lifecycle Management
+- Agent Execution Context
+- Agent Runtime State
+- Agent Process Controller
+- Agent Runtime Monitor
+
+
+Input:
+
+Selected Agent from Phase 6
+
+
+Output:
+
+Running Agent Instance
+
+
+
+--------------------------------------------------
+
+# 7.2 Brain Runtime
+
+## Purpose
+
+Provide execution environment for Brain Orchestrator.
+
+
+Responsibilities:
+
+- Run Brain execution loop
+- Maintain reasoning context
+- Synchronize Brain state
+- Control Brain lifecycle
+
+
+Must include:
+
+- Brain Runtime Instance
+- Brain Execution Loop
+- Reasoning Runtime Manager
+- Brain Context Runtime
+- Brain State Synchronization
+- Brain Runtime Monitor
+
+
+Input:
+
+Brain Plan / Goal
+
+
+Output:
+
+Brain Execution State
+
+
+
+--------------------------------------------------
+
+# 7.3 Session Runtime
+
+## Purpose
+
+Manage execution sessions.
+
+
+A session represents one complete interaction/execution journey.
+
+
+Responsibilities:
+
+- Create session
+- Track session lifecycle
+- Store session context
+- Recover interrupted sessions
+
+
+Must include:
+
+- Session Entity
+- Session Manager
+- Session Lifecycle
+- Session Context Storage
+- Session Recovery Handling
+- Session Termination Manager
+
+
+Input:
+
+Task Execution Request
+
+
+Output:
+
+Active Session
+
+
+
+--------------------------------------------------
+
+# 7.4 State Management
+
+## Purpose
+
+Maintain runtime state consistency.
+
+
+Responsibilities:
+
+- Store current execution state
+- Manage state transitions
+- Synchronize components
+- Validate state
+
+
+Must include:
+
+- Runtime State Model
+- State Storage
+- State Transition Manager
+- State Synchronization
+- State Consistency Validation
+- State Cleanup Manager
+
+
+Input:
+
+Runtime Events
+
+
+Output:
+
+Updated Runtime State
+
+
+
+--------------------------------------------------
+
+# 7.5 Checkpoint System
+
+## Purpose
+
+Create recovery points during execution.
+
+
+Example:
+
+Task:
+Build Trading Engine
+
+
+Checkpoint 1:
+Architecture completed
+
+
+Checkpoint 2:
+Models created
+
+
+Checkpoint 3:
+Tests passed
+
+
+
+Responsibilities:
+
+- Create checkpoints
+- Store snapshots
+- Version checkpoints
+- Validate restore points
+
+
+Must include:
+
+- Checkpoint Entity
+- Checkpoint Creator
+- Checkpoint Storage
+- Checkpoint Versioning
+- Checkpoint Validation
+- Checkpoint Restore Manager
+
+
+Input:
+
+Runtime State
+
+
+Output:
+
+Persistent Recovery Point
+
+
+
+--------------------------------------------------
+
+# 7.6 Resume System
+
+## Purpose
+
+Continue interrupted execution.
+
+
+Example:
+
+Agent stopped at:
+
+Phase 3 / Step 5
+
+
+After restart:
+
+Load checkpoint
+
+Restore state
+
+Continue from Step 6
+
+
+
+Must include:
+
+- Resume Request
+- Resume Context Loader
+- Execution Recovery Engine
+- State Restoration
+- Resume Validation
+- Execution Continuation Manager
+
+
+Input:
+
+Checkpoint
+
+
+Output:
+
+Continued Execution
+
+
+
+--------------------------------------------------
+
+# 7.7 Runtime Observability
+
+
+## Purpose
+
+Monitor runtime health and behavior.
+
+
+Responsibilities:
+
+- Track execution metrics
+- Record runtime events
+- Measure performance
+- Detect runtime problems
+
+
+Must include:
+
+- Runtime Metrics Collector
+- Execution Trace Tracking
+- Runtime Event Logging
+- Performance Monitoring
+- Runtime Health Assessment
+
+
+Input:
+
+Runtime Events
+
+
+Output:
+
+Runtime Insights
+
+
+
+--------------------------------------------------
+
+# Integration Points
+
+
+Consumes:
+
+
+Phase 5 Brain Orchestrator:
+
+- Goals
+- Plans
+- Reasoning Flow
+- Decisions
+
+
+Phase 6 Agent Orchestration:
+
+- Selected Agents
+- Pipelines
+- Handoffs
+
+
+
+Provides:
+
+
+Phase 8 LLM Integration:
+
+- Runtime environment
+
+
+Phase 9 Autonomous Execution Loop:
+
+- Stable execution foundation
+
+
+
+--------------------------------------------------
+
+# Final Acceptance Criteria
+
+
+Phase 7 is complete when:
+
+
+✅ Agents can start and stop safely
+
+✅ Brain has a running execution environment
+
+✅ Sessions persist correctly
+
+✅ Runtime state is tracked
+
+✅ Checkpoints are created
+
+✅ Failed executions can resume
+
+✅ Execution history is recoverable
+
+✅ Runtime health is observable
+
+
+Final System Capability:
+
+
+A task can run for hours/days,
+
+survive interruption,
+
+restore previous state,
+
+and continue automatically.
