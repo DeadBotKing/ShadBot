@@ -1,0 +1,5312 @@
+[
+    {
+        "project_id": "cb21a69c-1a92-48ef-b7c7-cfd56336a8be",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "66a4b8ae-4042-49a0-aab5-ff64edaa2132",
+        "created_at": "2026-08-15T08:49:16.136839+00:00"
+    },
+    {
+        "project_id": "ea07c735-0958-40d6-83e6-a53e86c8ddc4",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "ee348afc-e270-4dce-8e2d-ee136bece41b",
+        "created_at": "2026-08-15T08:49:32.448273+00:00"
+    },
+    {
+        "project_id": "48120688-d2cd-4612-8819-668c03885291",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "da67f37f-3d4e-40a0-8b9f-6d7fa0225184",
+        "created_at": "2026-08-15T08:49:38.305017+00:00"
+    },
+    {
+        "project_id": "e3268fd5-afe7-4010-978d-da3dd76089f1",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "173901c4-8bb4-4fff-bbfb-f97b327d3784",
+        "created_at": "2026-08-15T08:49:42.410658+00:00"
+    },
+    {
+        "project_id": "0627e53d-8a80-4b74-adb5-b545b15ccc79",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "bf29ca25-21d0-47f5-8078-1cca05c01668",
+        "created_at": "2026-08-15T08:49:46.543071+00:00"
+    },
+    {
+        "project_id": "8db0c62c-b226-4777-9d86-443384cc0f78",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "8d49b462-0cbc-48b4-8062-4be688b3849f",
+        "created_at": "2026-08-15T08:49:56.754406+00:00"
+    },
+    {
+        "project_id": "63cee0f2-3535-457d-9c6c-e70d41a43d82",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "499d127a-815b-4725-bc2d-fedaf977509c",
+        "created_at": "2026-08-15T08:50:51.018602+00:00"
+    },
+    {
+        "project_id": "bed53b2c-a390-4b8a-829e-631503c42959",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "cfe939c7-181a-4ba0-bf74-4ff8b15d2181",
+        "created_at": "2026-08-15T08:51:51.968752+00:00"
+    },
+    {
+        "project_id": "e8dcda3c-b944-48df-80d2-b4a9649b48ec",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "af684ee3-2f97-4419-ac72-4be9aa1b2b5a",
+        "created_at": "2026-08-15T08:51:59.135343+00:00"
+    },
+    {
+        "project_id": "76df39fc-4a68-4a50-b94f-cf2f2914e314",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "616df663-ee1c-4a9a-9755-f34530034e57",
+        "created_at": "2026-08-15T09:30:37.214325+00:00"
+    },
+    {
+        "project_id": "68484d84-8ad4-4fab-b67e-fd2d3f185697",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "704b98ef-1fa0-40d1-bd86-26509df6bd2a",
+        "created_at": "2026-08-15T09:30:43.704599+00:00"
+    },
+    {
+        "project_id": "d933e7ea-2c0f-48d1-a43d-717db5f18ceb",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "b6b76c9f-36c1-45fa-801e-ba7b4fa2acc6",
+        "created_at": "2026-08-15T09:30:47.585495+00:00"
+    },
+    {
+        "project_id": "89a43956-8949-4b42-83eb-f61c50be8b5e",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "5f5dda61-38df-4a41-aa92-b67c813a7c64",
+        "created_at": "2026-08-15T09:30:51.445353+00:00"
+    },
+    {
+        "project_id": "134f6b40-59c7-44ab-9231-d7a87d9263db",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "c277d295-a85b-4dfc-9634-a6cd1310a7a9",
+        "created_at": "2026-08-15T09:30:55.323552+00:00"
+    },
+    {
+        "project_id": "56b4cf24-68d3-4b44-8989-cbedd7a7c0e2",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "660861e8-27f0-49e1-8ca9-6684e78282bb",
+        "created_at": "2026-08-15T09:30:59.205400+00:00"
+    },
+    {
+        "project_id": "41d772b2-483f-4b82-95a5-f7fc437c5259",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "e1106b21-ccf6-413a-9932-0ed5fd1555da",
+        "created_at": "2026-08-15T09:31:03.051113+00:00"
+    },
+    {
+        "project_id": "dd4f7c05-5101-4881-a63a-74aad1c66fd8",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "3e5b4a96-63e5-47a3-a1d9-6518bf9bf1a5",
+        "created_at": "2026-08-15T09:31:06.908955+00:00"
+    },
+    {
+        "project_id": "947d5716-432a-456f-a494-51372c12d1c3",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "e30a0b6a-47b0-4167-8409-f4efbd796178",
+        "created_at": "2026-08-15T09:31:10.806368+00:00"
+    },
+    {
+        "project_id": "f679b52d-79f3-4c00-b921-ca75c1e7d71c",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "71e64176-ad93-4e37-8637-051a659a07ab",
+        "created_at": "2026-08-15T09:31:14.687942+00:00"
+    },
+    {
+        "project_id": "6ed1e6b5-77a4-414c-95a2-69de162ad851",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "6db350c4-8ab5-4bae-a04e-7e50e4c2b9d7",
+        "created_at": "2026-08-15T09:31:18.551163+00:00"
+    },
+    {
+        "project_id": "2250ed5b-143d-4f26-8187-8b7b6b5172d2",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "39003b7d-822c-4b3c-aa82-f39404a9315d",
+        "created_at": "2026-08-15T09:31:22.370643+00:00"
+    },
+    {
+        "project_id": "623aa343-3480-4980-9fef-2f6f486834e2",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "3011321d-c9ea-4f14-8eb1-f064680f2f59",
+        "created_at": "2026-08-15T09:31:26.163819+00:00"
+    },
+    {
+        "project_id": "5104f7a5-3824-4445-a966-64e567ad1827",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "28c4566b-270d-4120-b91e-e31970945299",
+        "created_at": "2026-08-15T09:31:30.025142+00:00"
+    },
+    {
+        "project_id": "a218af10-65b7-4c20-9747-90f9a9e27132",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "d693381d-2baf-4b3f-a0cf-ea3bcd4d1736",
+        "created_at": "2026-08-15T09:31:33.915868+00:00"
+    },
+    {
+        "project_id": "a3582b14-3e59-43d9-bd2e-877e18467e6c",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "7f4dc093-d157-444a-a9d3-33088e3285bd",
+        "created_at": "2026-08-15T09:31:37.824802+00:00"
+    },
+    {
+        "project_id": "037acf0e-71ad-4c4f-95fe-e353e917d234",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "09ada8e0-dde9-4d7d-a61d-45eb04fd090d",
+        "created_at": "2026-08-15T09:31:41.784564+00:00"
+    },
+    {
+        "project_id": "1ca738c8-622c-4345-aa9d-f13c59b1f1ee",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "634e9337-da26-4a9e-8144-472dd88cbaeb",
+        "created_at": "2026-08-15T09:31:45.702118+00:00"
+    },
+    {
+        "project_id": "6e8e59d9-72a2-48e2-a9d9-2602d2979010",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "0fb9882d-95bc-4459-bf87-a509d487dac1",
+        "created_at": "2026-08-15T09:31:49.651556+00:00"
+    },
+    {
+        "project_id": "651799b0-d699-4247-b9a1-e439705ea676",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "1b54cd8d-75b3-4778-9c8f-d8b0ce5618ad",
+        "created_at": "2026-08-15T09:31:53.658894+00:00"
+    },
+    {
+        "project_id": "47782ae8-a305-493f-9123-bf7eaa41a2da",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "35ecd2b7-7377-4d23-b283-a4ac45b3b6c7",
+        "created_at": "2026-08-15T09:31:57.538864+00:00"
+    },
+    {
+        "project_id": "99490274-3972-428a-94d9-07d860053f94",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "aadf372e-f139-44fd-886c-cfe054ee7ae6",
+        "created_at": "2026-08-15T09:32:01.445318+00:00"
+    },
+    {
+        "project_id": "c09382ca-7dec-4dc0-a7da-4c9869e665dc",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "18962dce-baa5-49a7-9984-bce446620b99",
+        "created_at": "2026-08-15T09:32:05.454883+00:00"
+    },
+    {
+        "project_id": "3e185a7e-dcc6-410b-ac61-2fb8deba1f9a",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "d0aee56d-3d74-43a2-b5b4-415d0fcb8bd8",
+        "created_at": "2026-08-15T09:32:09.350002+00:00"
+    },
+    {
+        "project_id": "9320146e-cfee-43c2-9572-4be8668fc398",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "956bcf8c-8c92-47c1-b313-b81cbdd1adcd",
+        "created_at": "2026-08-15T09:32:13.185988+00:00"
+    },
+    {
+        "project_id": "dc8662c7-caf7-441e-983e-8456669790b9",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "e5342fa6-7e47-4e81-a31d-eb8fe266ca6b",
+        "created_at": "2026-08-15T09:32:17.069101+00:00"
+    },
+    {
+        "project_id": "7f0f744a-f002-489f-a60e-2849342fe92e",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "3eea84a0-c043-49a1-b449-aebd98ffb304",
+        "created_at": "2026-08-15T09:32:21.092433+00:00"
+    },
+    {
+        "project_id": "30866b38-9754-4d28-ba30-d2ca31be132c",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "88dc5ebb-4b75-4dca-a30b-280a1e7885a7",
+        "created_at": "2026-08-15T09:32:25.019480+00:00"
+    },
+    {
+        "project_id": "f25723bc-4f78-4bdc-96fc-0036415f694a",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "f2dd5528-c313-40b1-878b-4006bb5b37e4",
+        "created_at": "2026-08-15T09:32:28.968334+00:00"
+    },
+    {
+        "project_id": "3d3ecad4-01d3-48c5-b461-db5d9f193f0b",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "7e50ebe4-61f2-47d0-8ea7-dfe954db6fe9",
+        "created_at": "2026-08-15T09:32:32.897792+00:00"
+    },
+    {
+        "project_id": "eaeb9155-681a-4614-8ddd-582ec4aecda6",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "d8d5176d-0661-48a6-93cd-fea90bf8b9c3",
+        "created_at": "2026-08-15T09:32:36.800795+00:00"
+    },
+    {
+        "project_id": "1f28a875-a209-4587-b283-550b64606991",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "c8c45656-aaeb-4eb8-9733-54c8a136e89e",
+        "created_at": "2026-08-15T09:32:40.750512+00:00"
+    },
+    {
+        "project_id": "3a17c9f7-421c-4af3-ac64-eccc627521d4",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "2477cf12-811c-4003-922b-f91fde426866",
+        "created_at": "2026-08-15T09:32:44.746355+00:00"
+    },
+    {
+        "project_id": "9506f61c-7472-4a8e-bd33-dcd97f29ed4a",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "3147b538-1d6a-4d40-b481-a6901ac70aa8",
+        "created_at": "2026-08-15T09:32:48.612052+00:00"
+    },
+    {
+        "project_id": "70d0d41f-8a54-41ab-8cfb-a25a4eb781d8",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "cbd18d34-6663-438f-aa73-5c8f5c3e1f70",
+        "created_at": "2026-08-15T09:32:52.502994+00:00"
+    },
+    {
+        "project_id": "abe4aa31-49a8-4a8e-8014-07b9c1e0c93c",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "1fe15b92-9e12-407c-9575-05b62dbcfdc4",
+        "created_at": "2026-08-15T09:32:56.374098+00:00"
+    },
+    {
+        "project_id": "d6a4db8d-513e-4ca4-a837-782adfb692f4",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "43f9ee63-74ae-4fbf-beea-febd84616403",
+        "created_at": "2026-08-15T09:33:00.278678+00:00"
+    },
+    {
+        "project_id": "33480b65-e23b-4e37-a7dd-7c50f450b010",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "7de45c4d-6adb-4c7f-a6eb-ebf636726496",
+        "created_at": "2026-08-15T09:33:04.184668+00:00"
+    },
+    {
+        "project_id": "06d204a8-39aa-4a15-bc8f-f45b2a7eafa8",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "008ff0b3-7f3d-4a7a-90b8-1a99c6c08723",
+        "created_at": "2026-08-15T09:33:08.042831+00:00"
+    },
+    {
+        "project_id": "4ad7d7f7-bbc4-4c69-aba7-61f5f7d71c06",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "4a76c5dc-a238-4f0e-bc7d-6d01f87c01f4",
+        "created_at": "2026-08-15T09:33:11.914296+00:00"
+    },
+    {
+        "project_id": "4a8d059a-3566-48d3-abad-b29c694c24ff",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "26578124-1a44-463b-b2a7-dbdcee3d6772",
+        "created_at": "2026-08-15T09:33:15.728470+00:00"
+    },
+    {
+        "project_id": "f84d12ab-16f1-449c-85e6-7ffb95bf9e19",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "8f51cc9d-ab19-4c13-b4cd-c7e016f927a5",
+        "created_at": "2026-08-15T09:33:19.609357+00:00"
+    },
+    {
+        "project_id": "1080a6ab-ccc8-495e-8f6c-ea4c5a988d41",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "23220082-8196-4648-a05b-7d44ceefd51c",
+        "created_at": "2026-08-15T09:33:23.446630+00:00"
+    },
+    {
+        "project_id": "85b24d62-90e7-4cf1-82ee-6678f21bed97",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "dba38a05-9605-4f4e-99e2-b678895cb61c",
+        "created_at": "2026-08-15T09:33:27.309915+00:00"
+    },
+    {
+        "project_id": "d552170a-0b3f-4647-93e9-14012fb8a608",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "9ce9e1c2-5790-446d-8eed-ee964408501a",
+        "created_at": "2026-08-15T09:33:31.124345+00:00"
+    },
+    {
+        "project_id": "d6973333-0791-46a8-b88e-75c83fbdb22b",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "47dde94f-0766-4df6-95a4-a1295b29b231",
+        "created_at": "2026-08-15T09:33:34.945045+00:00"
+    },
+    {
+        "project_id": "afb5676c-d751-42ed-aaf1-755c7939582b",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "ab2bb4d4-faf0-4c36-b1e3-7b0aa5178249",
+        "created_at": "2026-08-15T09:33:38.745222+00:00"
+    },
+    {
+        "project_id": "d9627937-bb8d-456e-b0d6-17d75ad75a79",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "2e73eecb-f00d-4709-9aae-b034b05ae8bc",
+        "created_at": "2026-08-15T09:33:42.557844+00:00"
+    },
+    {
+        "project_id": "d4d2321e-a738-4ab4-a7cb-ebb6e0f735e2",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "a9d50e1f-01fe-4ce8-a598-112ed9f006a6",
+        "created_at": "2026-08-15T09:33:46.366216+00:00"
+    },
+    {
+        "project_id": "2523a0bd-e3be-4ec0-bd22-f340cde797f2",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "c08878b6-acd1-44c3-a028-4e443e68a664",
+        "created_at": "2026-08-15T09:33:50.215135+00:00"
+    },
+    {
+        "project_id": "83a6cd03-7428-4c43-9d30-3816ad9f9333",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "f98069d3-59e8-431d-ac27-ae8c04aaed8b",
+        "created_at": "2026-08-15T09:33:54.033603+00:00"
+    },
+    {
+        "project_id": "5f73675f-6e7b-40af-8918-4c1742066c71",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "505d9513-6571-4ea0-8d66-320184d8de87",
+        "created_at": "2026-08-15T09:33:57.856056+00:00"
+    },
+    {
+        "project_id": "0e5825fe-b92d-49d3-a606-77527db7447d",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "27720374-053c-4427-987e-f1760309101d",
+        "created_at": "2026-08-15T09:34:01.672739+00:00"
+    },
+    {
+        "project_id": "2954fdb9-32d2-46c0-b0b7-50940e597aec",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "810aefa7-35d0-45cb-bebb-9d6595ca5321",
+        "created_at": "2026-08-15T09:34:05.479755+00:00"
+    },
+    {
+        "project_id": "c587190f-8761-4de9-813c-d947913b3048",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "98120a00-8072-40c4-9c0b-8dbbe51c53a0",
+        "created_at": "2026-08-15T09:34:09.289862+00:00"
+    },
+    {
+        "project_id": "cee1fcb9-5e03-490b-b068-f82bc90ba555",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "d2b55ba9-2106-41f9-ad9e-47dc3c64398b",
+        "created_at": "2026-08-15T09:34:13.110309+00:00"
+    },
+    {
+        "project_id": "3956593d-8ea1-4315-8952-a64d98aa344c",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "4ab3f9bf-8160-4ca9-87ea-b871fc9f4d08",
+        "created_at": "2026-08-15T09:34:16.947573+00:00"
+    },
+    {
+        "project_id": "512e8afb-6361-4099-a8e6-1b531fdb5fe8",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "09678870-7cbd-47d7-a175-9bf135e6dcb2",
+        "created_at": "2026-08-15T09:34:20.754765+00:00"
+    },
+    {
+        "project_id": "b2032c99-d64f-492e-b0f3-b837ed19bb22",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "93312fa3-dc57-400d-8f7b-9679626d2596",
+        "created_at": "2026-08-15T09:34:24.581300+00:00"
+    },
+    {
+        "project_id": "5d7771f3-6a96-4080-b1a4-92902589dae6",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "2a3700cc-8b23-42e7-8cc5-e0c925aae0db",
+        "created_at": "2026-08-15T09:34:28.410015+00:00"
+    },
+    {
+        "project_id": "6ff08e5d-d282-4f34-90bf-b8cc049ed258",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "73d18b23-6216-4698-ab60-c375f4216c7b",
+        "created_at": "2026-08-15T09:34:32.234453+00:00"
+    },
+    {
+        "project_id": "6d981bcf-335e-4eaf-b632-aafccfb385f8",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "cf1d306d-504b-4179-89a5-916ecc139e33",
+        "created_at": "2026-08-15T09:34:36.071024+00:00"
+    },
+    {
+        "project_id": "56d88616-3994-4fc3-9c50-2e859630fc93",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "9f7c76af-6180-4b90-81d9-a9cd8e959cc3",
+        "created_at": "2026-08-15T09:34:39.911353+00:00"
+    },
+    {
+        "project_id": "ba9adaba-3123-401d-aa1b-fa901c7651db",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "a15feff2-3386-47d9-9e82-a31411fff50e",
+        "created_at": "2026-08-15T09:34:43.727563+00:00"
+    },
+    {
+        "project_id": "8fb923f0-6c17-4fa6-923c-f751090f36b3",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "c9238400-47ae-4a1f-a87b-e05ccc9fe77f",
+        "created_at": "2026-08-15T09:34:47.570544+00:00"
+    },
+    {
+        "project_id": "29c52782-dbcb-4116-b797-88e47f84c089",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "bb9437e3-838e-44b1-ae1e-5688fab9a309",
+        "created_at": "2026-08-15T09:34:51.409768+00:00"
+    },
+    {
+        "project_id": "c1b3d70b-0c7e-405a-a5ce-c01f335be71f",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "83dfaf95-70cc-4661-b214-6c55e4982b50",
+        "created_at": "2026-08-15T09:34:55.254065+00:00"
+    },
+    {
+        "project_id": "8c3d2548-6b8f-4e8e-ac44-7226a1100475",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "545b0233-b1b4-476c-8df2-0237722d2ec6",
+        "created_at": "2026-08-15T09:34:59.079269+00:00"
+    },
+    {
+        "project_id": "ae370086-ed32-466e-9e60-d023e8ce52f6",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "5fe8b7e0-4e1a-4b9e-932b-24ebc68a73df",
+        "created_at": "2026-08-15T09:35:02.894588+00:00"
+    },
+    {
+        "project_id": "91b62102-7999-4b96-8218-9e2a56dd29d7",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "8751ab51-1c59-4ce8-8ced-ae8ddfa5795b",
+        "created_at": "2026-08-15T09:35:06.718377+00:00"
+    },
+    {
+        "project_id": "1ec01416-6d14-4cad-914c-bd3d0e994187",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "9df9b95f-35aa-4316-8bd9-fa5458572f58",
+        "created_at": "2026-08-15T09:35:10.554181+00:00"
+    },
+    {
+        "project_id": "a2088c7e-7b6b-4aef-a640-3648baba2e2b",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "8a489fe6-000a-40b1-a069-d37cf7aac923",
+        "created_at": "2026-08-15T09:35:14.373508+00:00"
+    },
+    {
+        "project_id": "28748a7f-6fce-4f13-a510-8a442b2caff3",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "b1d2ecb3-af68-4ab7-93fe-4060762fa810",
+        "created_at": "2026-08-15T09:35:18.248010+00:00"
+    },
+    {
+        "project_id": "7108726a-16a9-4294-bb14-07ae57385a7a",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "e4d4cb95-f090-4a1f-85c1-f7220d263330",
+        "created_at": "2026-08-15T09:35:22.060046+00:00"
+    },
+    {
+        "project_id": "f4cef145-2f8f-4fe9-9272-9b0ceb788354",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "5f465ca5-67b9-411f-bc0f-071e4a4519a2",
+        "created_at": "2026-08-15T09:35:25.868060+00:00"
+    },
+    {
+        "project_id": "54f751ea-66a5-4311-b57e-070ffee20bb9",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "5fe4ed29-17b4-4990-813d-228eb1a35b70",
+        "created_at": "2026-08-15T09:35:29.682941+00:00"
+    },
+    {
+        "project_id": "fee16b2a-8eb3-4e81-ad86-3f4d0266af24",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "34973fc6-6a97-4578-9af4-1fbdea832baa",
+        "created_at": "2026-08-15T09:35:33.569923+00:00"
+    },
+    {
+        "project_id": "da317bc3-d8d1-4875-822d-81b3761f8df9",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "bee7bd50-2e53-4879-9668-9e81c793a563",
+        "created_at": "2026-08-15T09:35:37.396352+00:00"
+    },
+    {
+        "project_id": "4742bf6a-46f2-43c2-93c3-97455b5633d2",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "a9e501c5-7835-49ed-bb46-6342cd11d4a2",
+        "created_at": "2026-08-15T09:35:41.188885+00:00"
+    },
+    {
+        "project_id": "1f79115e-aee0-46d3-9be4-4209afd66558",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "1396effb-a688-4678-998a-9ff9f5041abe",
+        "created_at": "2026-08-15T09:35:44.988172+00:00"
+    },
+    {
+        "project_id": "3ff7f8df-cb65-4531-a016-a6979fd2ff64",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "e1194bdf-1df6-4224-a659-69b2b753a1b2",
+        "created_at": "2026-08-15T09:35:48.786025+00:00"
+    },
+    {
+        "project_id": "04b2b0c8-428a-4851-b823-7c9edc2f44bd",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "98c506ec-569d-457b-8646-d45f4ff1dce2",
+        "created_at": "2026-08-15T09:35:52.615284+00:00"
+    },
+    {
+        "project_id": "27748309-b4dd-441b-8572-1ea627f96465",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "d5692856-1227-406e-be52-32b158fc9107",
+        "created_at": "2026-08-15T09:35:56.403972+00:00"
+    },
+    {
+        "project_id": "e9c5c798-23d5-422f-9353-f25af89b4d87",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "53b6f35e-05c7-4cd9-9750-1240c656b056",
+        "created_at": "2026-08-15T09:36:00.252027+00:00"
+    },
+    {
+        "project_id": "8a485f48-dddf-49cc-9969-9f3678192b44",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "a27b2b0a-560b-4fc3-850e-f7995792c333",
+        "created_at": "2026-08-15T09:36:04.047006+00:00"
+    },
+    {
+        "project_id": "220b6391-84f5-4b4b-a2c8-ca2db61e4375",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "37af56cc-93a0-42c5-b30b-db351bdf15b6",
+        "created_at": "2026-08-15T09:36:07.831571+00:00"
+    },
+    {
+        "project_id": "80f94e22-4535-4b3a-b41f-13b05672b5e3",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "9ee29086-fb68-4139-925b-816650a50212",
+        "created_at": "2026-08-15T09:36:11.640664+00:00"
+    },
+    {
+        "project_id": "276df2b6-fba0-457b-8fb4-085b1ed152f7",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "0416012a-9a0b-4f75-9789-a843a6316478",
+        "created_at": "2026-08-15T09:36:15.454994+00:00"
+    },
+    {
+        "project_id": "fcd1b1df-e845-4856-989c-bf5580969c5d",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "ad251c03-f3c2-4dfc-842c-f55cfc125519",
+        "created_at": "2026-08-15T09:36:19.256655+00:00"
+    },
+    {
+        "project_id": "5b2c3949-dfd3-4cbf-bcd4-38219247b2cc",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "bdc67110-d9f1-4df9-aa1e-d9dfb14c28b6",
+        "created_at": "2026-08-15T09:36:23.040242+00:00"
+    },
+    {
+        "project_id": "a9fdbbcc-4659-48fe-95a9-7bb7ed5b3a75",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "75f38c74-49f8-4ed3-bbad-b7bed19d0d5e",
+        "created_at": "2026-08-15T09:36:26.848549+00:00"
+    },
+    {
+        "project_id": "1d6d63ed-4a74-4ecb-b4e4-d492a828f652",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "86916094-e769-4e39-a14b-637bd4d0419b",
+        "created_at": "2026-08-15T09:36:30.645406+00:00"
+    },
+    {
+        "project_id": "cf85389c-2373-4731-b16f-f40fae2a1e83",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "09b53048-511d-4438-bf99-bc0c57584129",
+        "created_at": "2026-08-15T09:36:34.464511+00:00"
+    },
+    {
+        "project_id": "d7e1f295-5670-435e-ba07-deee9e2782a5",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "0ba00bb2-5db7-4fbf-be0b-e126313a4d2c",
+        "created_at": "2026-08-15T09:36:38.249975+00:00"
+    },
+    {
+        "project_id": "0a3cdef1-e83c-4455-a9b6-73044df9e6c1",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "de6ed59b-02a5-4fbb-a2d2-2667fabc7602",
+        "created_at": "2026-08-15T09:36:42.052172+00:00"
+    },
+    {
+        "project_id": "eb2b4998-df88-458f-9ae3-abc102cea216",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "927fea50-c43b-412d-840f-30026dd13412",
+        "created_at": "2026-08-15T09:36:45.868636+00:00"
+    },
+    {
+        "project_id": "ba892296-c425-4186-87c8-db47d225b725",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "c7ab9954-7717-4856-a7ca-f2448b292cb6",
+        "created_at": "2026-08-15T09:36:49.681036+00:00"
+    },
+    {
+        "project_id": "12be734a-f960-4b4c-b6a5-84e1a7eff791",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "798c819c-1f20-4c6c-ad8d-537434e51639",
+        "created_at": "2026-08-15T09:36:53.485930+00:00"
+    },
+    {
+        "project_id": "def3e958-70d6-4e4b-8ea2-f8b435d3672b",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "5561ac9b-ebc9-42c0-b575-388c6236d495",
+        "created_at": "2026-08-15T09:36:57.267685+00:00"
+    },
+    {
+        "project_id": "2ba540da-faa9-42a9-976f-e31c6107f55d",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "4c480436-d125-4aab-bc5e-a6a93d3fc1e8",
+        "created_at": "2026-08-15T09:37:01.074121+00:00"
+    },
+    {
+        "project_id": "ee560676-3935-4dbf-8ec2-5965a5d9f437",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "371ba625-b9bd-475d-8b94-f39af9cd7f35",
+        "created_at": "2026-08-15T09:37:04.888328+00:00"
+    },
+    {
+        "project_id": "cbbba379-517e-474f-b26a-90b77160d05e",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "c8299ef6-c08f-4d6a-9c04-63732a78c237",
+        "created_at": "2026-08-15T09:37:08.703721+00:00"
+    },
+    {
+        "project_id": "53d52156-a7e4-45e3-9c30-92588afff08f",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "ef00e8de-ca3c-4359-83c5-9659901eecfc",
+        "created_at": "2026-08-15T09:37:12.525756+00:00"
+    },
+    {
+        "project_id": "d32818d3-dead-45ba-9c52-1311398a92f3",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "c9b50910-9cf4-49e2-9186-3dbe6d750dcf",
+        "created_at": "2026-08-15T09:37:16.330713+00:00"
+    },
+    {
+        "project_id": "273c86b8-a270-421a-9f2c-d688148e88f0",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "ee06e892-9b9e-49f1-8ade-4b7b3e1fcaf2",
+        "created_at": "2026-08-15T09:37:20.136946+00:00"
+    },
+    {
+        "project_id": "054da588-c343-4bd8-8f95-beff75153b93",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "99ef20ec-b9b5-4c4b-8e95-4e1d2404c075",
+        "created_at": "2026-08-15T09:37:23.961439+00:00"
+    },
+    {
+        "project_id": "92b2e7b9-2027-4440-be1f-d07dcbb70f8b",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "3491546e-b611-4990-a1ec-b304681ffa55",
+        "created_at": "2026-08-15T09:37:27.758803+00:00"
+    },
+    {
+        "project_id": "33f4c15b-8df2-4bb0-b7c0-e6b68195be7f",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "f194f4b2-2c8c-4b75-9cde-eb9babe006b5",
+        "created_at": "2026-08-15T09:37:31.563898+00:00"
+    },
+    {
+        "project_id": "3a53466d-cabe-46b7-9d0c-518577f250c5",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "097126d9-63a3-4ecf-8cdc-2f49f326b4ae",
+        "created_at": "2026-08-15T09:37:35.372636+00:00"
+    },
+    {
+        "project_id": "ae72dd0f-c676-4f25-b106-3fb2a877c25f",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "09ed87a9-18ef-4ad9-9c51-ae674bda7601",
+        "created_at": "2026-08-15T09:37:39.168328+00:00"
+    },
+    {
+        "project_id": "4faf2617-bd9e-4a3a-a601-e226bd227ded",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "711427d4-80b1-4a5a-870a-9a84e0a19a42",
+        "created_at": "2026-08-15T09:37:42.972155+00:00"
+    },
+    {
+        "project_id": "2ffea495-9f5e-408b-9f98-be933f155097",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "658c2840-9981-407c-ac4f-090022b6d656",
+        "created_at": "2026-08-15T09:37:46.788072+00:00"
+    },
+    {
+        "project_id": "6859d0f4-89eb-498e-b2aa-95508a18f3e2",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "74323b11-72e1-4582-8d8e-998e5e47729f",
+        "created_at": "2026-08-15T09:37:50.615695+00:00"
+    },
+    {
+        "project_id": "0a52b36a-59e1-43e2-8fc7-f0a3304c2604",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "8f484c4c-0375-4baa-8527-2d51f7fb1725",
+        "created_at": "2026-08-15T09:37:54.414825+00:00"
+    },
+    {
+        "project_id": "9903281d-aba7-40e4-94af-4bc4ecd76f3a",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "52166ea7-df0a-4f69-9a6d-81c24874b005",
+        "created_at": "2026-08-15T09:37:58.241076+00:00"
+    },
+    {
+        "project_id": "f18710af-7d87-431c-810b-eddf631d2f08",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "15a491eb-daf5-4415-938a-731b331a8a5b",
+        "created_at": "2026-08-15T09:38:02.059691+00:00"
+    },
+    {
+        "project_id": "288733b5-08b9-4035-befa-99e39299b9ed",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "3e392f6e-974d-40cf-9f19-62c85ab276ac",
+        "created_at": "2026-08-15T09:38:05.864952+00:00"
+    },
+    {
+        "project_id": "ae281c28-344b-4ec0-a80d-fd9cd58c6e0e",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "4f8901a3-3e04-449c-84fc-2fd4ca4e8e34",
+        "created_at": "2026-08-15T09:38:09.671566+00:00"
+    },
+    {
+        "project_id": "e6e3339b-cad9-48eb-8ebd-3ffed39fdae1",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "1cb247aa-07e1-4def-9917-37c2d438883b",
+        "created_at": "2026-08-15T09:38:13.451429+00:00"
+    },
+    {
+        "project_id": "9cf0b1b5-d19d-4107-b86f-4831b731ede3",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "3f8b312c-021e-4eed-9048-5ff4d458c96b",
+        "created_at": "2026-08-15T09:38:17.260690+00:00"
+    },
+    {
+        "project_id": "4dc01271-799b-4f0e-90ce-183ddd7be5c2",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "fa1ff8f3-4189-4b13-b829-bd392708502c",
+        "created_at": "2026-08-15T09:38:21.077071+00:00"
+    },
+    {
+        "project_id": "a60c2e6d-00ab-4378-82ee-447f4ee3c969",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "ec686b73-5169-4e67-aae8-17613dffe5bd",
+        "created_at": "2026-08-15T09:38:24.870846+00:00"
+    },
+    {
+        "project_id": "ac2753ca-a196-448d-b3a1-505ab4ac5b19",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "3b4af037-a212-4e58-867b-f8b1cb2cca3d",
+        "created_at": "2026-08-15T09:38:28.659558+00:00"
+    },
+    {
+        "project_id": "d9788939-5a55-4e16-b46e-afaadb3ad0c1",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "f41f5841-c5ec-45b7-8338-8dae282fdf70",
+        "created_at": "2026-08-15T09:38:32.477605+00:00"
+    },
+    {
+        "project_id": "185e4e9a-a242-4d33-8a93-f83cd986dda4",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "cfe47f38-b4ba-4ca9-9ab0-ccd067501819",
+        "created_at": "2026-08-15T09:38:36.278927+00:00"
+    },
+    {
+        "project_id": "58846225-4e38-45dc-b278-a618af69a397",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "eccc08ec-0bc4-46f6-b6cd-4af0aebc4a45",
+        "created_at": "2026-08-15T09:38:40.088449+00:00"
+    },
+    {
+        "project_id": "5ddaa6e3-6aa1-4065-af51-079225373944",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "501f89f3-ea79-406f-ad47-cac3d8c123e2",
+        "created_at": "2026-08-15T09:38:43.888055+00:00"
+    },
+    {
+        "project_id": "629db709-0806-4223-86cb-3c244299f9af",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "356da6e1-ffdc-43ef-a792-fb9d52ee656d",
+        "created_at": "2026-08-15T09:38:47.691667+00:00"
+    },
+    {
+        "project_id": "04888be5-5f78-4430-8f89-1ce1bef3fd84",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "d4c3358c-b618-4936-93e0-a5a1a87e180a",
+        "created_at": "2026-08-15T09:38:51.489876+00:00"
+    },
+    {
+        "project_id": "1850c267-af90-44b6-91f5-08d7ff938c94",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "a2eafec8-dc4f-4688-a76f-bf621f3bfe41",
+        "created_at": "2026-08-15T09:38:55.282291+00:00"
+    },
+    {
+        "project_id": "abdfa9ff-24bd-477f-8170-90efac745140",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "5f6e6ffe-1b5d-494e-92ca-ac11065e422c",
+        "created_at": "2026-08-15T09:38:59.078869+00:00"
+    },
+    {
+        "project_id": "9ef56c15-f62d-48eb-b5f8-302d3e45d685",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "2661284b-4a47-40a6-a218-0c139f2a9e86",
+        "created_at": "2026-08-15T09:39:02.882429+00:00"
+    },
+    {
+        "project_id": "7b76cef2-295e-4c84-9565-7c098fa5d96f",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "b5d117ba-8522-460f-9999-aa35aa4fd325",
+        "created_at": "2026-08-15T09:39:06.683753+00:00"
+    },
+    {
+        "project_id": "2585e5dd-eed1-482e-ba00-ff905f635b86",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "6874781d-1032-4479-a301-a0aecefde152",
+        "created_at": "2026-08-15T09:39:10.470419+00:00"
+    },
+    {
+        "project_id": "9821aaed-bcf1-4f69-89ad-e8913a7eb118",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "28152433-77b5-4f00-8799-7e10db910cc7",
+        "created_at": "2026-08-15T09:39:14.283627+00:00"
+    },
+    {
+        "project_id": "dcf51ac9-ed43-4051-ac49-049ff1d12279",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "32da983f-d613-4003-bf3f-b7d14c33814b",
+        "created_at": "2026-08-15T09:39:18.117429+00:00"
+    },
+    {
+        "project_id": "5cc75c96-01a4-4c54-9989-6bd4232977fb",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "26c6f26f-7c0f-45eb-ad8d-a39aa170b267",
+        "created_at": "2026-08-15T09:39:21.946468+00:00"
+    },
+    {
+        "project_id": "7b84ccd3-db37-4fd6-82dc-d2bdd8ac0e5e",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "9893e32a-2fe9-40da-8583-0675bb5c1198",
+        "created_at": "2026-08-15T09:39:25.737117+00:00"
+    },
+    {
+        "project_id": "2daba5fc-e37f-4e4d-a2f5-3105cd61bff3",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "c226c4b7-6431-4959-b2b8-1c54d091cbce",
+        "created_at": "2026-08-15T09:39:29.535702+00:00"
+    },
+    {
+        "project_id": "f2db6321-3c24-42d9-8deb-7a5b407dc330",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "9c4cf5f0-eb99-4c18-a891-154adfff3eef",
+        "created_at": "2026-08-15T09:39:33.339609+00:00"
+    },
+    {
+        "project_id": "f2a28676-e789-46bb-95ee-bf30f7e732c6",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "843f9c5a-6529-48f6-bc54-eb7842a44e7e",
+        "created_at": "2026-08-15T09:39:37.141574+00:00"
+    },
+    {
+        "project_id": "6f7c904f-d071-4959-b299-61731aefb3b2",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "f1704fe3-3014-4e1a-b7cc-5f856ec8ef3c",
+        "created_at": "2026-08-15T09:39:40.954377+00:00"
+    },
+    {
+        "project_id": "0f747ff3-aab8-4992-bb74-03d45816ff1b",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "c861a6dd-3a5a-4e82-ac99-31b68a7104aa",
+        "created_at": "2026-08-15T09:39:44.752955+00:00"
+    },
+    {
+        "project_id": "22ed9ba2-9f45-49dc-bb46-67dd0fbb412d",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "469a6890-48cc-421e-aa89-461e50885595",
+        "created_at": "2026-08-15T09:39:48.531451+00:00"
+    },
+    {
+        "project_id": "c96df1e4-457f-4978-b47a-070bed07c5f8",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "8fe6d9f9-d11a-4a33-9c64-85d6f6f98ef0",
+        "created_at": "2026-08-15T09:39:52.354577+00:00"
+    },
+    {
+        "project_id": "ac7a6068-b0b7-4c2d-9e3c-9be0a7e242c6",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "15093f02-b54d-44e9-be01-9357a775abb0",
+        "created_at": "2026-08-15T09:39:56.139973+00:00"
+    },
+    {
+        "project_id": "eb5f57a6-e9ed-467d-8485-9fa4b6e5372b",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "ea8d8f33-b97e-41f0-82db-19df8ea14e69",
+        "created_at": "2026-08-15T09:39:59.925498+00:00"
+    },
+    {
+        "project_id": "52826545-2281-4b50-9a2a-126b912c75a6",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "2c46df24-2427-43df-87d2-3ba542abbd9f",
+        "created_at": "2026-08-15T09:40:03.732423+00:00"
+    },
+    {
+        "project_id": "9bac8d83-9b29-4da0-8d6b-f43aac48d849",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "13ed56ad-4801-4858-9f51-6cecb6fae4d2",
+        "created_at": "2026-08-15T09:40:07.454218+00:00"
+    },
+    {
+        "project_id": "e5d28702-e649-400f-85f5-3d976c9ff70e",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "cf7f1c73-a6a0-4d34-a1d3-7e96736c3763",
+        "created_at": "2026-08-15T09:40:11.252419+00:00"
+    },
+    {
+        "project_id": "c24780be-91e4-46c6-a70b-cb7977622b3e",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "856d8dc4-366b-4f34-b332-306fc6f0f1c0",
+        "created_at": "2026-08-15T09:40:15.041391+00:00"
+    },
+    {
+        "project_id": "cd8d5da8-d34e-4d56-a00a-f51f01d54c1d",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "357d7e19-7c34-471a-a7e9-9ed76ea7a733",
+        "created_at": "2026-08-15T09:40:18.839321+00:00"
+    },
+    {
+        "project_id": "73060017-9252-4893-b7bf-54d4e5b5bef4",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "1bf27ae6-036e-416f-9ee1-6360cb21dad4",
+        "created_at": "2026-08-15T09:40:22.638173+00:00"
+    },
+    {
+        "project_id": "6c6f4c15-d762-44ac-821d-2f8af9098331",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "e68accea-3ad5-4756-acc1-f3ab5d817b10",
+        "created_at": "2026-08-15T09:40:26.440788+00:00"
+    },
+    {
+        "project_id": "92a1bd6e-01f6-422d-813c-1096982305cb",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "4d3a6b04-c448-4329-a215-e739407f2d89",
+        "created_at": "2026-08-15T09:40:30.231999+00:00"
+    },
+    {
+        "project_id": "fe5efa8a-fbcd-4f8f-9e92-47853d586292",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "7c58e651-e5c9-4627-9e4d-ba4db1a5e44d",
+        "created_at": "2026-08-15T09:40:34.024093+00:00"
+    },
+    {
+        "project_id": "dafa3b43-97eb-4f51-bc76-dffd3f776419",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "1e75f2a3-adbc-43f9-8836-96084e96ba9e",
+        "created_at": "2026-08-15T09:40:37.854281+00:00"
+    },
+    {
+        "project_id": "4d0e0704-765a-4af3-bdc3-c100c108ba13",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "1516d959-13d9-4f54-aa0f-d4be2b99e768",
+        "created_at": "2026-08-15T09:40:41.677572+00:00"
+    },
+    {
+        "project_id": "da10b1d9-0275-4929-92bf-5d619a78c0e2",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "0fe7eecf-2d7f-4e47-afe8-11192f176eb5",
+        "created_at": "2026-08-15T09:40:45.492149+00:00"
+    },
+    {
+        "project_id": "d0a39123-feaf-4684-93eb-ba72a763d2ab",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "d7fd02b1-f861-48df-9c30-5539acd14cc0",
+        "created_at": "2026-08-15T09:40:49.281999+00:00"
+    },
+    {
+        "project_id": "c051a8e2-d417-486b-94af-fdaf2e52471d",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "7815837c-cd90-429f-acf5-77512ce868f6",
+        "created_at": "2026-08-15T09:40:53.070671+00:00"
+    },
+    {
+        "project_id": "40fe53d9-0f55-4463-b291-ee97605c96a6",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "8dbd93c3-caa5-4b31-ab8e-0b726b069203",
+        "created_at": "2026-08-15T09:40:56.843989+00:00"
+    },
+    {
+        "project_id": "5865e4d0-3e59-4620-b7ad-dedd162b423d",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "8bfda2e3-24df-4363-bbb6-74b4d6e1beb7",
+        "created_at": "2026-08-15T09:41:00.611315+00:00"
+    },
+    {
+        "project_id": "c7008f9b-1c8e-4501-9cad-b3ca2c51bc54",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "376a898c-c6d3-45e3-b001-34d0225c8aec",
+        "created_at": "2026-08-15T09:41:04.424614+00:00"
+    },
+    {
+        "project_id": "8c3aebcd-2b8e-4a2f-9f68-3482ce82d070",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "249bdea7-f280-4a97-84c9-1b356c41e3b7",
+        "created_at": "2026-08-15T09:41:08.275695+00:00"
+    },
+    {
+        "project_id": "7127d3cb-9772-4dc8-9277-71899c8bf2e0",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "a1da5973-061e-4d41-b1e2-19caf110c6d0",
+        "created_at": "2026-08-15T09:41:12.625096+00:00"
+    },
+    {
+        "project_id": "d5beea90-7056-44d5-b14e-44b57fef7ce5",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "d340b10d-21c2-41d4-a1e1-4d44c03d0139",
+        "created_at": "2026-08-15T09:41:16.610636+00:00"
+    },
+    {
+        "project_id": "f9c41098-8bd4-4038-87b7-4830a1e7ba38",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "24aa4a98-4027-496c-9889-2b9d7059ca72",
+        "created_at": "2026-08-15T09:41:20.724060+00:00"
+    },
+    {
+        "project_id": "0fef6ae2-6fed-4cb4-9872-3ce0886d37dd",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "df3baa8a-2a57-4d89-a8d8-7d1db2999600",
+        "created_at": "2026-08-15T09:41:24.693101+00:00"
+    },
+    {
+        "project_id": "1b6de714-64cc-4119-a5d3-557988b2f760",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "3d586c15-e780-4d49-bbd1-54cbe39c8ddd",
+        "created_at": "2026-08-15T09:41:28.609701+00:00"
+    },
+    {
+        "project_id": "b6793cf2-04ba-4506-b077-c2a658247128",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "8b4218bd-2713-405c-aeb5-814a84d68c99",
+        "created_at": "2026-08-15T09:41:32.625090+00:00"
+    },
+    {
+        "project_id": "f0f83937-6e63-4c73-93aa-2a9f736dd032",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "c76a9429-76a1-4c50-80f8-14544c1a1330",
+        "created_at": "2026-08-15T09:41:36.501920+00:00"
+    },
+    {
+        "project_id": "5e4a2f07-ae08-4118-bab7-09735e016c0e",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "4ea37285-016c-409f-b8d3-ab7a0bef4262",
+        "created_at": "2026-08-15T09:41:40.382876+00:00"
+    },
+    {
+        "project_id": "412baa21-36a7-4c0d-9ef6-2f804b391c35",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "d329d8ea-08dc-4ee6-8775-ced14cdb0b6c",
+        "created_at": "2026-08-15T09:41:44.266119+00:00"
+    },
+    {
+        "project_id": "46714da9-4140-428a-afa5-9482694f47b5",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "5f977dde-69a7-4328-a869-e14b5843ae5c",
+        "created_at": "2026-08-15T09:41:48.145161+00:00"
+    },
+    {
+        "project_id": "726daa83-db22-47a0-b630-ece7bf2f5e67",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "ee83eee4-2e6f-41e0-a28f-685a86587cda",
+        "created_at": "2026-08-15T09:41:52.006914+00:00"
+    },
+    {
+        "project_id": "8a0d122c-c31e-42fc-ae6e-86880aa375f9",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "70da1fd2-e6ad-4d8e-9604-2271cf18bbef",
+        "created_at": "2026-08-15T09:41:55.865894+00:00"
+    },
+    {
+        "project_id": "c54e1f28-6cd0-4414-bfdd-7c977eb01ea9",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "ab8f1dd3-f48d-4835-bed2-7252af882585",
+        "created_at": "2026-08-15T09:41:59.690897+00:00"
+    },
+    {
+        "project_id": "f1bcae09-8d55-4e3e-a4f5-d5eb055df72b",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "37d20398-4f73-4a30-868a-3b302fae8e5d",
+        "created_at": "2026-08-15T09:42:03.520722+00:00"
+    },
+    {
+        "project_id": "7d5eec93-f185-4445-a50f-263fe7a261c5",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "07795f93-4fc3-437c-8a7d-42b3d1b6c5c2",
+        "created_at": "2026-08-15T09:42:07.409491+00:00"
+    },
+    {
+        "project_id": "2551f2e0-9bfb-43d1-8cd2-3e672c44e03a",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "76c76bae-79a8-4fd7-aa57-5f395383fea7",
+        "created_at": "2026-08-15T09:42:11.329261+00:00"
+    },
+    {
+        "project_id": "1b076c1a-ef15-4dea-90da-c7ba9db7e6c5",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "30b78a08-7c6e-4edb-a93a-7e9323b1f045",
+        "created_at": "2026-08-15T09:42:15.237778+00:00"
+    },
+    {
+        "project_id": "65315ba2-41a5-453e-b7a5-70f4c78028ea",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "c41da7c9-45a4-43fa-a0ea-fa14f337c7f8",
+        "created_at": "2026-08-15T09:42:19.158285+00:00"
+    },
+    {
+        "project_id": "d7b4e537-76aa-4755-930a-c6c1e3ede3e6",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "50e7e79b-9740-45c4-8b56-c9d9a105a2b3",
+        "created_at": "2026-08-15T09:42:23.041479+00:00"
+    },
+    {
+        "project_id": "857caeef-c5b7-4e67-a619-cac21c67ffc6",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "80386784-6460-4f7d-a8dc-0e389841927a",
+        "created_at": "2026-08-15T09:42:26.927848+00:00"
+    },
+    {
+        "project_id": "0c713a7c-573b-4c06-8279-37018224ef38",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "f9df2403-2f9f-4ecf-aea5-ba074ce7e2b8",
+        "created_at": "2026-08-15T09:42:31.032890+00:00"
+    },
+    {
+        "project_id": "3c053f88-54e5-4014-b50e-235314c32bb7",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "3094a138-a5f6-4f60-9523-ca8ea02a3a3b",
+        "created_at": "2026-08-15T09:42:34.928405+00:00"
+    },
+    {
+        "project_id": "43a4a157-1c0e-43b9-aae8-4d8f534bf9fd",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "efe5da7c-50c5-44d7-9a2c-739709a82117",
+        "created_at": "2026-08-15T09:42:38.807943+00:00"
+    },
+    {
+        "project_id": "6f2deac9-5c2d-414b-97e9-669026b97fc4",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "5560f091-cd55-4ef6-aefa-57766611ae7f",
+        "created_at": "2026-08-15T09:42:42.690546+00:00"
+    },
+    {
+        "project_id": "a1ffa3ee-3d09-464e-b537-3ff308cdd4be",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "cf7f83b8-be51-428b-942d-69a8c0db9ab8",
+        "created_at": "2026-08-15T09:42:46.598732+00:00"
+    },
+    {
+        "project_id": "eb7bacf2-51eb-4405-af17-37bdbae2102b",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "debadae8-c3f0-49c7-b1ae-4b84613b5139",
+        "created_at": "2026-08-15T09:42:50.502838+00:00"
+    },
+    {
+        "project_id": "14ed25ba-3648-424b-ac88-fcf9cc5a26e3",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "fd63666e-b57d-4587-83f9-a473e5172739",
+        "created_at": "2026-08-15T09:42:54.362988+00:00"
+    },
+    {
+        "project_id": "e84bee35-0c34-4d3f-97e5-9f2414627e1f",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "5cae6baf-a961-4d0a-8d8d-eeac1099fb12",
+        "created_at": "2026-08-15T09:42:58.231001+00:00"
+    },
+    {
+        "project_id": "d92bafce-cff4-4c12-84d4-4a008f022881",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "34af5584-dc00-4795-a0cd-fca43d89142f",
+        "created_at": "2026-08-15T09:43:02.069118+00:00"
+    },
+    {
+        "project_id": "54f2e90d-7bb5-43ab-b4eb-65b4c8c1d648",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "3c7fb1bb-a523-4d43-bd3f-fb8e92942f3a",
+        "created_at": "2026-08-15T09:43:05.904834+00:00"
+    },
+    {
+        "project_id": "fe64f750-7b54-4c52-97e5-514cf0872b28",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "1ebb6ce5-d0bd-4df3-b7f1-87e08bbe8ca1",
+        "created_at": "2026-08-15T09:43:09.846091+00:00"
+    },
+    {
+        "project_id": "50cb100d-7072-4594-8b40-344feb2554ba",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "a2df33cd-917c-4494-aa19-920a2802ff1d",
+        "created_at": "2026-08-15T09:43:13.832237+00:00"
+    },
+    {
+        "project_id": "dec9cd0e-993f-49e8-b530-60228bf89dcc",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "ccdc8b69-803f-4ecd-af3e-dfaf46344100",
+        "created_at": "2026-08-15T09:43:17.815010+00:00"
+    },
+    {
+        "project_id": "5df09bbf-197f-4cc6-936b-da4e550d423f",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "84308892-d18d-4b21-8626-780202cf067b",
+        "created_at": "2026-08-15T09:43:21.821807+00:00"
+    },
+    {
+        "project_id": "f50110ec-955f-4f3a-b311-adb3974d1e0b",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "0d0925a4-434b-4361-9c85-ee3e5e3e6071",
+        "created_at": "2026-08-15T09:43:25.775614+00:00"
+    },
+    {
+        "project_id": "93016b73-ccac-44c5-b1d1-5f0b40c45910",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "3808d4ba-081e-4ab2-9510-808ac94df4ee",
+        "created_at": "2026-08-15T09:43:29.719951+00:00"
+    },
+    {
+        "project_id": "dbebd07b-2706-4c26-af9d-3087adbb4656",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "93bbe5fd-92fb-4521-a9a1-4804aaf679ab",
+        "created_at": "2026-08-15T09:43:33.620439+00:00"
+    },
+    {
+        "project_id": "7fadcb3e-7639-420e-8c90-dc793af58fba",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "ef2c19fa-f3e6-4a20-9f44-5348df4707c5",
+        "created_at": "2026-08-15T09:43:37.596300+00:00"
+    },
+    {
+        "project_id": "ff836954-2b9b-4eb0-8562-15ece1c3431b",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "986bb5a3-e6b9-443f-a6f6-4c8ff67ec59e",
+        "created_at": "2026-08-15T09:43:41.503970+00:00"
+    },
+    {
+        "project_id": "b60938b0-2033-406e-8e3b-aa9ed2480714",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "2e5da109-6b89-48de-bb2a-3851f106f2e2",
+        "created_at": "2026-08-15T09:43:45.372092+00:00"
+    },
+    {
+        "project_id": "691a0e83-2aa7-426d-8176-702c9dbaba5d",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "ed968089-ad53-4ce2-a45d-21f526bbd4af",
+        "created_at": "2026-08-15T09:43:49.256371+00:00"
+    },
+    {
+        "project_id": "e42ee651-da3d-4366-8e8d-2954fa9607e6",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "072ba51e-9eb3-4a14-ab49-d1cd2a176e59",
+        "created_at": "2026-08-15T09:43:53.131937+00:00"
+    },
+    {
+        "project_id": "3329f57b-3ffa-4598-9bc5-354f4b025ed5",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "d2a3bf0d-3003-4835-9a40-d54451256c13",
+        "created_at": "2026-08-15T09:43:57.018362+00:00"
+    },
+    {
+        "project_id": "ceeb9b87-c226-4765-9fcf-4747ec7abc36",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "a3b6c0ea-1fdd-477c-99e6-aa337aa5daad",
+        "created_at": "2026-08-15T09:44:00.870619+00:00"
+    },
+    {
+        "project_id": "1fa6dba4-d019-4604-9318-2e3ec40ced5e",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "bea4e45b-39c8-49eb-9c71-7e69034d14d1",
+        "created_at": "2026-08-15T09:44:04.750277+00:00"
+    },
+    {
+        "project_id": "13bd385c-fa72-4cd7-81d0-efa9615fc2a1",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "5924b700-91dd-48fb-ae1e-71f0e6f31d25",
+        "created_at": "2026-08-15T09:44:08.620108+00:00"
+    },
+    {
+        "project_id": "024c204d-7134-4409-94f2-d636360d9d41",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "f92a7bff-4f32-411e-a5e1-f8a55a5d6636",
+        "created_at": "2026-08-15T09:44:12.501549+00:00"
+    },
+    {
+        "project_id": "b2ada966-848a-4674-b068-963caa119fd2",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "1fdda5e7-64b3-4c31-ad38-e5a1aeb4b2f5",
+        "created_at": "2026-08-15T09:44:16.500899+00:00"
+    },
+    {
+        "project_id": "59f3da04-0a5f-4829-bd19-c39aa05c6485",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "8c0a6f03-4d52-4064-b656-7063a664c420",
+        "created_at": "2026-08-15T09:44:20.425831+00:00"
+    },
+    {
+        "project_id": "047aaaf1-8f76-4be8-84a5-786e8614877c",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "9005619a-1b5f-49c0-b219-6f298f28be29",
+        "created_at": "2026-08-15T09:44:24.510059+00:00"
+    },
+    {
+        "project_id": "46b7f3b0-7cee-4f35-b5f4-cb469fbfd348",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "66a5dafb-c204-4cda-b592-9c5b8c802d5f",
+        "created_at": "2026-08-15T09:44:28.568978+00:00"
+    },
+    {
+        "project_id": "ad3a2cf8-6430-4c6f-91a2-2e16c3394f9b",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "8d79ee59-976e-4f38-b40d-fd864c9bff8b",
+        "created_at": "2026-08-15T09:44:32.924592+00:00"
+    },
+    {
+        "project_id": "f9d2ddb7-e111-4995-8371-68e59bac8c7d",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "2546aad1-d4d4-45b4-83e2-0e72eb5ebeec",
+        "created_at": "2026-08-15T09:44:36.834350+00:00"
+    },
+    {
+        "project_id": "ff800604-1ccd-44a7-a173-1e5b6dd5b594",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "398b3b55-30c9-42c2-a836-53e6c3ff78dc",
+        "created_at": "2026-08-15T09:44:40.697590+00:00"
+    },
+    {
+        "project_id": "5fd7c6f0-91dc-4008-8f7d-a48ef43010bd",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "44cfdd56-7016-4f50-ab59-3cf10ec754c6",
+        "created_at": "2026-08-15T09:44:44.565585+00:00"
+    },
+    {
+        "project_id": "908f89fe-edc7-4be2-abde-66d3a0326282",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "2a2542a8-d53a-40c7-9acf-02710ecd4206",
+        "created_at": "2026-08-15T09:44:48.398640+00:00"
+    },
+    {
+        "project_id": "d50fc92f-24e3-44be-a13a-764799212530",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "db226cc9-1323-46e2-92ba-63337e7dedfe",
+        "created_at": "2026-08-15T09:44:52.207216+00:00"
+    },
+    {
+        "project_id": "c6c90db4-ab39-4b54-bb61-7636fa08c89a",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "c3a61022-e846-4b4e-99af-bbdd10bc12a8",
+        "created_at": "2026-08-15T09:44:56.010800+00:00"
+    },
+    {
+        "project_id": "64218051-3ea7-4220-99e7-5ae2da1bc80e",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "b76e2d11-ba2f-49fd-a153-2caa5e4e51af",
+        "created_at": "2026-08-15T09:44:59.824844+00:00"
+    },
+    {
+        "project_id": "eb1afdff-6cfb-4913-bcf4-28db52ddba56",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "f484af23-1113-4ef6-ba60-6840e4ccec37",
+        "created_at": "2026-08-15T09:45:03.644640+00:00"
+    },
+    {
+        "project_id": "f3022f3a-cd53-4530-b0b7-49688aa2cdc0",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "313e63a7-595d-40e1-8a95-e9d1733bb9b5",
+        "created_at": "2026-08-15T09:45:07.441799+00:00"
+    },
+    {
+        "project_id": "ea340bcf-e508-4e49-8ff1-62ec08c24f15",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "4200ba6b-c25e-4879-8de8-98554342cbbb",
+        "created_at": "2026-08-15T09:45:11.262976+00:00"
+    },
+    {
+        "project_id": "c766277c-6814-45f6-9b5e-b105a604ef06",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "c6fc2418-2098-46da-8932-3f1cd855a8a9",
+        "created_at": "2026-08-15T09:45:15.081022+00:00"
+    },
+    {
+        "project_id": "f66b89b5-ab25-4345-9839-aab0429c0018",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "114d94c5-c572-453c-8db9-272bcccab751",
+        "created_at": "2026-08-15T09:45:18.900424+00:00"
+    },
+    {
+        "project_id": "63d8098d-9ac8-441e-aa21-242918e20466",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "e0b738e5-96d9-4a7a-ac34-dd0203624bf6",
+        "created_at": "2026-08-15T09:45:22.713290+00:00"
+    },
+    {
+        "project_id": "5ff5bd26-cdce-466a-b4cf-4b82d1cd28f8",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "8b866e7e-8ecb-4a38-a3ad-4bcc9de35b84",
+        "created_at": "2026-08-15T09:45:26.531522+00:00"
+    },
+    {
+        "project_id": "a2257174-9375-4ed7-969f-e19924f023b1",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "6eace1be-4aef-4405-a98b-5de6e8c8b8c2",
+        "created_at": "2026-08-15T09:45:30.327895+00:00"
+    },
+    {
+        "project_id": "54b8d946-c4ac-4107-95c8-ac7bfca82ff2",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "d700652f-092b-4ce9-a608-24f9f4237256",
+        "created_at": "2026-08-15T09:45:34.168351+00:00"
+    },
+    {
+        "project_id": "757233e7-db2e-49a1-b9c9-2c7a4c61400f",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "07276e47-ee2c-4b0f-afb2-aea9fdd1a97d",
+        "created_at": "2026-08-15T09:45:37.988555+00:00"
+    },
+    {
+        "project_id": "ef9dd7b4-1ff7-481f-be97-ce7a7988ffa2",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "049b45da-6331-4c58-bd67-d4a2dfdac5d4",
+        "created_at": "2026-08-15T09:45:41.796592+00:00"
+    },
+    {
+        "project_id": "ccc7b700-2e4b-446f-99bf-e524ac456fe4",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "f28539d6-c5b6-48f0-ab5f-dd21390e4e65",
+        "created_at": "2026-08-15T09:45:45.591148+00:00"
+    },
+    {
+        "project_id": "3395fcf2-e7d8-4c14-bd57-e0ae9ee8f6f6",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "daef0c33-c248-485c-a613-8c8c1a61a27b",
+        "created_at": "2026-08-15T09:45:49.414605+00:00"
+    },
+    {
+        "project_id": "e36417f1-fbf3-4fd8-9e17-dbfddf39eb1b",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "4f3e7210-abb3-4064-a299-57d9384b903b",
+        "created_at": "2026-08-15T09:45:53.221792+00:00"
+    },
+    {
+        "project_id": "f35f50c0-417d-494f-81e6-32840b40f853",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "b43327c0-ab48-4e62-93b0-e86ce4cc1957",
+        "created_at": "2026-08-15T09:45:57.069816+00:00"
+    },
+    {
+        "project_id": "1c5fc23b-50cc-4d30-8647-83c21fc12025",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "c0cc42dc-3775-4178-a3b9-a71be737b0c4",
+        "created_at": "2026-08-15T09:46:00.916050+00:00"
+    },
+    {
+        "project_id": "dcd90191-9da5-4fcd-a8e7-88b68a74961d",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "6c4bbace-6da5-4852-b889-262de07f9ea6",
+        "created_at": "2026-08-15T09:46:04.818774+00:00"
+    },
+    {
+        "project_id": "f033aaed-c26a-4926-98f9-f5a18880825b",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "395574c8-5ee7-4c4f-b559-b049880bec1d",
+        "created_at": "2026-08-15T09:46:08.737573+00:00"
+    },
+    {
+        "project_id": "e564ef23-01a9-40d9-a672-7639ce822efe",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "64a7a0bd-8b11-4d52-89ad-87aa134eb77f",
+        "created_at": "2026-08-15T09:46:12.558617+00:00"
+    },
+    {
+        "project_id": "b50fec59-ff78-4bf3-8917-bfacc370a1a4",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "5a0095a5-a1df-4bd4-872f-45b79b3d913f",
+        "created_at": "2026-08-15T09:46:16.377606+00:00"
+    },
+    {
+        "project_id": "d6105a4e-a10f-4b51-97f3-269fedeafdb1",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "e403ec90-8460-4b53-96cf-250c0a1e816e",
+        "created_at": "2026-08-15T09:46:20.190869+00:00"
+    },
+    {
+        "project_id": "ca3ce567-eef8-4b68-96c5-f8af16824bc3",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "f6280551-acc7-441c-9485-9498ef15c2af",
+        "created_at": "2026-08-15T09:46:24.009942+00:00"
+    },
+    {
+        "project_id": "beb1ad58-5ca3-48bd-ac63-05e621508399",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "686893bf-aafc-46f1-9992-d8a04119f055",
+        "created_at": "2026-08-15T09:46:27.820947+00:00"
+    },
+    {
+        "project_id": "2398d750-5e87-4c15-bd8f-820ae423473a",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "b02da57e-f11b-4050-8f6a-11878ddcde7c",
+        "created_at": "2026-08-15T09:46:31.676035+00:00"
+    },
+    {
+        "project_id": "f5b8585f-c53b-4320-b654-19163841b721",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "2dd08fb5-a57f-40c3-8115-55d319ff7d80",
+        "created_at": "2026-08-15T09:46:35.535050+00:00"
+    },
+    {
+        "project_id": "f093ddea-8ca7-4c5e-b96a-01fed74d8e4d",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "9c40152e-6000-41c8-8210-afa306c3601b",
+        "created_at": "2026-08-15T09:46:39.506254+00:00"
+    },
+    {
+        "project_id": "95001384-80b4-4b5d-97e2-97b0ea584dc8",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "0753d55b-d429-47fc-bbf4-51f192fdf3d7",
+        "created_at": "2026-08-15T09:46:43.346297+00:00"
+    },
+    {
+        "project_id": "e5098eae-c6c0-410e-8a0d-7cb38db7c8a8",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "43da922b-b9e4-4ab4-9809-f9585c6585f9",
+        "created_at": "2026-08-15T09:46:47.286298+00:00"
+    },
+    {
+        "project_id": "0b29cb48-9586-4799-b551-e012edfced13",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "7bcbe0f6-da59-470c-a6a5-8a90ee49f1dc",
+        "created_at": "2026-08-15T09:46:51.241031+00:00"
+    },
+    {
+        "project_id": "cdb482f1-dd83-4830-8ed5-e4f219b6746a",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "82c11ae7-99e4-4be8-b190-b5687324cd9d",
+        "created_at": "2026-08-15T09:46:55.222535+00:00"
+    },
+    {
+        "project_id": "e676579b-666a-4287-8755-7a3977df635f",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "88c63b4a-9f5d-4e26-b87b-31ffeeb53645",
+        "created_at": "2026-08-15T09:46:59.041854+00:00"
+    },
+    {
+        "project_id": "413f5064-8e16-4018-a550-0325b0363bcf",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "084dc19c-2b29-4e63-b555-8389e2d64173",
+        "created_at": "2026-08-15T09:47:02.887551+00:00"
+    },
+    {
+        "project_id": "411805fe-3b5d-48e6-a094-11f8ef6575bc",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "3a475c6e-f72f-4460-8f4d-08f1019479ba",
+        "created_at": "2026-08-15T09:47:06.703623+00:00"
+    },
+    {
+        "project_id": "cf6475af-e3dc-4779-9cab-33d81088e0c1",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "fbef4da7-317b-4152-9045-180632bc46f6",
+        "created_at": "2026-08-15T09:47:10.568224+00:00"
+    },
+    {
+        "project_id": "707bde19-cf9b-436d-bdaa-93cf5b7d3519",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "f1075a34-d1e0-4b81-9251-fafd8294b1fe",
+        "created_at": "2026-08-15T09:47:14.386026+00:00"
+    },
+    {
+        "project_id": "87b1a067-94f0-4413-85b6-c895489ddf66",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "5cf2e819-7982-443b-98dc-462cf3ade32f",
+        "created_at": "2026-08-15T09:47:18.209402+00:00"
+    },
+    {
+        "project_id": "7911bafb-bdad-4c32-bc3a-79d5d1a50c4a",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "1d69c513-2af7-42ef-8ded-a8ab2dbe469e",
+        "created_at": "2026-08-15T09:47:22.111961+00:00"
+    },
+    {
+        "project_id": "a9bbc929-d9ba-47bd-ad4f-6b09ea8bdb33",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "fea7cf09-8180-4eeb-97a8-2de66527b5c6",
+        "created_at": "2026-08-15T09:47:25.946136+00:00"
+    },
+    {
+        "project_id": "7381acb8-83c0-4110-b644-64a41dee163a",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "1ad2087f-cd18-4b89-b97d-a93e9c71831d",
+        "created_at": "2026-08-15T09:47:29.879746+00:00"
+    },
+    {
+        "project_id": "4a0ca773-b704-4fc4-a8ef-53232451990a",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "fe771c79-1ced-45e6-b821-39f5225aaeb1",
+        "created_at": "2026-08-15T09:47:33.790639+00:00"
+    },
+    {
+        "project_id": "d12a9b3f-9344-4751-8855-2c45fd2ba0db",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "817d750c-aa1a-4275-bc80-1d3cf1020f67",
+        "created_at": "2026-08-15T09:47:37.712318+00:00"
+    },
+    {
+        "project_id": "7d8c636a-7ecd-4eb0-9b09-877d6d2236d4",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "fefc3449-ffda-4b36-823c-1585f5baa675",
+        "created_at": "2026-08-15T09:47:41.796928+00:00"
+    },
+    {
+        "project_id": "78511c29-532d-45dd-96d1-9b9b529beff0",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "06033a3d-ff52-4444-bc7b-f7cffff95c0b",
+        "created_at": "2026-08-15T09:47:45.693620+00:00"
+    },
+    {
+        "project_id": "f62f7684-60dc-4940-8bba-0bff17a6f78b",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "5ae75128-3c2b-495a-b175-4f1201c0fca7",
+        "created_at": "2026-08-15T09:47:49.620832+00:00"
+    },
+    {
+        "project_id": "1e0bd3cc-f83f-4071-adef-25b70e2ce83f",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "ab7c2f25-12a2-4b6a-bf77-2fdbf1882b9d",
+        "created_at": "2026-08-15T09:47:53.536926+00:00"
+    },
+    {
+        "project_id": "f7418eb4-f14b-4c49-a0fb-138c11581d14",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "378ba631-a156-453e-aa07-74dae100df40",
+        "created_at": "2026-08-15T09:47:57.477433+00:00"
+    },
+    {
+        "project_id": "6b6f8e92-3779-4419-b5d6-7a055c21dfbb",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "ff2718c9-9619-4515-afb9-bd5742cce704",
+        "created_at": "2026-08-15T09:48:01.295212+00:00"
+    },
+    {
+        "project_id": "fbf07feb-15d3-481c-b810-e127092fffce",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "f938d79f-3fa0-410c-a4a2-9ae18fdf485c",
+        "created_at": "2026-08-15T09:48:05.087541+00:00"
+    },
+    {
+        "project_id": "942be2cf-01a8-4c6c-bbb6-2ad14c449c29",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "84306fde-96bd-45d8-b8f7-b75c5e74c7af",
+        "created_at": "2026-08-15T09:48:09.035299+00:00"
+    },
+    {
+        "project_id": "46ab254e-9658-4b2a-82e7-8e76d462843c",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "63d096d3-87ec-4d96-94c6-3f027d226eef",
+        "created_at": "2026-08-15T09:48:12.869614+00:00"
+    },
+    {
+        "project_id": "d6746eb2-8d8b-4217-a0c9-9dc594e5c3f8",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "0c839c53-47fd-41e1-a805-0a151ab0e653",
+        "created_at": "2026-08-15T09:48:16.782484+00:00"
+    },
+    {
+        "project_id": "6b2ce61c-4349-4615-8a5f-7c9d671f2f3d",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "9a0e1242-26bb-441f-a2ba-b944ab82f5cc",
+        "created_at": "2026-08-15T09:48:20.715683+00:00"
+    },
+    {
+        "project_id": "a63f1cc5-fbf0-4d3a-b12d-0c8cea759823",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "3c86f0b9-878a-461a-8970-8b87dad78c1a",
+        "created_at": "2026-08-15T09:48:24.592996+00:00"
+    },
+    {
+        "project_id": "b972361c-800a-4281-8efc-c99df3fb43b2",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "72a73501-5ad6-4acf-8e54-7048acb74693",
+        "created_at": "2026-08-15T09:48:28.460707+00:00"
+    },
+    {
+        "project_id": "9ed0dce8-ef95-427d-b2b2-a733cce7b714",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "662a5e89-8375-4f1a-937f-5b4109e467c8",
+        "created_at": "2026-08-15T09:48:32.336191+00:00"
+    },
+    {
+        "project_id": "2d2f7e81-ab8c-4396-b236-76811185421f",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "4c08f038-cde5-42f9-8741-f986f6ab41a2",
+        "created_at": "2026-08-15T09:48:36.140162+00:00"
+    },
+    {
+        "project_id": "9ac8e508-8b38-4568-ae0c-1299842492b6",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "c6897190-1ccd-4239-ab97-3568e72b0501",
+        "created_at": "2026-08-15T09:48:39.947691+00:00"
+    },
+    {
+        "project_id": "0ef97e6d-1bd6-4b1e-9018-543987b8331b",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "7cad5b7c-03a9-4e06-bacd-0d8b338487b6",
+        "created_at": "2026-08-15T09:48:43.742750+00:00"
+    },
+    {
+        "project_id": "a885eab1-0588-4032-80b9-05327a2beb73",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "b6bb10e4-70c2-4b50-a855-467457ec633b",
+        "created_at": "2026-08-15T09:48:47.563444+00:00"
+    },
+    {
+        "project_id": "2db63b78-d861-458c-ab23-a4e79a6a5983",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "53da6760-6c00-4147-8d70-f8ec111d3cea",
+        "created_at": "2026-08-15T09:48:51.367756+00:00"
+    },
+    {
+        "project_id": "0fe17c54-c422-4a2e-ad86-6de9a37837a8",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "191d17e6-9b2a-4678-a305-255c6892acf0",
+        "created_at": "2026-08-15T09:48:55.354491+00:00"
+    },
+    {
+        "project_id": "dcd861da-60cd-401c-8916-b3b923410d16",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "9a2eb397-c03b-46a7-9aa8-3666df3743a6",
+        "created_at": "2026-08-15T09:48:59.253749+00:00"
+    },
+    {
+        "project_id": "28051fdf-a3c1-4b51-a110-801343c295ab",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "66a968eb-b3e5-4f70-b109-9c9dcb495730",
+        "created_at": "2026-08-15T09:49:03.066674+00:00"
+    },
+    {
+        "project_id": "e874d9a6-5b7b-4ff3-ba97-fc4a3d258f23",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "4ff6095e-9c0d-4c8c-8a44-b362fe238d30",
+        "created_at": "2026-08-15T09:49:06.868924+00:00"
+    },
+    {
+        "project_id": "4dd38b67-02c6-45f5-9659-6daa6ca01019",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "229930bc-9b82-4246-8215-6a0de0fe69be",
+        "created_at": "2026-08-15T09:49:10.721737+00:00"
+    },
+    {
+        "project_id": "c92af0e5-6f98-4760-b302-9c48fc83e5f5",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "72a49a9f-3925-4bb7-a316-e10ea0048e62",
+        "created_at": "2026-08-15T09:49:14.559063+00:00"
+    },
+    {
+        "project_id": "a9c8794b-3b5d-4500-a4b2-9b3ac84f21c5",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "463fe61b-30f1-454c-b02c-216f76b28c7d",
+        "created_at": "2026-08-15T09:49:18.442014+00:00"
+    },
+    {
+        "project_id": "a75c6491-780a-4707-9447-5aa9f902594a",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "e341c849-5e4b-457f-9142-f1e37964b040",
+        "created_at": "2026-08-15T09:49:22.392164+00:00"
+    },
+    {
+        "project_id": "78cca78c-ebe6-4895-8280-e752cf5649c4",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "e4ceeabc-67b5-490f-9ea9-3b028d98d359",
+        "created_at": "2026-08-15T09:49:26.194890+00:00"
+    },
+    {
+        "project_id": "2308addc-a23f-42f0-a0fe-af282892d2e7",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "c5f742f5-94ea-4c93-a841-245b59f353c4",
+        "created_at": "2026-08-15T09:49:30.054825+00:00"
+    },
+    {
+        "project_id": "d39ca244-ec6e-4c7c-88c5-80b8cce58e44",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "0dbe5dfc-b58c-45e2-936f-3b24aaae659a",
+        "created_at": "2026-08-15T09:49:33.888684+00:00"
+    },
+    {
+        "project_id": "0c7956a3-2007-4250-8c32-166b496eedf3",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "8ab940f6-4ee8-4586-a878-25cd2507866d",
+        "created_at": "2026-08-15T09:49:37.729942+00:00"
+    },
+    {
+        "project_id": "d6899e55-d3ab-4bbc-a2ea-6e766edbe2c0",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "2664bdb1-1a8c-4245-a9ea-65e8fd42f0c6",
+        "created_at": "2026-08-15T09:49:41.765051+00:00"
+    },
+    {
+        "project_id": "e05bd527-06f6-499e-80e0-9fa5e9156750",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "eced3f93-774d-4a73-829b-3cc55ec890af",
+        "created_at": "2026-08-15T09:49:45.649197+00:00"
+    },
+    {
+        "project_id": "588825fb-aca8-4374-a07f-ccba6b6be243",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "87177b20-04b4-43b3-a64c-382f55dbb57d",
+        "created_at": "2026-08-15T09:49:49.667363+00:00"
+    },
+    {
+        "project_id": "77ef1db6-889b-4f05-beff-e1383c1164c7",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "da52f7de-de4f-47f4-9f06-ffe0fd86b7c2",
+        "created_at": "2026-08-15T09:49:53.847537+00:00"
+    },
+    {
+        "project_id": "1c189c45-1b8f-4552-a86e-a1d71ccc7fe6",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "0a34b392-16eb-4e97-8630-95c77a5a1ba8",
+        "created_at": "2026-08-15T09:49:57.902109+00:00"
+    },
+    {
+        "project_id": "77c7bb92-4bc7-4ab5-a5fc-71f179b6ee7c",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "59babc3d-631a-46e1-818a-3a5eac517f32",
+        "created_at": "2026-08-15T09:50:01.843874+00:00"
+    },
+    {
+        "project_id": "280218e7-3042-4523-bd05-5aef675beaac",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "738ec986-496b-440e-8225-b04db0e33868",
+        "created_at": "2026-08-15T09:50:05.757846+00:00"
+    },
+    {
+        "project_id": "dc819d4e-7af0-40e3-b27f-301e07aa51d1",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "52d66f51-840f-41ad-a1f9-b0386a60418a",
+        "created_at": "2026-08-15T09:50:09.700071+00:00"
+    },
+    {
+        "project_id": "f3af1a0c-f174-4ea5-8149-4e7203d9037a",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "093d568d-16c4-4139-b2ab-a24f7b1536cb",
+        "created_at": "2026-08-15T09:50:13.720431+00:00"
+    },
+    {
+        "project_id": "25f56745-5899-4d4d-94e0-17b1c7979b74",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "5d0c9989-cf23-4e4a-bbbc-40463776f145",
+        "created_at": "2026-08-15T09:50:17.691333+00:00"
+    },
+    {
+        "project_id": "afe838e7-7b43-4633-b123-18e59bfcda57",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "2313aed5-bd6b-4975-a588-c4b93b1c568d",
+        "created_at": "2026-08-15T09:50:21.501523+00:00"
+    },
+    {
+        "project_id": "dd2a4ebd-36a2-4744-9172-1d5f6261eef9",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "ff4ed8d4-0126-4895-a3b8-d623fad88cbd",
+        "created_at": "2026-08-15T09:50:25.397225+00:00"
+    },
+    {
+        "project_id": "2b6e2e81-2fc9-4881-875c-498e090b011e",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "80631771-be32-40bf-ac32-0e11706e48fd",
+        "created_at": "2026-08-15T09:50:29.230923+00:00"
+    },
+    {
+        "project_id": "2422fa52-60bb-4b98-b708-1115426880b2",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "85dd2d0b-45fc-43bc-8209-ae6527c60870",
+        "created_at": "2026-08-15T09:50:33.023367+00:00"
+    },
+    {
+        "project_id": "f9f97ac5-19f0-4780-a230-6b6addb76af6",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "9190cc8f-8f4b-4a90-9724-4e88affdb275",
+        "created_at": "2026-08-15T09:50:36.835308+00:00"
+    },
+    {
+        "project_id": "d73ed434-8c3b-4827-9194-6a1a37e360c8",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "7815a0f2-5cb3-485a-89e3-c4efe7cc3950",
+        "created_at": "2026-08-15T09:50:40.649522+00:00"
+    },
+    {
+        "project_id": "1d3bb11b-b1ad-4d55-91c7-d817e115e5f2",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "46d7438a-eb7d-45b4-bf75-8810bac4c858",
+        "created_at": "2026-08-15T09:50:44.461782+00:00"
+    },
+    {
+        "project_id": "9c2f355d-f8df-4184-b720-c260ce115897",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "349b72a5-3d1b-4bb5-b8a0-cd3c94160cdc",
+        "created_at": "2026-08-15T09:50:48.274168+00:00"
+    },
+    {
+        "project_id": "76a9e901-7c2d-4bfd-8a49-e74fb2748350",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "a51c9c97-4d4b-4cab-a4d4-e6bf144d71bb",
+        "created_at": "2026-08-15T09:50:52.116373+00:00"
+    },
+    {
+        "project_id": "0e8d3d19-087a-435d-bb8e-2c58565757f9",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "8dd445e3-9a00-4983-9748-90fc9f314e1d",
+        "created_at": "2026-08-15T09:50:56.127976+00:00"
+    },
+    {
+        "project_id": "0f65db9d-fc58-43aa-b428-e642756c12a5",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "768b0509-8a73-46b9-9899-b1243ee9c9ea",
+        "created_at": "2026-08-15T09:50:59.948810+00:00"
+    },
+    {
+        "project_id": "3b3fd3dc-c2bb-4803-92f8-7c24255be137",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "557efa58-1f60-44ba-81cc-c612dfc5987a",
+        "created_at": "2026-08-15T09:51:03.829447+00:00"
+    },
+    {
+        "project_id": "929b1ba3-1af6-4b10-92de-fa3a1d53487b",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "2214c9ab-2636-40e2-9d52-194bab19f1f3",
+        "created_at": "2026-08-15T09:51:07.830389+00:00"
+    },
+    {
+        "project_id": "cc3386b1-2705-45ce-90d5-cb140812d031",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "33647155-f2ee-40e8-99c0-a32baacee51c",
+        "created_at": "2026-08-15T09:51:11.717537+00:00"
+    },
+    {
+        "project_id": "311f6b5a-1ac7-418e-b984-5e02fcf889d1",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "8550bd1c-bad5-4def-9c29-e07b6ef32be3",
+        "created_at": "2026-08-15T09:51:15.633834+00:00"
+    },
+    {
+        "project_id": "5f35d4f5-0dbb-47c0-9f9d-8e16424140b2",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "fa21b87f-8023-44d6-ae76-631f7b621d6f",
+        "created_at": "2026-08-15T09:51:19.544122+00:00"
+    },
+    {
+        "project_id": "c8c55458-44a3-4395-b2e5-fa3d3a61365d",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "989bd5cb-f1a8-4947-a0de-d954d3f28616",
+        "created_at": "2026-08-15T09:51:23.430735+00:00"
+    },
+    {
+        "project_id": "88aaf328-5162-411a-b713-947356696e84",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "bce78cba-bd67-41f8-9a55-23a7e1f2d523",
+        "created_at": "2026-08-15T09:51:27.269323+00:00"
+    },
+    {
+        "project_id": "685dfa9a-0056-4d4e-9701-26c2355b47d3",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "282e4ad2-b773-417b-845c-5965db2d653c",
+        "created_at": "2026-08-15T09:51:31.204864+00:00"
+    },
+    {
+        "project_id": "4ae7357b-6594-40d0-86bc-a1486007ebc6",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "ce9b1cc5-12e7-4d8d-91ca-b466a9a26427",
+        "created_at": "2026-08-15T09:51:35.219248+00:00"
+    },
+    {
+        "project_id": "13046c01-10fb-485b-ab08-b57c0857fdbd",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "cb8cd043-41f7-44fd-a2cf-67ac31b21e83",
+        "created_at": "2026-08-15T09:51:39.337617+00:00"
+    },
+    {
+        "project_id": "d956a22e-7316-41ed-b991-2a981b4831a1",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "de05459d-13aa-4e25-bc33-f49ddc0c8d04",
+        "created_at": "2026-08-15T09:51:43.164467+00:00"
+    },
+    {
+        "project_id": "00470bd0-004c-45b2-8a69-a28367944f45",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "0831d6e5-31f9-4dd5-90a0-48a0117cd8fc",
+        "created_at": "2026-08-15T09:51:47.130583+00:00"
+    },
+    {
+        "project_id": "3eb40a09-a715-4601-987c-bf022df6b0ad",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "b117f225-4c67-498a-8d1e-bd7b13cdd398",
+        "created_at": "2026-08-15T09:51:51.003534+00:00"
+    },
+    {
+        "project_id": "ba79589f-178c-4c16-83ac-3769570932fd",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "1e176e60-f3dc-41d5-bbd3-816f79cd98ba",
+        "created_at": "2026-08-15T09:51:55.082718+00:00"
+    },
+    {
+        "project_id": "f41ddc27-c683-4903-8aae-d38453836669",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "e609079c-e68c-4f3b-9a86-9770d13ff897",
+        "created_at": "2026-08-15T09:51:58.923455+00:00"
+    },
+    {
+        "project_id": "2b845edc-654d-4695-9d91-61e71b17c441",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "23cbdf14-ef44-4832-bde0-ae0b8189f25d",
+        "created_at": "2026-08-15T09:52:02.794849+00:00"
+    },
+    {
+        "project_id": "ac53fc11-d2b0-4ad1-bc6d-dd4c630e4a62",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "e339d173-1451-459f-8916-dbe26f15ba3f",
+        "created_at": "2026-08-15T09:52:06.694425+00:00"
+    },
+    {
+        "project_id": "e50f55c7-b6b2-42da-95e1-b49d008eed8d",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "b2e16066-4266-4b65-910d-2d9527149232",
+        "created_at": "2026-08-15T09:52:10.512933+00:00"
+    },
+    {
+        "project_id": "5713516d-9d91-485d-be18-c406e6966b08",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "f3f9959d-7c16-44c0-b24d-29da01a9fc28",
+        "created_at": "2026-08-15T09:52:14.341990+00:00"
+    },
+    {
+        "project_id": "2a498ce8-1fcc-4257-9df2-58a3669e009b",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "f01e001a-efd6-4ed1-9b85-fff70b00f2cb",
+        "created_at": "2026-08-15T09:52:18.173167+00:00"
+    },
+    {
+        "project_id": "67d32e99-e07d-42da-bf3b-52979fbc5484",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "63b959d3-a129-4698-9718-e57e36ab3017",
+        "created_at": "2026-08-15T09:52:22.057599+00:00"
+    },
+    {
+        "project_id": "a65843dc-bbd1-40ca-a65a-0d6336072367",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "53f081b2-2e9a-4f44-a974-dd562151a8d4",
+        "created_at": "2026-08-15T09:52:25.929723+00:00"
+    },
+    {
+        "project_id": "42a212bd-cf83-46cc-9da1-050591db8c76",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "761c649a-8972-4f6f-a4db-e43f45007eb4",
+        "created_at": "2026-08-15T09:52:29.832709+00:00"
+    },
+    {
+        "project_id": "6499d599-4dde-441d-8b82-d8b502b64f4f",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "d10c662e-7159-46da-bf96-955485c9c06e",
+        "created_at": "2026-08-15T09:52:33.730507+00:00"
+    },
+    {
+        "project_id": "c2bb7573-c9c0-4470-83da-10fee59063d8",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "e71c4d4f-7909-4719-8bc4-b6bb6b58896a",
+        "created_at": "2026-08-15T09:52:37.571871+00:00"
+    },
+    {
+        "project_id": "deff8af2-afd4-40c9-a56c-d1dad53c3893",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "786559a4-f6ad-44aa-b5f7-9104205f37aa",
+        "created_at": "2026-08-15T09:52:41.418196+00:00"
+    },
+    {
+        "project_id": "2f7d23b5-489b-45be-8258-b920bacc1e4a",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "2b161d26-24fc-4c6f-9dc8-16baafac1595",
+        "created_at": "2026-08-15T09:52:45.322712+00:00"
+    },
+    {
+        "project_id": "cb185969-bc9e-4510-a3f7-a58e8d8e9704",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "81e5b076-87b2-44ed-8039-75a03d1b13eb",
+        "created_at": "2026-08-15T09:52:49.229193+00:00"
+    }
+]
