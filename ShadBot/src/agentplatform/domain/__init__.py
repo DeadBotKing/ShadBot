@@ -1,3 +1,0 @@
-"""
-Agent Platform Domain Layer.
-"""
