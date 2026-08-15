@@ -120,6 +120,12 @@ class EngineerAgent(BaseLLMAgent):
             else Path(".")
         )
 
+        # Every planned module, so each prompt can tell the model what already
+        # exists and must be imported rather than re-implemented.
+        planned_paths = tuple(
+            str(fp.path).replace("\\", "/") for fp in plan.file_plan
+        )
+
         for file_plan in plan.file_plan:
             target_path = project_path / file_plan.path
             try:
@@ -140,6 +146,8 @@ class EngineerAgent(BaseLLMAgent):
                 context=context,
                 file_path=(project_path / file_plan.path),
                 instructions=module_instructions,
+                purpose=file_plan.purpose,
+                sibling_files=planned_paths,
             )
 
             generated_files.append(
@@ -152,21 +160,56 @@ class EngineerAgent(BaseLLMAgent):
         if not has_runner:
             run_script_path = project_path / "run.py"
             try:
+                # The runner must actually EXERCISE the generated code.
+                # The previous template only printed "operational" without
+                # importing anything, so `python run.py` succeeded even when
+                # every generated module was broken.
                 run_content = (
                     "#!/usr/bin/env python3\n"
                     '"""\n'
                     f"ShadBot Autonomously Generated Runner for {project_path.name}.\n"
+                    "\n"
+                    "Imports every generated module so that a broken build "
+                    "fails here\n"
+                    "with a non-zero exit code instead of silently reporting "
+                    "success.\n"
                     '"""\n\n'
+                    "from __future__ import annotations\n\n"
+                    "import importlib\n"
+                    "import pkgutil\n"
                     "import sys\n"
-                    "from pathlib import Path\n\n"
+                    "import traceback\n"
+                    "from pathlib import Path\n\n\n"
                     "def main() -> int:\n"
-                    f'    print("Starting {project_path.name}...")\n'
-                    "    # Add src/ to sys.path if present\n"
+                    '    """Import all generated modules; return 0 only if all succeed."""\n\n'
+                    f'    print("Starting {project_path.name}...")\n\n'
                     '    src_dir = Path(__file__).parent / "src"\n'
-                    "    if src_dir.exists():\n"
-                    "        sys.path.insert(0, str(src_dir))\n"
+                    "    root = src_dir if src_dir.is_dir() else Path(__file__).parent\n"
+                    "    sys.path.insert(0, str(root))\n\n"
+                    "    failures: list[str] = []\n"
+                    "    checked = 0\n\n"
+                    "    for module_info in pkgutil.walk_packages(\n"
+                    "        [str(root)],\n"
+                    '        prefix="",\n'
+                    "    ):\n"
+                    '        if "__main__" in module_info.name:\n'
+                    "            continue\n"
+                    "        try:\n"
+                    "            importlib.import_module(module_info.name)\n"
+                    "            checked += 1\n"
+                    "        except Exception:\n"
+                    "            failures.append(\n"
+                    '                f"{module_info.name}:\\n"\n'
+                    "                + traceback.format_exc(limit=3)\n"
+                    "            )\n\n"
+                    "    if failures:\n"
+                    '        print(f"FAILED: {len(failures)} module(s) could not be imported.")\n'
+                    "        for failure in failures:\n"
+                    '            print(f"  - {failure}")\n'
+                    "        return 1\n\n"
+                    '    print(f"OK: {checked} module(s) imported successfully.")\n'
                     f'    print("Project {project_path.name} is operational.")\n'
-                    "    return 0\n\n"
+                    "    return 0\n\n\n"
                     "if __name__ == '__main__':\n"
                     "    sys.exit(main())\n"
                 )

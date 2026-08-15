@@ -21,7 +21,24 @@ class FakeArtifact:
 
 
 class FakeCodeGenerationService:
-    def generate(self, context, file_path, instructions):
+    def __init__(self) -> None:
+        self.calls: list[dict[str, object]] = []
+
+    def generate(
+        self,
+        context,
+        file_path,
+        instructions,
+        purpose="",
+        sibling_files=(),
+    ):
+        self.calls.append(
+            {
+                "file_path": file_path,
+                "purpose": purpose,
+                "sibling_files": tuple(sibling_files),
+            }
+        )
         file_path.parent.mkdir(parents=True, exist_ok=True)
         file_path.write_text("# Autonomously generated code\n", encoding="utf-8")
         return FakeArtifact(file_path)
@@ -66,4 +83,18 @@ def test_engineer_agent_execution_and_run_script_generation(tmp_path: Path) -> N
     assert "run.py" in str(res.data["generated_files"])
     run_script = tmp_path / "run.py"
     assert run_script.exists()
-    assert "ShadBot Autonomously Generated Runner" in run_script.read_text(encoding="utf-8")
+
+    runner_source = run_script.read_text(encoding="utf-8")
+
+    assert "ShadBot Autonomously Generated Runner" in runner_source
+
+    # The runner must exercise the generated code, not just print success.
+    assert "importlib" in runner_source
+    assert "return 1" in runner_source
+
+    # The per-file prompt must receive this module's own purpose, otherwise
+    # every generated file gets an identical prompt.
+    assert code_srv.calls[0]["purpose"] == "MACD indicator"
+    assert code_srv.calls[0]["sibling_files"] == (
+        "src/indicators/market_analyzer.py",
+    )

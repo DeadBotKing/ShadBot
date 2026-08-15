@@ -1,0 +1,1191 @@
+diff --git a/ShadBot/src/agentplatform/application/generation/code_generation_service.py b/ShadBot/src/agentplatform/application/generation/code_generation_service.py
+index 30fa00e..f3de883 100644
+--- a/ShadBot/src/agentplatform/application/generation/code_generation_service.py
++++ b/ShadBot/src/agentplatform/application/generation/code_generation_service.py
+@@ -18,6 +18,11 @@ from agentplatform.application.generation.artifact_service import (
+ from agentplatform.application.generation.module_splitter import (
+     ModuleSplitter,
+ )
++from agentplatform.application.prompt.prompt_builder import (
++    CODEGEN_FILE_KEY,
++    CODEGEN_PURPOSE_KEY,
++    CODEGEN_SIBLINGS_KEY,
++)
+ from agentplatform.domain.agents import (
+     AgentRole,
+ )
+@@ -57,14 +62,40 @@ class CodeGenerationService:
+         context: AgentExecutionContext,
+         file_path: Path,
+         instructions: str,
++        purpose: str = "",
++        sibling_files: tuple[str, ...] = (),
+     ) -> GeneratedArtifact:
+         """
+         Generate and persist source file.
++
++        Args:
++            context: Execution context.
++            file_path: Absolute path of the module to write.
++            instructions: Legacy free-text instructions.
++            purpose: The single responsibility of this module. Drives the
++                focused per-file prompt.
++            sibling_files: Other modules in the project, so the model imports
++                them instead of re-implementing them in this file.
+         """
+ 
++        root = self._resolve_root(file_path)
++
++        relative_target = self._relative_to_root(file_path, root)
++
++        # Switch PromptBuilder into focused single-file mode. Without this the
++        # prompts for different modules were 96.4% identical and the model
++        # returned the same response for every file.
+         generation_context = replace(
+             context,
+             instructions=instructions,
++            metadata={
++                **context.metadata,
++                CODEGEN_FILE_KEY: relative_target,
++                CODEGEN_PURPOSE_KEY: purpose or instructions,
++                CODEGEN_SIBLINGS_KEY: [
++                    path for path in sibling_files if path != relative_target
++                ],
++            },
+         )
+ 
+         response = self._brain.think(
+@@ -76,8 +107,6 @@ class CodeGenerationService:
+             response,
+         )
+ 
+-        root = self._resolve_root(file_path)
+-
+         modules = self._splitter.split(
+             code=code,
+             default_path=self._relative_to_root(file_path, root),
+diff --git a/ShadBot/src/agentplatform/application/orchestration/agent_orchestrator.py b/ShadBot/src/agentplatform/application/orchestration/agent_orchestrator.py
+index 92a3421..f3a3798 100644
+--- a/ShadBot/src/agentplatform/application/orchestration/agent_orchestrator.py
++++ b/ShadBot/src/agentplatform/application/orchestration/agent_orchestrator.py
+@@ -533,6 +533,7 @@ class AgentOrchestrator:
+             for name in (
+                 "syntax",
+                 "imports",
++                "smoke_run",
+                 "pytest",
+                 "ruff",
+                 "mypy",
+@@ -548,7 +549,7 @@ class AgentOrchestrator:
+             lint_passed=False,
+             typecheck_passed=False,
+             summary=(
+-                "UNVERIFIABLE (no target project) | executed=0/7 | "
++                "UNVERIFIABLE (no target project) | executed=0/8 | "
+                 "skipped=all"
+             ),
+             checks=checks,
+diff --git a/ShadBot/src/agentplatform/application/prompt/prompt_builder.py b/ShadBot/src/agentplatform/application/prompt/prompt_builder.py
+index a5d9562..4c21407 100644
+--- a/ShadBot/src/agentplatform/application/prompt/prompt_builder.py
++++ b/ShadBot/src/agentplatform/application/prompt/prompt_builder.py
+@@ -2,6 +2,32 @@
+ ShadBot Agent Platform
+ 
+ Prompt builder.
++
++Purpose:
++    Turn an execution context into the text sent to the LLM.
++
++Two modes:
++    1. General agent prompt - the full context dump, used by researcher,
++       architect, reviewer and friends where breadth is the point.
++
++    2. Focused per-file code generation prompt - used when the engineer is
++       implementing ONE module.
++
++Why mode 2 exists:
++    The general prompt embeds the whole task description, metadata,
++    intelligence context and memory context. When the engineer generated 11
++    different modules, those 11 prompts were measured at 96.4% similar: the
++    only difference was one `Instructions` line buried in a wall of text. The
++    model therefore returned the SAME response 8 times (1746 chars each),
++    every response overwrote the same 5 files, and 659 seconds produced 32
++    lines of code.
++
++    A focused prompt puts the target file first, states its single
++    responsibility, and omits everything the model cannot act on.
++
++Design rules honoured:
++    - Rule 27: no fake implementations.
++    - Rule 18: failures are reported, not swallowed.
+ """
+ 
+ from __future__ import annotations
+@@ -9,6 +35,29 @@ from __future__ import annotations
+ from agentplatform.domain.agents import AgentRole
+ from agentplatform.domain.context import AgentExecutionContext
+ 
++# Metadata keys that switch the builder into focused single-file mode.
++CODEGEN_FILE_KEY = "codegen_target_file"
++CODEGEN_PURPOSE_KEY = "codegen_target_purpose"
++CODEGEN_SIBLINGS_KEY = "codegen_sibling_files"
++
++_MAX_CONTEXT_CHARS = 600
++
++
++def _clip(value: object, limit: int = _MAX_CONTEXT_CHARS) -> str:
++    """
++    Render a context value without letting it swamp the prompt.
++    """
++
++    text = str(value).strip()
++
++    if not text or text in {"{}", "[]", "None"}:
++        return ""
++
++    if len(text) <= limit:
++        return text
++
++    return text[:limit].rstrip() + " ...[truncated]"
++
+ 
+ class PromptBuilder:
+     """
+@@ -22,6 +71,165 @@ class PromptBuilder:
+     ) -> str:
+         """
+         Create agent prompt.
++
++        Returns a focused single-file prompt when the context carries a
++        code generation target, otherwise the general agent prompt.
++        """
++
++        target_file = context.metadata.get(CODEGEN_FILE_KEY)
++
++        if target_file:
++            return self._build_codegen_prompt(
++                context=context,
++                target_file=str(target_file),
++            )
++
++        return self._build_general_prompt(
++            role=role,
++            context=context,
++        )
++
++    def _build_codegen_prompt(
++        self,
++        context: AgentExecutionContext,
++        target_file: str,
++    ) -> str:
++        """
++        Build a prompt for implementing exactly one module.
++        """
++
++        purpose = str(
++            context.metadata.get(CODEGEN_PURPOSE_KEY, "")
++        ).strip() or "Implement this module."
++
++        siblings = context.metadata.get(CODEGEN_SIBLINGS_KEY) or []
++
++        sibling_block = ""
++
++        if siblings:
++            listed = "\n".join(f"- {path}" for path in siblings)
++            sibling_block = (
++                "\nOther modules in this project (import from them when "
++                f"needed, do NOT re-implement them):\n{listed}\n"
++            )
++
++        feedback = _clip(context.metadata.get("review_feedback", ""))
++
++        feedback_block = ""
++
++        if feedback:
++            feedback_block = (
++                "\nThe previous attempt at this file was rejected. Fix these "
++                f"issues:\n{feedback}\n"
++            )
++
++        project_goal = _clip(context.task_title, 200)
++
++        module_name = target_file.rsplit("/", 1)[-1]
++
++        layer = self._infer_layer(target_file)
++
++        return f"""Write ONE Python file: {module_name}
++
++FULL PATH:
++{target_file}
++
++WHAT {module_name} MUST DO (this and nothing else):
++{purpose}
++
++{layer}
++PROJECT (context only, do not implement all of it here):
++{project_goal}
++{sibling_block}{feedback_block}
++HARD REQUIREMENTS:
++- Output ONLY the code for {target_file}. Nothing else.
++- Do NOT write other modules in this response.
++- Do NOT emit "# path/to/other_file.py" section headers.
++- Every function and method needs PEP 484 type annotations.
++- Every module, class and public function needs a docstring.
++- Domain layer classes must be immutable: use
++  @dataclass(frozen=True).
++- Import what you use. Every name you reference must be defined or imported
++  in THIS file.
++- No placeholder bodies. No `pass` where logic belongs. No TODO comments.
++  If you cannot implement something, raise NotImplementedError with a message
++  explaining what is missing.
++- The code must run. A caller must be able to import this module and use it
++  without a TypeError or AttributeError.
++
++Return the file contents inside a single ```python code block."""
++
++    @staticmethod
++    def _infer_layer(target_file: str) -> str:
++        """
++        Derive Clean Architecture rules for the layer this file belongs to.
++
++        This also differentiates prompts: without it every per-file prompt
++        shares the same boilerplate and the model cannot tell the requests
++        apart.
++        """
++
++        path = target_file.replace("\\", "/").lower()
++
++        if "/domain/" in path:
++            return (
++                "LAYER: DOMAIN (innermost).\n"
++                "- Pure Python. No I/O, no HTTP, no filesystem, no database.\n"
++                "- MUST NOT import from application/ or infrastructure/.\n"
++                "- Entities and value objects MUST be "
++                "@dataclass(frozen=True).\n"
++                "- Use Enum for fixed sets of values.\n"
++            )
++
++        if "/application/" in path:
++            return (
++                "LAYER: APPLICATION (use cases).\n"
++                "- Orchestrates domain objects. Stateless: no mutable "
++                "instance state between calls.\n"
++                "- May import from domain/. MUST NOT import from "
++                "infrastructure/.\n"
++                "- Depend on abstractions; receive collaborators via "
++                "__init__ injection.\n"
++            )
++
++        if "/infrastructure/" in path:
++            return (
++                "LAYER: INFRASTRUCTURE (adapters).\n"
++                "- Concrete I/O: filesystem, HTTP, subprocess, database.\n"
++                "- May import from domain/ and application/.\n"
++                "- Never use shell=True. Pass argument lists to subprocess.\n"
++                "- Any subprocess call must pass "
++                'encoding="utf-8", errors="replace".\n'
++            )
++
++        if path.endswith(("__main__.py", "run.py", "main.py")):
++            return (
++                "LAYER: ENTRY POINT.\n"
++                "- Wire the object graph and call into the application "
++                "layer.\n"
++                "- Define main() -> int returning an exit code.\n"
++                "- Guard execution with if __name__ == '__main__'.\n"
++                "- Running this file MUST NOT raise. Verify every call you "
++                "make against the module you import it from.\n"
++            )
++
++        if "/tests/" in path or path.rsplit("/", 1)[-1].startswith("test_"):
++            return (
++                "LAYER: TESTS.\n"
++                "- Use pytest. Plain asserts, no unittest classes.\n"
++                "- Each test asserts one real behaviour. No trivial "
++                "assert True.\n"
++            )
++
++        return "LAYER: general module.\n"
++
++    def _build_general_prompt(
++        self,
++        role: AgentRole,
++        context: AgentExecutionContext,
++    ) -> str:
++        """
++        Build the broad, context-rich prompt for non-codegen agents.
+         """
+ 
+         review_feedback = context.metadata.get(
+@@ -49,13 +257,13 @@ Instructions:
+ {context.instructions}
+ 
+ Project Intelligence Context:
+-{context.intelligence_context}
++{_clip(context.intelligence_context)}
+ 
+ Agent Memory Context:
+-{context.memory_context}
++{_clip(context.memory_context)}
+ 
+ Metadata:
+-{context.metadata}
++{_clip(context.metadata)}
+ 
+ Previous Review Feedback:
+ {review_feedback}
+diff --git a/ShadBot/src/agentplatform/application/quality_gate/__init__.py b/ShadBot/src/agentplatform/application/quality_gate/__init__.py
+index b7fae5a..a609163 100644
+--- a/ShadBot/src/agentplatform/application/quality_gate/__init__.py
++++ b/ShadBot/src/agentplatform/application/quality_gate/__init__.py
+@@ -17,12 +17,14 @@ from .validators import (
+     RuffValidator,
+     SecurityValidator,
+     ImportValidator,
++    SmokeRunValidator,
+     SyntaxValidator,
+ )
+ 
+ __all__ = [
+     "CheckResult",
+     "ImportValidator",
++    "SmokeRunValidator",
+     "SyntaxValidator",
+     "PytestValidator",
+     "RuffValidator",
+diff --git a/ShadBot/src/agentplatform/application/quality_gate/deterministic_quality_gate.py b/ShadBot/src/agentplatform/application/quality_gate/deterministic_quality_gate.py
+index 592f8e9..acca2d4 100644
+--- a/ShadBot/src/agentplatform/application/quality_gate/deterministic_quality_gate.py
++++ b/ShadBot/src/agentplatform/application/quality_gate/deterministic_quality_gate.py
+@@ -37,6 +37,7 @@ from .validators import (
+     RuffValidator,
+     SecurityValidator,
+     ImportValidator,
++    SmokeRunValidator,
+     SyntaxValidator,
+ )
+ 
+@@ -72,6 +73,7 @@ class DeterministicQualityGate:
+         self,
+         syntax_val: SyntaxValidator | None = None,
+         import_val: ImportValidator | None = None,
++        smoke_val: SmokeRunValidator | None = None,
+         pytest_val: PytestValidator | None = None,
+         ruff_val: RuffValidator | None = None,
+         black_val: BlackValidator | None = None,
+@@ -82,6 +84,7 @@ class DeterministicQualityGate:
+     ) -> None:
+         self.syntax_val = syntax_val or SyntaxValidator()
+         self.import_val = import_val or ImportValidator()
++        self.smoke_val = smoke_val or SmokeRunValidator()
+         self.pytest_val = pytest_val or PytestValidator()
+         self.ruff_val = ruff_val or RuffValidator()
+         self.black_val = black_val or BlackValidator()
+@@ -103,6 +106,7 @@ class DeterministicQualityGate:
+ 
+         syntax = self.syntax_val.validate(scan_root)
+         imports = self.import_val.validate(str(target))
++        smoke = self.smoke_val.validate(str(target))
+         tests = self.pytest_val.validate(str(target))
+         lint = self.ruff_val.validate(str(target))
+         typing_check = self.mypy_val.validate(str(target))
+@@ -112,6 +116,7 @@ class DeterministicQualityGate:
+         checks = (
+             syntax,
+             imports,
++            smoke,
+             tests,
+             lint,
+             typing_check,
+diff --git a/ShadBot/src/agentplatform/application/quality_gate/validators.py b/ShadBot/src/agentplatform/application/quality_gate/validators.py
+index 17c34b4..7d89ab1 100644
+--- a/ShadBot/src/agentplatform/application/quality_gate/validators.py
++++ b/ShadBot/src/agentplatform/application/quality_gate/validators.py
+@@ -863,3 +863,213 @@ class ImportValidator:
+             ),
+             score=round(len(ok) / total, 2) if total else 0.0,
+         )
++
++
++# Executed in a subprocess: this actually RUNS generated code.
++_SMOKE_PROBE = r'''
++import json
++import pathlib
++import runpy
++import sys
++import traceback
++
++root = pathlib.Path(sys.argv[1]).resolve()
++entry = pathlib.Path(sys.argv[2]).resolve()
++source_root = root / "src" if (root / "src").is_dir() else root
++sys.path.insert(0, str(source_root))
++sys.argv = [str(entry)]
++
++result = {"entry": str(entry.relative_to(root)), "ok": False, "error": ""}
++
++# A __main__.py inside a package uses relative imports, which run_path cannot
++# resolve. Execute it as `python -m package` instead so the parent package is
++# known and the real runtime behaviour is exercised.
++package = ""
++if entry.name == "__main__.py":
++    parts = entry.parent.relative_to(source_root).parts
++    if parts:
++        package = ".".join(parts)
++
++try:
++    if package:
++        runpy.run_module(package, run_name="__main__", alter_sys=True)
++    else:
++        runpy.run_path(str(entry), run_name="__main__")
++    result["ok"] = True
++except SystemExit as exc:
++    code = exc.code if exc.code is not None else 0
++    result["ok"] = code == 0
++    if not result["ok"]:
++        result["error"] = f"exited with code {code}"
++except BaseException as exc:
++    tb = traceback.extract_tb(sys.exc_info()[2])
++    where = ""
++    for frame in reversed(tb):
++        if frame.filename.endswith(".py") and str(root) in frame.filename:
++            rel = pathlib.Path(frame.filename)
++            try:
++                rel = rel.relative_to(root)
++            except ValueError:
++                pass
++            where = f" at {rel}:{frame.lineno}"
++            break
++    result["error"] = f"{type(exc).__name__}: {exc}{where}"
++
++print("SHADBOT_SMOKE_RESULT " + json.dumps(result))
++'''
++
++
++class SmokeRunValidator:
++    """
++    Validates that the generated project actually RUNS.
++
++    Rationale:
++        ImportValidator proves modules load. It does not prove they work:
++        importing a module executes only its top-level statements, so a broken
++        call inside main() is invisible.
++
++        Run 2 of ShadBotCore_BuiltByAgent passed both syntax and imports and
++        the gate reported GREEN, yet `python -m agentplatform` died with
++        `TypeError: 'dict' object is not callable` because a @property was
++        called like a function.
++
++        This check closes that hole: it executes each entry point and fails on
++        a non-zero exit or any uncaught exception.
++
++    Entry points probed, in priority order:
++        run.py, main.py, __main__.py, src/<pkg>/__main__.py
++
++    A project with no entry point is SKIPPED, never passed.
++    """
++
++    _ENTRY_CANDIDATES = ("run.py", "main.py", "__main__.py")
++
++    def _find_entry_points(self, target: Path) -> list[Path]:
++        found: list[Path] = []
++
++        for name in self._ENTRY_CANDIDATES:
++            candidate = target / name
++            if candidate.is_file():
++                found.append(candidate)
++
++        source_root = target / "src" if (target / "src").is_dir() else target
++
++        for candidate in sorted(source_root.rglob("__main__.py")):
++            if any(
++                part in {".git", ".venv", "venv", "__pycache__", "node_modules"}
++                for part in candidate.parts
++            ):
++                continue
++            if candidate not in found:
++                found.append(candidate)
++
++        return found
++
++    def validate(self, project_path: str) -> CheckResult:
++        target = Path(project_path)
++
++        if not target.exists():
++            return CheckResult(
++                check_name="smoke_run",
++                passed=False,
++                details=f"Target path does not exist: {target}",
++                score=0.0,
++                skipped=True,
++            )
++
++        entries = self._find_entry_points(target)
++
++        if not entries:
++            return CheckResult(
++                check_name="smoke_run",
++                passed=False,
++                details=(
++                    "No entry point (run.py / main.py / __main__.py) found. "
++                    "Check SKIPPED - generated projects should expose one."
++                ),
++                score=0.0,
++                skipped=True,
++            )
++
++        failures: list[str] = []
++        succeeded: list[str] = []
++
++        for entry in entries:
++            try:
++                completed = subprocess.run(
++                    [sys.executable, "-c", _SMOKE_PROBE, str(target), str(entry)],
++                    capture_output=True,
++                    text=True,
++                    encoding="utf-8",
++                    errors="replace",
++                    timeout=_DEFAULT_TOOL_TIMEOUT_SECONDS,
++                    cwd=str(target),
++                )
++            except subprocess.TimeoutExpired:
++                failures.append(
++                    f"{entry.name}: timed out after "
++                    f"{_DEFAULT_TOOL_TIMEOUT_SECONDS}s (blocking call or "
++                    f"infinite loop)"
++                )
++                continue
++            except OSError as exc:
++                return CheckResult(
++                    check_name="smoke_run",
++                    passed=False,
++                    details=f"Could not launch smoke probe: {exc}",
++                    score=0.0,
++                    skipped=True,
++                )
++
++            payload: dict[str, object] | None = None
++
++            for line in (completed.stdout or "").splitlines():
++                if line.startswith("SHADBOT_SMOKE_RESULT "):
++                    try:
++                        payload = json.loads(
++                            line[len("SHADBOT_SMOKE_RESULT ") :]
++                        )
++                    except ValueError:
++                        payload = None
++                    break
++
++            if payload is None:
++                failures.append(
++                    f"{entry.name}: probe produced no result. "
++                    + _combine_output(
++                        completed.stdout,
++                        completed.stderr,
++                        completed.returncode,
++                    )
++                )
++                continue
++
++            if payload.get("ok"):
++                succeeded.append(str(payload.get("entry", entry.name)))
++            else:
++                failures.append(
++                    f"{payload.get('entry', entry.name)}: {payload.get('error')}"
++                )
++
++        total = len(succeeded) + len(failures)
++
++        if not failures:
++            return CheckResult(
++                check_name="smoke_run",
++                passed=True,
++                details=(
++                    f"All {total} entry point(s) ran successfully: "
++                    + ", ".join(succeeded)
++                ),
++                score=1.0,
++            )
++
++        return CheckResult(
++            check_name="smoke_run",
++            passed=False,
++            details=_truncate(
++                f"{len(failures)}/{total} entry point(s) failed to run:\n"
++                + "\n".join(failures)
++            ),
++            score=round(len(succeeded) / total, 2) if total else 0.0,
++        )
+diff --git a/ShadBot/src/agentplatform/infrastructure/agents/engineer_agent.py b/ShadBot/src/agentplatform/infrastructure/agents/engineer_agent.py
+index d40de83..2a22e9e 100644
+--- a/ShadBot/src/agentplatform/infrastructure/agents/engineer_agent.py
++++ b/ShadBot/src/agentplatform/infrastructure/agents/engineer_agent.py
+@@ -120,6 +120,12 @@ class EngineerAgent(BaseLLMAgent):
+             else Path(".")
+         )
+ 
++        # Every planned module, so each prompt can tell the model what already
++        # exists and must be imported rather than re-implemented.
++        planned_paths = tuple(
++            str(fp.path).replace("\\", "/") for fp in plan.file_plan
++        )
++
+         for file_plan in plan.file_plan:
+             target_path = project_path / file_plan.path
+             try:
+@@ -140,6 +146,8 @@ class EngineerAgent(BaseLLMAgent):
+                 context=context,
+                 file_path=(project_path / file_plan.path),
+                 instructions=module_instructions,
++                purpose=file_plan.purpose,
++                sibling_files=planned_paths,
+             )
+ 
+             generated_files.append(
+@@ -152,21 +160,56 @@ class EngineerAgent(BaseLLMAgent):
+         if not has_runner:
+             run_script_path = project_path / "run.py"
+             try:
++                # The runner must actually EXERCISE the generated code.
++                # The previous template only printed "operational" without
++                # importing anything, so `python run.py` succeeded even when
++                # every generated module was broken.
+                 run_content = (
+                     "#!/usr/bin/env python3\n"
+                     '"""\n'
+                     f"ShadBot Autonomously Generated Runner for {project_path.name}.\n"
++                    "\n"
++                    "Imports every generated module so that a broken build "
++                    "fails here\n"
++                    "with a non-zero exit code instead of silently reporting "
++                    "success.\n"
+                     '"""\n\n'
++                    "from __future__ import annotations\n\n"
++                    "import importlib\n"
++                    "import pkgutil\n"
+                     "import sys\n"
+-                    "from pathlib import Path\n\n"
++                    "import traceback\n"
++                    "from pathlib import Path\n\n\n"
+                     "def main() -> int:\n"
+-                    f'    print("Starting {project_path.name}...")\n'
+-                    "    # Add src/ to sys.path if present\n"
++                    '    """Import all generated modules; return 0 only if all succeed."""\n\n'
++                    f'    print("Starting {project_path.name}...")\n\n'
+                     '    src_dir = Path(__file__).parent / "src"\n'
+-                    "    if src_dir.exists():\n"
+-                    "        sys.path.insert(0, str(src_dir))\n"
++                    "    root = src_dir if src_dir.is_dir() else Path(__file__).parent\n"
++                    "    sys.path.insert(0, str(root))\n\n"
++                    "    failures: list[str] = []\n"
++                    "    checked = 0\n\n"
++                    "    for module_info in pkgutil.walk_packages(\n"
++                    "        [str(root)],\n"
++                    '        prefix="",\n'
++                    "    ):\n"
++                    '        if "__main__" in module_info.name:\n'
++                    "            continue\n"
++                    "        try:\n"
++                    "            importlib.import_module(module_info.name)\n"
++                    "            checked += 1\n"
++                    "        except Exception:\n"
++                    "            failures.append(\n"
++                    '                f"{module_info.name}:\\n"\n'
++                    "                + traceback.format_exc(limit=3)\n"
++                    "            )\n\n"
++                    "    if failures:\n"
++                    '        print(f"FAILED: {len(failures)} module(s) could not be imported.")\n'
++                    "        for failure in failures:\n"
++                    '            print(f"  - {failure}")\n'
++                    "        return 1\n\n"
++                    '    print(f"OK: {checked} module(s) imported successfully.")\n'
+                     f'    print("Project {project_path.name} is operational.")\n'
+-                    "    return 0\n\n"
++                    "    return 0\n\n\n"
+                     "if __name__ == '__main__':\n"
+                     "    sys.exit(main())\n"
+                 )
+diff --git a/ShadBot/src/agentplatform/infrastructure/llm/ollama_provider.py b/ShadBot/src/agentplatform/infrastructure/llm/ollama_provider.py
+index 7ac287f..d1470e2 100644
+--- a/ShadBot/src/agentplatform/infrastructure/llm/ollama_provider.py
++++ b/ShadBot/src/agentplatform/infrastructure/llm/ollama_provider.py
+@@ -39,6 +39,25 @@ class OllamaProvider(LLMProvider):
+         self._keep_alive = keep_alive
+         self._timeout_seconds = int(os.getenv("SHADBOT_LLM_TIMEOUT", "1800"))
+ 
++        # Prompt-hash cache. In a single pipeline run the engineer issued 11
++        # calls whose prompts were 96.4% identical; 8 returned byte-identical
++        # responses. Re-sending an identical prompt to a deterministic-enough
++        # local model is pure waste: 659s produced 32 lines of code.
++        #
++        # Only exact prompt matches hit, so this can never blend two different
++        # requests. Set SHADBOT_LLM_CACHE=0 to disable.
++        self._cache_enabled = os.getenv("SHADBOT_LLM_CACHE", "1") != "0"
++        self._cache: dict[str, str] = {}
++        self._cache_hits = 0
++
++    @property
++    def cache_hits(self) -> int:
++        """
++        Number of LLM calls served from the prompt cache.
++        """
++
++        return self._cache_hits
++
+     @staticmethod
+     def _is_available(endpoint: str) -> bool:
+         if os.environ.get("PYTEST_CURRENT_TEST"):
+@@ -83,6 +102,23 @@ class OllamaProvider(LLMProvider):
+         """
+         is_unit_test = bool(os.environ.get("PYTEST_CURRENT_TEST"))
+ 
++        cache_key = ""
++
++        if self._cache_enabled:
++            cache_key = hashlib.sha256(
++                f"{self._model}\x00{prompt}".encode("utf-8"),
++            ).hexdigest()
++
++            cached = self._cache.get(cache_key)
++
++            if cached is not None:
++                self._cache_hits += 1
++                print(
++                    f"[LLM] Cache hit ({len(cached)} chars) - identical prompt "
++                    f"already answered, skipping model call."
++                )
++                return cached
++
+         if not self._is_available(self._endpoint):
+             if is_unit_test:
+                 return self._stub_response(prompt)
+@@ -113,6 +149,10 @@ class OllamaProvider(LLMProvider):
+             data = response.json()
+             res_text = str(data.get("response", ""))
+             print(f"[LLM] Response received from model '{self._model}' (Length: {len(res_text)} chars)")
++
++            if cache_key and res_text:
++                self._cache[cache_key] = res_text
++
+             return res_text
+         except requests.RequestException as exc:
+             if is_unit_test:
+diff --git a/ShadBot/tests/agentplatform_tests/agents/test_engineer_agent.py b/ShadBot/tests/agentplatform_tests/agents/test_engineer_agent.py
+index 8609bc1..3d75047 100644
+--- a/ShadBot/tests/agentplatform_tests/agents/test_engineer_agent.py
++++ b/ShadBot/tests/agentplatform_tests/agents/test_engineer_agent.py
+@@ -21,7 +21,24 @@ class FakeArtifact:
+ 
+ 
+ class FakeCodeGenerationService:
+-    def generate(self, context, file_path, instructions):
++    def __init__(self) -> None:
++        self.calls: list[dict[str, object]] = []
++
++    def generate(
++        self,
++        context,
++        file_path,
++        instructions,
++        purpose="",
++        sibling_files=(),
++    ):
++        self.calls.append(
++            {
++                "file_path": file_path,
++                "purpose": purpose,
++                "sibling_files": tuple(sibling_files),
++            }
++        )
+         file_path.parent.mkdir(parents=True, exist_ok=True)
+         file_path.write_text("# Autonomously generated code\n", encoding="utf-8")
+         return FakeArtifact(file_path)
+@@ -66,4 +83,18 @@ def test_engineer_agent_execution_and_run_script_generation(tmp_path: Path) -> N
+     assert "run.py" in str(res.data["generated_files"])
+     run_script = tmp_path / "run.py"
+     assert run_script.exists()
+-    assert "ShadBot Autonomously Generated Runner" in run_script.read_text(encoding="utf-8")
++
++    runner_source = run_script.read_text(encoding="utf-8")
++
++    assert "ShadBot Autonomously Generated Runner" in runner_source
++
++    # The runner must exercise the generated code, not just print success.
++    assert "importlib" in runner_source
++    assert "return 1" in runner_source
++
++    # The per-file prompt must receive this module's own purpose, otherwise
++    # every generated file gets an identical prompt.
++    assert code_srv.calls[0]["purpose"] == "MACD indicator"
++    assert code_srv.calls[0]["sibling_files"] == (
++        "src/indicators/market_analyzer.py",
++    )
+diff --git a/ShadBot/tests/agentplatform_tests/quality_gate/test_prompt_focus_and_smoke.py b/ShadBot/tests/agentplatform_tests/quality_gate/test_prompt_focus_and_smoke.py
+new file mode 100644
+index 0000000..a7e2d05
+--- /dev/null
++++ b/ShadBot/tests/agentplatform_tests/quality_gate/test_prompt_focus_and_smoke.py
+@@ -0,0 +1,363 @@
++"""
++ShadBot Agent Platform
++
++Regression tests for the run-2 defects.
++
++  BUG L - the gate reported GREEN on code that crashed at runtime, because
++          importing a module never executes main().
++
++  BUG M - per-file codegen prompts were 96.4% identical, so the model returned
++          the same response for 11 different modules.
++
++  BUG N - identical prompts were re-sent to the model instead of cached.
++
++  BUG O - the generated run.py printed "operational" without importing
++          anything, so it exited 0 on a completely broken project.
++"""
++
++from __future__ import annotations
++
++import difflib
++import re
++from pathlib import Path
++from uuid import uuid4
++
++from agentplatform.application.prompt.prompt_builder import (
++    CODEGEN_FILE_KEY,
++    CODEGEN_PURPOSE_KEY,
++    CODEGEN_SIBLINGS_KEY,
++    PromptBuilder,
++)
++from agentplatform.application.quality_gate import SmokeRunValidator
++from agentplatform.domain.agents import AgentRole
++from agentplatform.domain.context import AgentExecutionContext
++
++LONG_TASK_DESCRIPTION = (
++    "Implement the complete ShadBot Agent Platform in 'src/agentplatform/' "
++    "from Phase 1 through Phase 12. " * 6
++)
++
++
++def _codegen_context(
++    target: str,
++    purpose: str,
++) -> AgentExecutionContext:
++    return AgentExecutionContext(
++        project_id=uuid4(),
++        task_id=uuid4(),
++        instructions="Implement the module.",
++        task_title="Autonomous Implementation of ShadBot Agent Platform",
++        task_description=LONG_TASK_DESCRIPTION,
++        task_type="full_lifecycle",
++        metadata={
++            CODEGEN_FILE_KEY: target,
++            CODEGEN_PURPOSE_KEY: purpose,
++            CODEGEN_SIBLINGS_KEY: [
++                "src/agentplatform/domain/agents/agent_role.py",
++                "src/agentplatform/application/release/release_service.py",
++            ],
++        },
++    )
++
++
++# ---------------------------------------------------------------------------
++# BUG M - prompt differentiation
++# ---------------------------------------------------------------------------
++
++
++def test_codegen_prompts_for_different_files_are_distinct() -> None:
++    """
++    The defect: two prompts for completely different modules were 96.4%
++    identical, differing only in one buried Instructions line.
++    """
++
++    builder = PromptBuilder()
++
++    a = builder.build(
++        AgentRole.ENGINEER,
++        _codegen_context(
++            "src/agentplatform/domain/agents/agent_role.py",
++            "Agent identity and role enumeration (Phase 2)",
++        ),
++    )
++    b = builder.build(
++        AgentRole.ENGINEER,
++        _codegen_context(
++            "src/agentplatform/application/release/release_service.py",
++            "Production Freeze V1.0 and SLA governance (Phase 12)",
++        ),
++    )
++
++    similarity = difflib.SequenceMatcher(None, a, b).ratio()
++
++    assert similarity < 0.90, f"prompts are {similarity:.1%} similar"
++
++    # The opening of the prompt - what the model weighs most - must differ.
++    assert a[:150] != b[:150]
++
++
++def test_codegen_prompt_omits_the_full_task_description() -> None:
++    """
++    The huge shared task description is what made every prompt look alike.
++    """
++
++    prompt = PromptBuilder().build(
++        AgentRole.ENGINEER,
++        _codegen_context("src/pkg/mod.py", "Do one thing"),
++    )
++
++    assert LONG_TASK_DESCRIPTION not in prompt
++
++
++def test_codegen_prompt_names_the_target_file_first() -> None:
++    prompt = PromptBuilder().build(
++        AgentRole.ENGINEER,
++        _codegen_context("src/agentplatform/domain/models.py", "Entities"),
++    )
++
++    assert prompt.startswith("Write ONE Python file: models.py")
++    assert "src/agentplatform/domain/models.py" in prompt
++
++
++def test_codegen_prompt_forbids_multi_module_output() -> None:
++    """
++    Without this instruction the model emits several modules per response.
++    """
++
++    prompt = PromptBuilder().build(
++        AgentRole.ENGINEER,
++        _codegen_context("src/pkg/mod.py", "Do one thing"),
++    )
++
++    assert "Do NOT write other modules" in prompt
++    assert "section headers" in prompt
++
++
++def test_codegen_prompt_carries_layer_rules() -> None:
++    builder = PromptBuilder()
++
++    domain = builder.build(
++        AgentRole.ENGINEER,
++        _codegen_context("src/agentplatform/domain/models.py", "Entities"),
++    )
++    infra = builder.build(
++        AgentRole.ENGINEER,
++        _codegen_context(
++            "src/agentplatform/infrastructure/tools/git_tool.py",
++            "Git adapter",
++        ),
++    )
++
++    assert "LAYER: DOMAIN" in domain
++    assert "frozen=True" in domain
++
++    assert "LAYER: INFRASTRUCTURE" in infra
++    assert "shell=True" in infra
++
++
++def test_general_prompt_still_used_without_codegen_target() -> None:
++    context = AgentExecutionContext(
++        project_id=uuid4(),
++        task_id=uuid4(),
++        instructions="Research the topic.",
++        task_title="Research",
++        task_description=LONG_TASK_DESCRIPTION,
++        metadata={},
++    )
++
++    prompt = PromptBuilder().build(AgentRole.RESEARCHER, context)
++
++    assert "You are an AI software engineering agent." in prompt
++
++
++# ---------------------------------------------------------------------------
++# BUG L - smoke run
++# ---------------------------------------------------------------------------
++
++
++def _make_project(tmp_path: Path, service_body: str) -> Path:
++    pkg = tmp_path / "src" / "app"
++    pkg.mkdir(parents=True)
++
++    (pkg / "__init__.py").write_text("", encoding="utf-8")
++    (pkg / "domain.py").write_text(
++        "class Domain:\n"
++        "    def __init__(self, data):\n"
++        "        self._data = data\n\n"
++        "    @property\n"
++        "    def data(self):\n"
++        "        return self._data\n",
++        encoding="utf-8",
++    )
++    (pkg / "service.py").write_text(service_body, encoding="utf-8")
++    (pkg / "__main__.py").write_text(
++        "from .domain import Domain\n"
++        "from .service import Service\n\n"
++        "def main():\n"
++        "    print(Service(Domain({'k': 'v'})).run())\n\n"
++        'if __name__ == "__main__":\n'
++        "    main()\n",
++        encoding="utf-8",
++    )
++
++    return tmp_path
++
++
++BROKEN_SERVICE = (
++    "class Service:\n"
++    "    def __init__(self, domain):\n"
++    "        self.domain = domain\n\n"
++    "    def run(self):\n"
++    "        return self.domain.data('x')\n"  # property called like a function
++)
++
++WORKING_SERVICE = (
++    "class Service:\n"
++    "    def __init__(self, domain):\n"
++    "        self.domain = domain\n\n"
++    "    def run(self):\n"
++    "        return self.domain.data\n"
++)
++
++
++def test_smoke_run_catches_runtime_crash_that_imports_cleanly(
++    tmp_path: Path,
++) -> None:
++    """
++    The exact run-2 failure: every module imports, the gate said GREEN, and
++    `python -m app` died with TypeError: 'dict' object is not callable.
++    """
++
++    project = _make_project(tmp_path, BROKEN_SERVICE)
++
++    result = SmokeRunValidator().validate(str(project))
++
++    assert result.passed is False
++    assert result.skipped is False
++    assert "TypeError" in result.details
++
++
++def test_smoke_run_reports_file_and_line(tmp_path: Path) -> None:
++    project = _make_project(tmp_path, BROKEN_SERVICE)
++
++    result = SmokeRunValidator().validate(str(project))
++
++    assert re.search(r"service\.py:\d+", result.details)
++
++
++def test_smoke_run_passes_working_project(tmp_path: Path) -> None:
++    project = _make_project(tmp_path, WORKING_SERVICE)
++
++    result = SmokeRunValidator().validate(str(project))
++
++    assert result.passed is True
++    assert result.score == 1.0
++
++
++def test_smoke_run_fails_on_nonzero_exit(tmp_path: Path) -> None:
++    (tmp_path / "run.py").write_text(
++        "import sys\nsys.exit(3)\n",
++        encoding="utf-8",
++    )
++
++    result = SmokeRunValidator().validate(str(tmp_path))
++
++    assert result.passed is False
++    assert "code 3" in result.details
++
++
++def test_smoke_run_skips_project_without_entry_point(tmp_path: Path) -> None:
++    src = tmp_path / "src"
++    src.mkdir()
++    (src / "lib.py").write_text("x = 1\n", encoding="utf-8")
++
++    result = SmokeRunValidator().validate(str(tmp_path))
++
++    assert result.skipped is True
++    assert result.passed is False
++
++
++def test_smoke_run_is_part_of_the_gate() -> None:
++    from agentplatform.application.quality_gate import DeterministicQualityGate
++
++    assert hasattr(DeterministicQualityGate(), "smoke_val")
++
++
++# ---------------------------------------------------------------------------
++# BUG N - prompt cache
++# ---------------------------------------------------------------------------
++
++
++def test_llm_cache_returns_identical_response_without_second_call() -> None:
++    from agentplatform.infrastructure.llm.ollama_provider import OllamaProvider
++
++    provider = OllamaProvider()
++
++    calls: list[str] = []
++
++    def fake_post(*args: object, **kwargs: object) -> object:
++        calls.append("call")
++
++        class _Response:
++            @staticmethod
++            def raise_for_status() -> None:
++                return None
++
++            @staticmethod
++            def json() -> dict[str, str]:
++                return {"response": "generated code"}
++
++        return _Response()
++
++    provider._is_available = lambda endpoint: True  # type: ignore[method-assign]
++
++    import agentplatform.infrastructure.llm.ollama_provider as module
++
++    original_post = module.requests.post
++    module.requests.post = fake_post  # type: ignore[assignment]
++
++    try:
++        first = provider.generate("identical prompt")
++        second = provider.generate("identical prompt")
++        third = provider.generate("a different prompt")
++    finally:
++        module.requests.post = original_post  # type: ignore[assignment]
++
++    assert first == second == "generated code"
++    assert len(calls) == 2, "identical prompt must not be re-sent"
++    assert provider.cache_hits == 1
++    assert third == "generated code"
++
++
++def test_llm_cache_can_be_disabled(monkeypatch) -> None:  # type: ignore[no-untyped-def]
++    from agentplatform.infrastructure.llm.ollama_provider import OllamaProvider
++
++    monkeypatch.setenv("SHADBOT_LLM_CACHE", "0")
++
++    assert OllamaProvider()._cache_enabled is False
++
++
++# ---------------------------------------------------------------------------
++# BUG O - the generated runner must exercise the code
++# ---------------------------------------------------------------------------
++
++
++def test_generated_runner_template_imports_modules() -> None:
++    """
++    The old template printed "operational" without importing anything, so it
++    exited 0 even when every generated module was broken.
++    """
++
++    source = Path(
++        "src/agentplatform/infrastructure/agents/engineer_agent.py"
++    ).read_text(encoding="utf-8")
++
++    match = re.search(r"run_content = \(\n(.*?)\n\s*\)\n", source, re.DOTALL)
++
++    assert match is not None, "run.py template not found"
++
++    template = match.group(1)
++
++    assert "importlib" in template
++    assert "pkgutil" in template
++    assert "return 1" in template, "must signal failure with a non-zero exit"

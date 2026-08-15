@@ -17,12 +17,14 @@ from .validators import (
     RuffValidator,
     SecurityValidator,
     ImportValidator,
+    SmokeRunValidator,
     SyntaxValidator,
 )
 
 __all__ = [
     "CheckResult",
     "ImportValidator",
+    "SmokeRunValidator",
     "SyntaxValidator",
     "PytestValidator",
     "RuffValidator",

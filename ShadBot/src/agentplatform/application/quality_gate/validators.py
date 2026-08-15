@@ -863,3 +863,213 @@ class ImportValidator:
             ),
             score=round(len(ok) / total, 2) if total else 0.0,
         )
+
+
+# Executed in a subprocess: this actually RUNS generated code.
+_SMOKE_PROBE = r'''
+import json
+import pathlib
+import runpy
+import sys
+import traceback
+
+root = pathlib.Path(sys.argv[1]).resolve()
+entry = pathlib.Path(sys.argv[2]).resolve()
+source_root = root / "src" if (root / "src").is_dir() else root
+sys.path.insert(0, str(source_root))
+sys.argv = [str(entry)]
+
+result = {"entry": str(entry.relative_to(root)), "ok": False, "error": ""}
+
+# A __main__.py inside a package uses relative imports, which run_path cannot
+# resolve. Execute it as `python -m package` instead so the parent package is
+# known and the real runtime behaviour is exercised.
+package = ""
+if entry.name == "__main__.py":
+    parts = entry.parent.relative_to(source_root).parts
+    if parts:
+        package = ".".join(parts)
+
+try:
+    if package:
+        runpy.run_module(package, run_name="__main__", alter_sys=True)
+    else:
+        runpy.run_path(str(entry), run_name="__main__")
+    result["ok"] = True
+except SystemExit as exc:
+    code = exc.code if exc.code is not None else 0
+    result["ok"] = code == 0
+    if not result["ok"]:
+        result["error"] = f"exited with code {code}"
+except BaseException as exc:
+    tb = traceback.extract_tb(sys.exc_info()[2])
+    where = ""
+    for frame in reversed(tb):
+        if frame.filename.endswith(".py") and str(root) in frame.filename:
+            rel = pathlib.Path(frame.filename)
+            try:
+                rel = rel.relative_to(root)
+            except ValueError:
+                pass
+            where = f" at {rel}:{frame.lineno}"
+            break
+    result["error"] = f"{type(exc).__name__}: {exc}{where}"
+
+print("SHADBOT_SMOKE_RESULT " + json.dumps(result))
+'''
+
+
+class SmokeRunValidator:
+    """
+    Validates that the generated project actually RUNS.
+
+    Rationale:
+        ImportValidator proves modules load. It does not prove they work:
+        importing a module executes only its top-level statements, so a broken
+        call inside main() is invisible.
+
+        Run 2 of ShadBotCore_BuiltByAgent passed both syntax and imports and
+        the gate reported GREEN, yet `python -m agentplatform` died with
+        `TypeError: 'dict' object is not callable` because a @property was
+        called like a function.
+
+        This check closes that hole: it executes each entry point and fails on
+        a non-zero exit or any uncaught exception.
+
+    Entry points probed, in priority order:
+        run.py, main.py, __main__.py, src/<pkg>/__main__.py
+
+    A project with no entry point is SKIPPED, never passed.
+    """
+
+    _ENTRY_CANDIDATES = ("run.py", "main.py", "__main__.py")
+
+    def _find_entry_points(self, target: Path) -> list[Path]:
+        found: list[Path] = []
+
+        for name in self._ENTRY_CANDIDATES:
+            candidate = target / name
+            if candidate.is_file():
+                found.append(candidate)
+
+        source_root = target / "src" if (target / "src").is_dir() else target
+
+        for candidate in sorted(source_root.rglob("__main__.py")):
+            if any(
+                part in {".git", ".venv", "venv", "__pycache__", "node_modules"}
+                for part in candidate.parts
+            ):
+                continue
+            if candidate not in found:
+                found.append(candidate)
+
+        return found
+
+    def validate(self, project_path: str) -> CheckResult:
+        target = Path(project_path)
+
+        if not target.exists():
+            return CheckResult(
+                check_name="smoke_run",
+                passed=False,
+                details=f"Target path does not exist: {target}",
+                score=0.0,
+                skipped=True,
+            )
+
+        entries = self._find_entry_points(target)
+
+        if not entries:
+            return CheckResult(
+                check_name="smoke_run",
+                passed=False,
+                details=(
+                    "No entry point (run.py / main.py / __main__.py) found. "
+                    "Check SKIPPED - generated projects should expose one."
+                ),
+                score=0.0,
+                skipped=True,
+            )
+
+        failures: list[str] = []
+        succeeded: list[str] = []
+
+        for entry in entries:
+            try:
+                completed = subprocess.run(
+                    [sys.executable, "-c", _SMOKE_PROBE, str(target), str(entry)],
+                    capture_output=True,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    timeout=_DEFAULT_TOOL_TIMEOUT_SECONDS,
+                    cwd=str(target),
+                )
+            except subprocess.TimeoutExpired:
+                failures.append(
+                    f"{entry.name}: timed out after "
+                    f"{_DEFAULT_TOOL_TIMEOUT_SECONDS}s (blocking call or "
+                    f"infinite loop)"
+                )
+                continue
+            except OSError as exc:
+                return CheckResult(
+                    check_name="smoke_run",
+                    passed=False,
+                    details=f"Could not launch smoke probe: {exc}",
+                    score=0.0,
+                    skipped=True,
+                )
+
+            payload: dict[str, object] | None = None
+
+            for line in (completed.stdout or "").splitlines():
+                if line.startswith("SHADBOT_SMOKE_RESULT "):
+                    try:
+                        payload = json.loads(
+                            line[len("SHADBOT_SMOKE_RESULT ") :]
+                        )
+                    except ValueError:
+                        payload = None
+                    break
+
+            if payload is None:
+                failures.append(
+                    f"{entry.name}: probe produced no result. "
+                    + _combine_output(
+                        completed.stdout,
+                        completed.stderr,
+                        completed.returncode,
+                    )
+                )
+                continue
+
+            if payload.get("ok"):
+                succeeded.append(str(payload.get("entry", entry.name)))
+            else:
+                failures.append(
+                    f"{payload.get('entry', entry.name)}: {payload.get('error')}"
+                )
+
+        total = len(succeeded) + len(failures)
+
+        if not failures:
+            return CheckResult(
+                check_name="smoke_run",
+                passed=True,
+                details=(
+                    f"All {total} entry point(s) ran successfully: "
+                    + ", ".join(succeeded)
+                ),
+                score=1.0,
+            )
+
+        return CheckResult(
+            check_name="smoke_run",
+            passed=False,
+            details=_truncate(
+                f"{len(failures)}/{total} entry point(s) failed to run:\n"
+                + "\n".join(failures)
+            ),
+            score=round(len(succeeded) / total, 2) if total else 0.0,
+        )

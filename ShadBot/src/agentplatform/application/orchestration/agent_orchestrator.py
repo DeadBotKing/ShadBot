@@ -533,6 +533,7 @@ class AgentOrchestrator:
             for name in (
                 "syntax",
                 "imports",
+                "smoke_run",
                 "pytest",
                 "ruff",
                 "mypy",
@@ -548,7 +549,7 @@ class AgentOrchestrator:
             lint_passed=False,
             typecheck_passed=False,
             summary=(
-                "UNVERIFIABLE (no target project) | executed=0/7 | "
+                "UNVERIFIABLE (no target project) | executed=0/8 | "
                 "skipped=all"
             ),
             checks=checks,

@@ -18,6 +18,11 @@ from agentplatform.application.generation.artifact_service import (
 from agentplatform.application.generation.module_splitter import (
     ModuleSplitter,
 )
+from agentplatform.application.prompt.prompt_builder import (
+    CODEGEN_FILE_KEY,
+    CODEGEN_PURPOSE_KEY,
+    CODEGEN_SIBLINGS_KEY,
+)
 from agentplatform.domain.agents import (
     AgentRole,
 )
@@ -57,14 +62,40 @@ class CodeGenerationService:
         context: AgentExecutionContext,
         file_path: Path,
         instructions: str,
+        purpose: str = "",
+        sibling_files: tuple[str, ...] = (),
     ) -> GeneratedArtifact:
         """
         Generate and persist source file.
+
+        Args:
+            context: Execution context.
+            file_path: Absolute path of the module to write.
+            instructions: Legacy free-text instructions.
+            purpose: The single responsibility of this module. Drives the
+                focused per-file prompt.
+            sibling_files: Other modules in the project, so the model imports
+                them instead of re-implementing them in this file.
         """
 
+        root = self._resolve_root(file_path)
+
+        relative_target = self._relative_to_root(file_path, root)
+
+        # Switch PromptBuilder into focused single-file mode. Without this the
+        # prompts for different modules were 96.4% identical and the model
+        # returned the same response for every file.
         generation_context = replace(
             context,
             instructions=instructions,
+            metadata={
+                **context.metadata,
+                CODEGEN_FILE_KEY: relative_target,
+                CODEGEN_PURPOSE_KEY: purpose or instructions,
+                CODEGEN_SIBLINGS_KEY: [
+                    path for path in sibling_files if path != relative_target
+                ],
+            },
         )
 
         response = self._brain.think(
@@ -75,8 +106,6 @@ class CodeGenerationService:
         code = self._extractor.extract(
             response,
         )
-
-        root = self._resolve_root(file_path)
 
         modules = self._splitter.split(
             code=code,
