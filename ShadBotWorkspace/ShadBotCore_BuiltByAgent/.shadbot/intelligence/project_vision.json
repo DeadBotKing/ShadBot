@@ -1,9 +1,9 @@
 {
     "identity": {
-        "project_id": "7d1f77b8-64f1-4151-bb01-43c50ca53b86",
+        "project_id": "59a00894-0bc0-476c-b29e-65eb5fd187f5",
         "name": "",
         "path": "C:\\Users\\DeadBotKing\\Desktop\\ShadBot\\ShadBotWorkspace\\ShadBotCore_BuiltByAgent",
-        "created_at": "2026-08-15T15:05:22.887225+00:00"
+        "created_at": "2026-08-15T16:07:49.467690+00:00"
     },
     "architecture": {
         "description": "",
@@ -40,5 +40,5 @@
         "summary": ""
     },
     "recommendations": [],
-    "generated_at": "2026-08-15T15:05:22.887253+00:00"
+    "generated_at": "2026-08-15T16:07:49.467750+00:00"
 }

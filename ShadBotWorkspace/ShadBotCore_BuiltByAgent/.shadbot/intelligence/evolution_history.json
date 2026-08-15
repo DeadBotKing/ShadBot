@@ -1,0 +1,17 @@
+[
+    {
+        "project_id": "59a00894-0bc0-476c-b29e-65eb5fd187f5",
+        "previous_version": "previous",
+        "current_version": "current",
+        "changes": [
+            {
+                "change_type": "architecture",
+                "target": "system",
+                "description": "Architecture changed."
+            }
+        ],
+        "impact_summary": "1 project evolution changes detected.",
+        "evolution_id": "8a00e840-6854-485c-9d63-f6216318ef14",
+        "created_at": "2026-08-15T16:07:49.467786+00:00"
+    }
+]
