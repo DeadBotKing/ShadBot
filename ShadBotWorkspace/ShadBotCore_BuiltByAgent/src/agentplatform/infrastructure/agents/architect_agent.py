@@ -1,80 +1,66 @@
-# src/agentplatform/domain/__init__.py
-from .shadbotagent import ShadBotAgent
+# src/agentplatform/domain/models.py
 
-# src/agentplatform/application/__init__.py
-from .agent_service import AgentService
+from dataclasses import dataclass
+from uuid import UUID
+
+@dataclass(frozen=True)
+class Agent:
+    id: UUID
+    name: str
+    role: str
+
+@dataclass(frozen=True)
+class Task:
+    id: UUID
+    title: str
+    description: str
+    status: str
+
+# src/agentplatform/domain/services.py
+
+from typing import List
+from .models import Agent, Task
+
+class DomainService:
+    def get_all_agents(self) -> List[Agent]:
+        pass
+
+    def get_task_by_id(self, task_id: UUID) -> Task:
+        pass
 
 # src/agentplatform/application/services.py
-import uuid
-from .events import AgentCreatedEvent
-from ..domain.entities import ShadBotAgent
-from ..domain.repositories import AgentRepository
-from ..domain.services.event_publisher import EventPublisher
 
-class AgentService:
-    def __init__(self, agent_repository: AgentRepository, event_publisher: EventPublisher):
-        self.agent_repository = agent_repository
-        self.event_publisher = event_publisher
+from typing import List
+from ..domain.models import Agent, Task
+from ..domain.services import DomainService
 
-    def create_agent(self, name: str, role: str) -> ShadBotAgent:
-        agent = ShadBotAgent(name, role)
-        self.agent_repository.save(agent)
-        self.event_publisher.publish(AgentCreatedEvent(agent))
-        return agent
+class ApplicationService:
+    def __init__(self, domain_service: DomainService):
+        self.domain_service = domain_service
 
-# src/agentplatform/domain/entities.py
-from datetime import datetime
+    def get_all_agents(self) -> List[Agent]:
+        return self.domain_service.get_all_agents()
 
-class ShadBotAgent:
-    def __init__(self, name: str, role: str):
-        self.id = str(uuid.uuid4())
-        self.name = name
-        self.role = role
-        self.created_at = datetime.now()
-        self.updated_at = None
+    def get_task_by_id(self, task_id: UUID) -> Task:
+        return self.domain_service.get_task_by_id(task_id)
 
-# src/agentplatform/domain/repositories.py
-import uuid
-from .entities import ShadBotAgent
+# src/agentplatform/application/validation.py
 
-class AgentRepository:
-    def save(self, agent: ShadBotAgent):
-        # Implement logic to save the agent to a database or storage system
-        pass
+from typing import Dict
+from ..domain.models import Agent, Task
 
-    def get_by_id(self, agent_id: str) -> ShadBotAgent:
-        # Implement logic to retrieve an agent by its ID
-        pass
+class QualityGate:
+    @staticmethod
+    def validate(agent: Agent, task: Task) -> Dict[str, str]:
+        # Implement validation logic here
+        return {}
 
-# src/agentplatform/domain/events.py
-from datetime import datetime
+# src/agentplatform/__init__.py
 
-class AgentCreatedEvent:
-    def __init__(self, agent: ShadBotAgent):
-        self.agent = agent
-        self.created_at = datetime.now()
+from .application.services import ApplicationService
+from .application.validation import QualityGate
 
-# src/agentplatform/application/services/event_publisher.py
-from ..domain.events import AgentCreatedEvent
-
-class EventPublisher:
-    def publish(self, event: AgentCreatedEvent):
-        # Implement logic to publish the event to an event bus or messaging system
-        pass
-
-# src/agentplatform/domain/services/agentservice_domain.py
-from .entities import ShadBotAgent
-from .repositories import AgentRepository
-from .events import AgentCreatedEvent
-from ..application.services.event_publisher import EventPublisher
-
-class AgentServiceDomain:
-    def __init__(self, agent_repository: AgentRepository, event_publisher: EventPublisher):
-        self.agent_repository = agent_repository
-        self.event_publisher = event_publisher
-
-    def create_agent(self, name: str, role: str) -> ShadBotAgent:
-        agent = ShadBotAgent(name, role)
-        self.agent_repository.save(agent)
-        self.event_publisher.publish(AgentCreatedEvent(agent))
-        return agent
+__all__ = [
+    'ApplicationService',
+    'QualityGate'
+]
