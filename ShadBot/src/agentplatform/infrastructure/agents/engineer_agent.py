@@ -11,6 +11,7 @@ from typing import Any
 
 from agentplatform.application.generation import (
     CodeGenerationService,
+    ImportCycleBreaker,
 )
 from agentplatform.application.tooling import (
     ToolExecutor,
@@ -156,6 +157,14 @@ class EngineerAgent(BaseLLMAgent):
                 ),
             )
 
+        # Break import cycles before the runner is built, so the smoke run
+        # exercises repaired code. LLMs routinely emit mutual imports between
+        # an orchestrator and the services it coordinates; where the import is
+        # only a type annotation, TYPE_CHECKING resolves it. A cycle that is
+        # genuinely used at runtime is left alone and reported, because
+        # rewriting it would hide a real design flaw.
+        self._break_import_cycles(project_path)
+
         has_runner = any(f.endswith("run.py") or f.endswith("main.py") for f in generated_files)
         if not has_runner:
             run_script_path = project_path / "run.py"
@@ -255,3 +264,42 @@ class EngineerAgent(BaseLLMAgent):
                 "tests": tests,
             },
         )
+
+    @staticmethod
+    def _break_import_cycles(project_path: Path) -> None:
+        """
+        Repair annotation-only import cycles in the generated project.
+
+        Run 4 of ShadBotCore_BuiltByAgent lost 6 of its 11 modules to one
+        cycle: the orchestrator imported four services, and all four imported
+        the orchestrator back purely for type hints. Moving those imports
+        under TYPE_CHECKING resolves it without changing behaviour.
+        """
+
+        source_root = project_path / "src"
+
+        if not source_root.is_dir():
+            return
+
+        try:
+            repairs, unrepaired = ImportCycleBreaker(source_root).repair()
+        except OSError as exc:
+            print(f"[CYCLE BREAKER] Could not scan generated sources: {exc}")
+            return
+
+        for repair in repairs:
+            print(
+                f"[CYCLE BREAKER] {repair.module}: moved "
+                f"'{repair.moved_import}' under TYPE_CHECKING "
+                f"(cycle with {repair.partner})."
+            )
+
+        if repairs:
+            print(f"[CYCLE BREAKER] Broke {len(repairs)} import cycle edge(s).")
+
+        for cycle in unrepaired:
+            print(
+                "[CYCLE BREAKER] UNREPAIRABLE runtime cycle: "
+                + " -> ".join(cycle)
+                + " (imports are used at runtime; this is a design flaw)"
+            )
